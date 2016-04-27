@@ -1,12 +1,14 @@
 var attrArray = ["Bobby", "CarlyFiorina","ChrisChristie", "GeorgePataki",  "JamesWebb"];
 var expressed = attrArray[0];
+var width = window.innerWidth * 0.645,
+    height = 650;
+
 
 window.onload = setMap();
 
 // set the width and height of the map
 function setMap() {
-  var width = window.innerWidth * 0.645,
-        height = 650;
+
 
     // creating the map as an svg and giving it attributes of width and height
     var map = d3.select("body")
@@ -42,10 +44,10 @@ function setMap() {
 
          us = joinData(us, bobby);
       
-         setEnumerationUnits(us, map, path);
-         setCircles (path,map,bobby,projection);
-         createDropdown(bobby);
-        
+        setEnumerationUnits(us, map, path);
+        // setCircles (path,map,bobby,projection);
+        createDropdown(bobby);
+        createSplitSymbols(bobby);
 
     };
 };
@@ -93,26 +95,26 @@ var states = map.selectAll(".states")
 
 
 
-function setCircles (path,map,bobby,projection){
+// function setCircles (path,map,bobby,projection){
 
-         var circles = map.selectAll(".circles")
-        .data(bobby)
-        .enter()
-        .append("circle")
-        .attr("class", function(d){
+//          var circles = map.selectAll(".circles")
+//         .data(bobby)
+//         .enter()
+//         .append("circle")
+//         .attr("class", function(d){
              
-            return "circles " + d.postalcode;
-        })
-        .attr("fill", "grey")
-        .attr('fill-opacity', 0.5)
-        .attr("cx", function(d) {
-            return projection([d.Lon, d.Lat])[0]; }) 
-        .attr("cy", function(d) { return projection([d.Lon, d.Lat])[1]; });
+//             return "circles " + d.postalcode;
+//         })
+//         .attr("fill", "grey")
+//         .attr('fill-opacity', 0.5)
+//         .attr("cx", function(d) {
+//             return projection([d.Lon, d.Lat])[0]; }) 
+//         .attr("cy", function(d) { return projection([d.Lon, d.Lat])[1]; });
 
-        updateCircles(circles,bobby);
+//         updateCircles(circles,bobby);
  
 
-};
+// };
 
 function createDropdown(bobby){
     //add select element
@@ -147,21 +149,41 @@ function changeAttribute(attribute, bobby){
 };
 
 
-function updateCircles(circles, bobby)
-{
+function updateCircles(circles, bobby) {
     var domainArray = [];
-    for (var i=0; i<bobby.length; i++){
-        var val = parseFloat(bobby[i][expressed]);
+        for (var i=0; i<bobby.length; i++){
+            var val = parseFloat(bobby[i][expressed]);
         domainArray.push(val);
     };
-        var radiusMin = Math.min.apply(Math, domainArray);
-        var radiusMax = Math.max.apply(Math, domainArray);
+    var radiusMin = Math.min.apply(Math, domainArray);
+    var radiusMax = Math.max.apply(Math, domainArray);
 
-var setRadius = d3.scale.sqrt()
-        .range([4, 40])
-        .domain([radiusMin, radiusMax]);
-    //create a second svg element to hold the bar chart
-var circleRadius= circles.attr("r", function(d){
-            return setRadius(d[expressed]); 
-        });
-};
+    setRadius = d3.scale.sqrt()
+            .range([4, 40])
+            .domain([radiusMin, radiusMax]);
+        //create a second svg element to hold the bar chart
+    var circleRadius= circles.attr("r", function(d){
+                return setRadius(d[expressed]); 
+            });
+    };
+
+//Kristen's Section
+//Create Split Prop Symbols
+// function createSplitSymbols(splits, bobby){
+//     var arc = d3.svg.arc()
+//         .innerRadius(0)
+//         .outerRadius(function(d){
+//             return radiusFlannery(d.bobby)
+//         })
+//         .startAngle(0)
+//         .endAngle(Math.PI)
+
+//     var candidate1 = svg.append("g")
+//     candidate1.selectAll("path")
+//         .data(bobby)
+//         .enter().append("path")
+//         .style("fill", defaultColor)
+//         .style(defaultStroke)
+//         .attr("transform", function(d){
+//             return "translate(" + projection([d.])
+//         })
