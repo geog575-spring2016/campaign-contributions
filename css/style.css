@@ -1,1 +1,25 @@
-/* 575 boilerplate style.css */
+/*Campaign Contributions CSS*/
+
+
+.states {
+ stroke: white;
+    stroke-width: 0.3px;
+    stroke-linecap: round;
+}
+
+.map {
+position: absolute;
+    top: 1%;
+    left: 18%;
+    margin: 0 0 0 1%;
+}
+
+.pageTitle {
+    position: absolute;
+    top: 1%;
+    right: 25%;
+    font-size: 50px;
+    font-weight: bold;
+    font-family: Garamond;
+
+}
