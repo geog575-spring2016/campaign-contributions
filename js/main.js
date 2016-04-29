@@ -1,11 +1,17 @@
 var attrArray = ["BenCarson", "BernieSanders","BobbyJindal", "CarlyFiorina",  "ChrisChristie","DonaldTrump","GeorgePataki","HillaryClinton","JamesWebb","JebBush","JohnKasich","LawrenceLessig","LindseyGraham","MarcoRubio", "MartinOMalley", "MikeHuckabee", "RandPaul", "RickPerry", "RickSantorum", "ScottWalker", "TedCruz"];
+
 var expressed = attrArray[0];
+
 var attrArray2 = ["March_15", "April_15","May_15", "June_15",  "July_15","August_15","September_15","October_15","November_15","December_15","January_16","February_16","March_16"];
+
 var expressed2 = attrArray2[0];
 
+for (var i=0; i<attrArray2.length; i++){
+    attrArray2[i] = attrArray2[i].replace("_", " 20")
+};
+
+
 window.onload = setMap();
-
-
 
 
 // set the width and height of the map
@@ -37,34 +43,34 @@ function setMap() {
     // uses queue.js to parallelize asynchronous loading of the the CSV and shapefile data
     d3_queue.queue()
         .defer(d3.csv, "data/total_contributions_percandidate_perstate.csv")
-        .defer(d3.csv, "data/GoodCSVs/BenCarson.csv")
-        .defer(d3.csv, "data/GoodCSVs/BernieSanders.csv")
-        .defer(d3.csv, "data/GoodCSVs/BobbyJindal.csv")
-        .defer(d3.csv, "data/GoodCSVs/CarlyFiorina.csv")
-        .defer(d3.csv, "data/GoodCSVs/ChrisChristie.csv")
-        .defer(d3.csv, "data/GoodCSVs/DonaldTrump.csv")
-        .defer(d3.csv, "data/GoodCSVs/GeorgePataki.csv")
-        .defer(d3.csv, "data/GoodCSVs/JamesWebb.csv")
-        .defer(d3.csv, "data/GoodCSVs/JebBush.csv")
-        .defer(d3.csv, "data/GoodCSVs/JohnKasich.csv")
-        .defer(d3.csv, "data/GoodCSVs/LawrenceLessig.csv")
-        .defer(d3.csv, "data/GoodCSVs/LindseyGraham.csv")
-        .defer(d3.csv, "data/GoodCSVs/MarcoRubio.csv")
-        .defer(d3.csv, "data/GoodCSVs/MartinOMalley.csv")
-        .defer(d3.csv, "data/GoodCSVs/MikeHuckabee.csv")
-        .defer(d3.csv, "data/GoodCSVs/RandPaul.csv")
-        .defer(d3.csv, "data/GoodCSVs/RickPerry.csv")
-        .defer(d3.csv, "data/GoodCSVs/RickSantorum.csv")
-        .defer(d3.csv, "data/GoodCSVs/ScottWalker.csv")
-        .defer(d3.csv, "data/GoodCSVs/TedCruz.csv")
+        // .defer(d3.csv, "data/GoodCSVs/BenCarson.csv")
+        // .defer(d3.csv, "data/GoodCSVs/BernieSanders.csv")
+        // .defer(d3.csv, "data/GoodCSVs/BobbyJindal.csv")
+        // .defer(d3.csv, "data/GoodCSVs/CarlyFiorina.csv")
+        // .defer(d3.csv, "data/GoodCSVs/ChrisChristie.csv")
+        // .defer(d3.csv, "data/GoodCSVs/DonaldTrump.csv")
+        // .defer(d3.csv, "data/GoodCSVs/GeorgePataki.csv")
+        // .defer(d3.csv, "data/GoodCSVs/JamesWebb.csv")
+        // .defer(d3.csv, "data/GoodCSVs/JebBush.csv")
+        // .defer(d3.csv, "data/GoodCSVs/JohnKasich.csv")
+        // .defer(d3.csv, "data/GoodCSVs/LawrenceLessig.csv")
+        // .defer(d3.csv, "data/GoodCSVs/LindseyGraham.csv")
+        // .defer(d3.csv, "data/GoodCSVs/MarcoRubio.csv")
+        // .defer(d3.csv, "data/GoodCSVs/MartinOMalley.csv")
+        // .defer(d3.csv, "data/GoodCSVs/MikeHuckabee.csv")
+        // .defer(d3.csv, "data/GoodCSVs/RandPaul.csv")
+        // .defer(d3.csv, "data/GoodCSVs/RickPerry.csv")
+        // .defer(d3.csv, "data/GoodCSVs/RickSantorum.csv")
+        // .defer(d3.csv, "data/GoodCSVs/ScottWalker.csv")
+        // .defer(d3.csv, "data/GoodCSVs/TedCruz.csv")
         .defer(d3.json, "data/US_shapefile.topojson")
         .await(callback); // waits til both sets of data are loaded before it sends the data to the callback function
 
     // callback function that takes the data as two parameters and an error parameter that will report any errors that occur
-    function callback(error, totals, carson, sanders, jindal, fiorina, christie, trump, pataki, webb, bush, kasich, lessig, graham, rubio, omalley, huckabee, paul, perry, santorum, walker, cruz, unitedStates) {
+    function callback(error, totals, unitedStates) {
         // translate the topojson to GeoJSON within the DOM
         var us = topojson.feature(unitedStates, unitedStates.objects.US_shapefile).features; // pulls the array of features from the shapefile data and passes it to .data()
-        var csvArray = [totals, carson, sanders, jindal, fiorina, christie, trump, pataki, webb, bush, kasich, lessig, graham, rubio, omalley, huckabee, paul, perry, santorum, walker, cruz];
+        var csvArray = [totals];
         var attributeNames = ["bobbycontribution", "test1contribution", "test2contribution", "test3contribution"];
            for (csv in csvArray){
             joinData(us, csvArray[csv], attributeNames[csv]);
@@ -72,11 +78,13 @@ function setMap() {
 
          setEnumerationUnits(us, map, path);
 
-         setCircles (path, map, totals, carson, sanders, jindal, fiorina, christie, trump, pataki, webb, bush, kasich, lessig, graham, rubio, omalley, huckabee, paul, perry, santorum, walker, cruz, projection);
+         setCircles (path, map, totals, projection);
 
-         createDropdown(totals, carson, sanders, jindal, fiorina, christie, trump, pataki, webb, bush, kasich, lessig, graham, rubio, omalley, huckabee, paul, perry, santorum, walker, cruz);
+         createDropdown(totals);
 
-         overlay(path, map, totals, carson, sanders, jindal, fiorina, christie, trump, pataki, webb, bush, kasich, lessig, graham, rubio, omalley, huckabee, paul, perry, santorum, walker, cruz, projection);
+         overlay(path, map, totals, projection);
+
+        //  sliderBar();
 
 
 
@@ -126,10 +134,10 @@ function setEnumerationUnits(us, map, path){
 
 
 
-function setCircles (path, map, data, projection){
+function setCircles (path, map, totals, projection){
 
     var circles = map.selectAll(".circles")
-        .data(data)
+        .data(totals)
         .enter()
         .append("circle")
         .attr("class", function(d){
@@ -142,7 +150,7 @@ function setCircles (path, map, data, projection){
             return projection([d.Lon, d.Lat])[0]; })
         .attr("cy", function(d) { return projection([d.Lon, d.Lat])[1]; });
 
-        updateCircles(circles, data);
+        updateCircles(circles, totals);
 
 
 };
@@ -179,9 +187,10 @@ function changeAttribute(attribute, data){
 
 };
 
+d3.select('#slider3').call(d3.slider().scale(d3.scale.ordinal().domain(attrArray2).rangePoints([0, 1], 0.5)).axis(d3.svg.axis()).snap(true).value(attrArray2[12]))
 
-function updateCircles(circles, data)
-{
+
+function updateCircles(circles, data){
     var domainArray = [];
     for (var i=0; i<data.length; i++){
         var val = parseFloat(data[i][expressed]);
