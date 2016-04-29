@@ -35,37 +35,39 @@ function setMap() {
 
     // uses queue.js to parallelize asynchronous loading of the the CSV and shapefile data
     d3_queue.queue()
-        .defer(d3.csv, "data/bobby.csv")
+        .defer(d3.csv, "data/total_contributions_percandidate_perstate.csv")
         .defer(d3.json, "data/US_shapefile.topojson")
         .await(callback); // waits til both sets of data are loaded before it sends the data to the callback function
 
     // callback function that takes the data as two parameters and an error parameter that will report any errors that occur
-    function callback(error, bobby, unitedStates) {
-        bobby.forEach(function(d){
+    function callback(error, totals, unitedStates) {
+        totals.forEach(function(d){
           d.Lat= +d.Lat
           d.Lon= +d.Lon
-          d.Bobby = +d.Bobby
+          d.BenCarson = +d.BenCarson
+          d.HillaryClinton = +d.HillaryClinton
+          d.DonaldTrump = +d.DonaldTrump
         })
         // translate the topojson to GeoJSON within the DOM
         var us = topojson.feature(unitedStates, unitedStates.objects.US_shapefile).features; // pulls the array of features from the shapefile data and passes it to .data()
 
-         us = joinData(us, bobby);
+         us = joinData(us, totals);
 
 
         setEnumerationUnits(us, path);
         // setCircles (path,map,bobby,projection);
         //createDropdown(bobby);
-        createSplitSymbols(bobby, us);
+        createSplitSymbols(totals, us);
 
     };
     //createSplitSymbols(bobby);
 };
 
-function joinData(us, bobby){
+function joinData(us, totals){
 
     //loop through csv to assign each set of csv attribute values to geojson region
-    for (var i=0; i<bobby.length; i++){
-        var csvRegion = bobby[i]; //the current region
+    for (var i=0; i<totals.length; i++){
+        var csvRegion = totals[i]; //the current region
         var csvKey = csvRegion.postalcode; //the CSV primary key
 
          //loop through geojson regions to find correct region
@@ -150,19 +152,19 @@ var states = map.selectAll(".states")
 //         .text(function(d){ return d });
 // };
 
-function changeAttribute(attribute, bobby){
+function changeAttribute(attribute, totals){
     //change the expressed attribute
     expressed = attribute;
     var circles = d3.selectAll(".circles");
-    updateCircles(circles,bobby);
+    updateCircles(circles, totals);
 
 };
 
 
-function updateCircles(circles, bobby) {
+function updateCircles(circles, totals) {
     var domainArray = [];
-        for (var i=0; i<bobby.length; i++){
-            var val = parseFloat(bobby[i][expressed]);
+        for (var i=0; i<total_contributions_percandidate_perstate.length; i++){
+            var val = parseFloat(total_contributions_percandidate_perstate[i][expressed]);
         domainArray.push(val);
     };
     var radiusMin = Math.min.apply(Math, domainArray);
@@ -180,32 +182,33 @@ function updateCircles(circles, bobby) {
 
 //Kristen's Section
 //Create Split Prop Symbols
-function createSplitSymbols(bobby, us){
+function createSplitSymbols(totals, us){
+  //split symbol for first candidate
     var arc = d3.svg.arc()
         .innerRadius(0)
         .outerRadius(function(d){
-          console.log(setRadius(d.Bobby));
-            return setRadius(d.Bobby)
+          //console.log(setRadius(d.BenCarson));
+            return setRadius(d.DonaldTrump)
         })
         .startAngle(Math.PI)
         .endAngle(Math.PI*2)
-      console.log(bobby);
+      //console.log(totals);
 
-      radiusMin = d3.min(bobby, function(d){
-        return d.Bobby
+      radiusMin = d3.min(totals, function(d){
+        return d.DonaldTrump
       })
 
-      radiusMax = d3.max(bobby, function(d){
-        return d.Bobby
+      radiusMax = d3.max(totals, function(d){
+        return d.DonaldTrump
       })
-      console.log(radiusMax);
+      //console.log(radiusMax);
       setRadius = d3.scale.sqrt()
               .domain([radiusMin, radiusMax])
               .range([4, 40]);
 
     var candidate1 = map.append("g");
     candidate1.selectAll("path")
-        .data(bobby)
+        .data(totals)
         .enter().append("path")
         .style("fill", "blue")
         .style("stroke", "red")
@@ -214,4 +217,39 @@ function createSplitSymbols(bobby, us){
             return "translate(" + projection([d.Lon, d.Lat])[0] + "," + projection([d.Lon, d.Lat])[1]+")";
         })
         .attr("d", arc);
+
+    //start split symbol for second candidate
+    var arc2 = d3.svg.arc()
+        .innerRadius(0)
+        .outerRadius(function(d){
+          //console.log(setRadius(d.HillaryClinton));
+            return setRadius(d.HillaryClinton)
+        })
+        .startAngle(0)
+        .endAngle(Math.PI)
+      //console.log(totals);
+
+      radiusMin = d3.min(totals, function(d){
+        return d.HillaryClinton
+      })
+
+      radiusMax = d3.max(totals, function(d){
+        return d.HillaryClinton
+      })
+      //console.log(radiusMax);
+      setRadius = d3.scale.sqrt()
+              .domain([radiusMin, radiusMax])
+              .range([4, 40]);
+
+    var candidate2 = map.append("g");
+    candidate2.selectAll("path")
+        .data(totals)
+        .enter().append("path")
+        .style("fill", "blue")
+        .style("stroke", "red")
+        //length of line
+        .attr("transform", function(d){
+            return "translate(" + projection([d.Lon, d.Lat])[0] + "," + projection([d.Lon, d.Lat])[1]+")";
+        })
+        .attr("d", arc2);
 };
