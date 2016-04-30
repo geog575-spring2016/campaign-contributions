@@ -54,20 +54,20 @@ function setMap() {
 
         };
 
-        
-      
+
+
          setEnumerationUnits(us, map, path);
          setCircles (path,map,bobby,projection);
          createDropdown(bobby);
          overlay(path,map,test1,test2,test3,projection);
 
-        
+
 
     };
 };
 
 function joinData(us, csvData, attribute){
-   
+
     //loop through csv to assign each set of csv attribute values to geojson region
     for (var i=0; i<csvData.length; i++){
         var csvRegion = csvData[i]; //the current region
@@ -77,7 +77,7 @@ function joinData(us, csvData, attribute){
         for (var a=0; a<us.length; a++){
             var geojsonProps = us[a].properties; //the current region geojson properties
             var geojsonKey = geojsonProps.state; //the geojson primary key
-           
+
             //where primary keys match, transfer csv data to geojson properties object
             if (geojsonKey == csvKey){
 
@@ -90,7 +90,7 @@ function joinData(us, csvData, attribute){
             };
         };
     };
- 
+
     return us;
 
 };
@@ -116,17 +116,17 @@ function setCircles (path,map,data,projection){
         .enter()
         .append("circle")
         .attr("class", function(d){
-             
+
             return "circles " + d.state;
         })
         .attr("fill", "grey")
         .attr('fill-opacity', 0.5)
         .attr("cx", function(d) {
-            return projection([d.Lon, d.Lat])[0]; }) 
+            return projection([d.Lon, d.Lat])[0]; })
         .attr("cy", function(d) { return projection([d.Lon, d.Lat])[1]; });
 
         updateCircles(circles,data);
- 
+
 
 };
 
@@ -159,7 +159,7 @@ function changeAttribute(attribute, data){
     expressed = attribute;
     var circles = d3.selectAll(".circles");
     updateCircles(circles,data);
-  
+
 };
 
 
@@ -178,7 +178,7 @@ var setRadius = d3.scale.sqrt()
         .domain([radiusMin, radiusMax]);
     //create a second svg element to hold the bar chart
 var circleRadius= circles.attr("r", function(d){
-            return setRadius(d[expressed]); 
+            return setRadius(d[expressed]);
         });
 };
 
@@ -206,7 +206,7 @@ function overlay(path,map,test1,test2,test3,projection){
             test2InsetDiv.style.visibility = "visible";
         }
     });
-    
+
     $(".test3-section").click(function(){
         var test3Div = document.getElementById('test3-centers');
         var test3InsetDiv = document.getElementById('test3-inset');
@@ -228,17 +228,17 @@ function setCircles2 (path,map,data,projection){
         .enter()
         .append("circle")
         .attr("class", function(d){
-             
+
             return "circles " + d.state;
         })
         .attr("fill", "red")
         .attr('fill-opacity', 0.5)
         .attr("cx", function(d) {
-            return projection([d.Lon, d.Lat])[0]; }) 
+            return projection([d.Lon, d.Lat])[0]; })
         .attr("cy", function(d) { return projection([d.Lon, d.Lat])[1]; });
 
         updateCircles2(circles,data);
- 
+
 };
 
 function updateCircles2(circles, data)
@@ -256,6 +256,6 @@ var setRadius = d3.scale.sqrt()
         .domain([radiusMin, radiusMax]);
     //create a second svg element to hold the bar chart
 var circleRadius= circles.attr("r", function(d){
-            return setRadius(d[expressed2]); 
+            return setRadius(d[expressed2]);
         });
 };

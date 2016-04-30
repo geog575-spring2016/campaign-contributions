@@ -6,8 +6,8 @@
 		<title>Campaign Contributions</title>
 
 		<!--put your external stylesheet links here-->
-		<!-- <link rel="stylesheet" href="CSS/bootstrap.min.css">
-		<link rel="stylesheet" href="CSS/bootstrap-theme.min.css"> -->
+		<link rel="stylesheet" href="CSS/bootstrap.min.css">
+		<link rel="stylesheet" href="CSS/bootstrap-theme.min.css">
 		<link rel="stylesheet" href="css/style.css"/>
 		<!--[if IE<9]>
 			<link rel="stylesheet" href="css/style.ie.css">
@@ -16,26 +16,44 @@
 
 	<body>
 		<!--put your initial page content here-->
-		<div id="content"></div>
+		<!--<div id="content"></div>-->
 		<!--you can also use this space for internal scripts or stylesheets;
 		place these within <script> or <style> tags-->
+	<div class="center">
+		<div class="jumbotron">
+				<div class="pageTitle">
+				</div>
+		</div>
+	</div>
+
+		<div class="container">
+			<div class="col-md-4">
 		        <div class="overlay-menu">
-            <div class="test1-section">
-                <div class="test1" id ="test1-centers" style="width:125px;height:60px;">
-                    <strong>Show: </strong><br>test1 contribution</div>
-                <div class ="test1-inset" id="test1-inset" style="width:198px;height:60px;"></div>
-            </div>
-            <div class="test2-section">
-                <div class="test2" id ="test2-centers" style="width:125px;height:60px;">
-                    <strong>Show: </strong><br>test2 contribution</div>
-                <div class ="test2-inset" id="test2-inset" style="width:198px;height:60px;"></div>
-            </div>
-            <div class="test3-section">
-                <div class="test3" id ="test3-centers" style="width:125px;height:60px;">
-                    <strong>Show: </strong><br>test3 contribution</div>
-                <div class ="test3-inset" id="test3-inset" style="width:198px;height:60px;"></div>
-            </div>
-        </div>
+		            <div class="test1-section">
+		                <div class="test1" id ="test1-centers" style="width:125px;height:60px;">
+		                    <strong>Show: </strong><br>test1 contribution</div>
+		                <div class ="test1-inset" id="test1-inset" style="width:198px;height:60px;"></div>
+		            </div>
+		            <div class="test2-section">
+		                <div class="test2" id ="test2-centers" style="width:125px;height:60px;">
+		                    <strong>Show: </strong><br>test2 contribution</div>
+		                <div class ="test2-inset" id="test2-inset" style="width:198px;height:60px;"></div>
+		            </div>
+		            <div class="test3-section">
+		                <div class="test3" id ="test3-centers" style="width:125px;height:60px;">
+		                    <strong>Show: </strong><br>test3 contribution</div>
+		                <div class ="test3-inset" id="test3-inset" style="width:198px;height:60px;"></div>
+		            </div>
+								<div class="dropdown">
+								</div>
+        		</div>
+				</div>
+
+				<div class="col-md-8">
+						<div class="map"><!--map is drawn in main.js-->
+						</div>
+				</div>
+			</div>
 		<!--put your external script links here-->
 		<script type="text/javascript" src="lib/jquery-1.11.3.min.js"></script>
 		<script type="text/javascript" src="lib/d3.js"></script>
