@@ -132,7 +132,7 @@ function setCircles (path,map,data,projection){
 
 function createDropdown(data){
     //add select element
-    var dropdown = d3.select("body")
+    var dropdown = d3.select("#sideColumn")
         .append("select")
         .attr("class", "dropdown")
         .on("change", function(){
