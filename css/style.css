@@ -19,9 +19,15 @@ position: absolute;
     font-size: 50px;
     font-weight: bold;
     font-family: Garamond;
-
 }
 
-.col-md-4 {
-  margin-top: 100px;
+.map {
+  padding-top: 25px;
+}
+
+.jumbotron {
+  text-align: center;
+  margin-top: 12px;
+  font-family: Garamond;
+
 }

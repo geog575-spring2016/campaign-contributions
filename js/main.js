@@ -14,15 +14,15 @@ function setMap() {
         height = 650;
 
     // creating the map as an svg and giving it attributes of width and height
-    var map = d3.select("body")
+    var map = d3.select("#mapContainer")
         .append("svg")
         .attr("class", "map")
         .attr("width", width)
         .attr("height", height);
-     var pageTitle = d3.select("body")
-        .append("text")
-        .attr("class", "pageTitle")
-        .html("We "+"don't".strike()+" need your money, money, money");
+    //  var pageTitle = d3.select("#titleText")
+    //     .append("text")
+    //     .attr("class", "pageTitle")
+    //     .html("We "+"don't".strike()+" need your money, money, money");
 
     // creating projection - Albers USA which puts Alaska and Hawaii, projected in their own right below the 48 contiguous states
     var projection = d3.geo.albersUsa()
@@ -53,9 +53,6 @@ function setMap() {
             joinData(us, csvArray[csv], attributeNames[csv]);
 
         };
-
-
-
          setEnumerationUnits(us, map, path);
          setCircles (path,map,bobby,projection);
          createDropdown(bobby);
@@ -258,4 +255,12 @@ var setRadius = d3.scale.sqrt()
 var circleRadius= circles.attr("r", function(d){
             return setRadius(d[expressed2]);
         });
+};
+
+//function to create info panel
+function createInfoPanel(panel) {
+  d3.select("#infoPanel")
+      .apend("div")
+      .attr("class", "col-md-3")
+
 };

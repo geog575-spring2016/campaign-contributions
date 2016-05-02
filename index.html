@@ -14,20 +14,22 @@
 		<![endif]-->
 	</head>
 
+
 	<body>
 		<!--put your initial page content here-->
 		<!--<div id="content"></div>-->
 		<!--you can also use this space for internal scripts or stylesheets;
 		place these within <script> or <style> tags-->
-	<div class="center">
-		<div class="jumbotron">
-				<div class="pageTitle">
-				</div>
+		<div class="center">
+			<div class="jumbotron">
+					<div class="container">
+						<h1>We D̶o̶n̶'̶t̶ Need Your Money, Money, Money</h1>
+					</div>
+			</div>
 		</div>
-	</div>
 
 		<div class="container">
-			<div id = "sideColumn" class="col-md-4">
+			<div id = "sideColumn" class="col-md-3">
 		        <div class="overlay-menu">
 		            <div class="test1-section">
 		                <div class="test1" id ="test1-centers" style="width:125px;height:60px;">
@@ -44,14 +46,14 @@
 		                    <strong>Show: </strong><br>test3 contribution</div>
 		                <div class ="test3-inset" id="test3-inset" style="width:198px;height:60px;"></div>
 		            </div>
-								<div class="dropdown">
-								</div>
         		</div>
 				</div>
 
-				<div class="col-md-8">
-						<div class="map"><!--map is drawn in main.js-->
-						</div>
+				<div id = "mapContainer" class="col-md-6">
+				</div>
+
+				<div id = "infoPanel" class="col-md-3">
+				</div>
 				</div>
 			</div>
 		<!--put your external script links here-->
@@ -59,9 +61,9 @@
 		<script type="text/javascript" src="lib/d3.js"></script>
 		<script type="text/javascript" src="lib/d3-queue.js"></script>
 		<script type="text/javascript" src="lib/topojson.v1.min.js"></script>
-		<!-- <script type="text/javascript" src="lib/bootstrap.min.js"></script> -->
-
+		<script type="text/javascript" src="lib/bootstrap.min.js"></script>
 		<script type="text/javascript" src="js/main.js"></script>
+
 
 	</body>
 </html>
