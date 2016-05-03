@@ -27,7 +27,12 @@ position: absolute;
 
 .jumbotron {
   text-align: center;
-  margin-top: 12px;
+  /*margin-top: 10px;*/
+  /*margin-top: 12px;*/
+  padding: 5px;
   font-family: Garamond;
+}
 
+h1 {
+  margin: 10px;
 }

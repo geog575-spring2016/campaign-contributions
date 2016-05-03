@@ -4,21 +4,18 @@ var attrArray2 = ["March_15", "April_15","May_15", "June_15",  "July_15","August
 var expressed2 = attrArray2[0];
 
 window.onload = setMap();
-
-
-
-
 // set the width and height of the map
 function setMap() {
-  var width = window.innerWidth * 0.645,
-        height = 650;
+  // var width = window.innerWidth * 0.645,
+  //       height = 650;
 
     // creating the map as an svg and giving it attributes of width and height
     var map = d3.select("#mapContainer")
         .append("svg")
+        //.append("rect")
         .attr("class", "map")
-        .attr("width", width)
-        .attr("height", height);
+        //.attr("width", width)
+        //.attr("height", height);
     //  var pageTitle = d3.select("#titleText")
     //     .append("text")
     //     .attr("class", "pageTitle")
@@ -28,7 +25,7 @@ function setMap() {
     var projection = d3.geo.albersUsa()
     // no center because it's already centered on the US as part of the projection code
         .scale(1000)
-        .translate([width / 2, height / 2]); // keeps map centered in the svg container
+        //.translate([width / 2, height / 2]); // keeps map centered in the svg container
 
     // creating a path generator to draw the projection
     var path = d3.geo.path()
@@ -258,9 +255,9 @@ var circleRadius= circles.attr("r", function(d){
 };
 
 //function to create info panel
-function createInfoPanel(panel) {
-  d3.select("#infoPanel")
-      .apend("div")
-      .attr("class", "col-md-3")
-
-};
+// function createInfoPanel(panel) {
+//   d3.select("#infoPanel")
+//       //.append("select")
+//       //.attr("class", "col-md-2")
+//
+// };
