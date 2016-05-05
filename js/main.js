@@ -314,10 +314,9 @@ function createcheckbox1(path,map,total, us, projection){
     .on("click", function(d){
 
 
-
+//console.log(document.getElementsByClassName('rightsplit'));
 if(checkedArray.length == 0)
 {checkedArray.push(this.value);}
-
 else  if (checkedArray.length <= 1)
 {
     if(this.checked)
@@ -356,12 +355,25 @@ else
 
     if (checkedArray.length == 2)
 
-    { removeCircles = d3.selectAll(".circles").remove();
-        createSplitSymbols(total,checkedArray[0],checkedArray[1], us,projection);
-        console.log("Using "+ checkedArray[0] + " and " + checkedArray[1]+" to make split symbols showing "+ radioName);}
+    {if (document.getElementsByClassName('rightsplit').length==0){
+       d3.selectAll(".circles").remove();
 
+        createRightSplit(total,checkedArray[1],us,projection);
+        console.log("Using "+ checkedArray[0] + " and " + checkedArray[1]+" to make split symbols showing "+ radioName);}
+        else {
+          createLeftSplit(total,checkedArray[1],us,projection);
+        }
+}
 else if (checkedArray.length ==1)
-    {setCircles2(path,map,checkedArray[0],projection);
+//nothing
+//both (create id for each symbol-for each candidate) document.elementby class name left split and get right.  if id matches right, create left for this new person
+//otherwise do right
+    { //put if's here!!
+      d3.selectAll(".leftsplit").remove();//embed these into if's
+            d3.selectAll(".rightsplit").remove();
+            createLeftSplit(total,checkedArray[0],us,projection);
+            //setCircles2(path,map,checkedArray[0],projection);
+
     console.log("Using "+ checkedArray[0] +" to make symbols showing "+ radioName)}
 
 
@@ -488,7 +500,7 @@ function updateCircles(circles, data)
         radiusMax = Math.max.apply(Math, domainArray);
         //console.log(radiusMax);
         setRadius = d3.scale.sqrt()
-            .range([4, 40])
+            .range([0, 40])
             .domain([radiusMin, radiusMax]);
     //create a second svg element to hold the bar chart
 var circleRadius= circles.attr("r", function(d){
@@ -497,9 +509,9 @@ var circleRadius= circles.attr("r", function(d){
 
 };
 
-function createSplitSymbols(total,candidate1name,candidate2name,us,projection){
+function createLeftSplit(total,candidate1name,us,projection){
 var candidate_a;
-var candidate_b;
+
 
 
 removeCircles = d3.selectAll(".circles").remove();
@@ -510,11 +522,7 @@ for (var i=0; i<attributeNames.length; i++){
 };
 
 
-for (var i=0; i<attributeNames.length; i++){
-  if(attributeNames[i] == candidate2name)
-    {candidate_b = csvArray[i];}
-};
- console.log(candidate_a.state, candidate_b);
+ //console.log(candidate_a.state, candidate_b);
 
 
 
@@ -538,19 +546,29 @@ for (var i=0; i<attributeNames.length; i++){
       //console.log(radiusMax);
       setRadius = d3.scale.sqrt()
               .domain([radiusMin, radiusMax])
-              .range([4, 40]);
+              .range([0, 40]);
 
     var candidate1 = map.append("g");
     candidate1.selectAll("path")
         .data(candidate_a)
         .enter().append("path")
         .style("fill", "yellow")
+        .attr("class", "leftsplit")
 
         //length of line
         .attr("transform", function(d){
             return "translate(" + projection([d.Lon, d.Lat])[0] + "," + projection([d.Lon, d.Lat])[1]+")";
         })
         .attr("d", arc);
+};
+
+function createRightSplit(total,candidate1name,us,projection){
+var candidate_b;
+//if (candidate1name != "empty"){
+        for (var i=0; i<attributeNames.length; i++){
+          if(attributeNames[i] == candidate1name)
+            {candidate_b = csvArray[i];}
+        };
 
     //start split symbol for second candidate
     var arc2 = d3.svg.arc()
@@ -573,19 +591,18 @@ for (var i=0; i<attributeNames.length; i++){
       //console.log(radiusMax);
       setRadius = d3.scale.sqrt()
               .domain([radiusMin, radiusMax])
-              .range([4, 40]);
+              .range([0, 40]);
 
     var candidate2 = map.append("g");
     candidate2.selectAll("path")
         .data(candidate_b)
         .enter().append("path")
         .style("fill", "purple")
-
+        .attr("class", "rightsplit")
         //length of line
         .attr("transform", function(d){
             return "translate(" + projection([d.Lon, d.Lat])[0] + "," + projection([d.Lon, d.Lat])[1]+")";
         })
         .attr("d", arc2);
-
-
+    //  };
 };
