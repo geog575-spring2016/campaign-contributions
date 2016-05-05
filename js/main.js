@@ -66,6 +66,7 @@ function setMap() {
         .defer(d3.csv, "data/GoodCSVs/RickSantorum.csv")
         .defer(d3.csv, "data/GoodCSVs/ScottWalker.csv")
         .defer(d3.csv, "data/GoodCSVs/TedCruz.csv")
+
         .await(callback); // waits til both sets of data are loaded before it sends the data to the callback function
 
     // callback function that takes the data as two parameters and an error parameter that will report any errors that occur
@@ -120,7 +121,7 @@ function setMap() {
         //console.log(us);
         csvArray = [total, test1, test2, test3];
         //console.log(csvArray[0]);
-        attributeNames = ["total", "Ben Carson", "Bernie Sanders", "Bobby Jindal"];
+        attributeNames = ["total", "Ben carson", "Bernie Sanders", "Bobby Jindal"];
            for (csv in csvArray){
             joinData(us, csvArray[csv], attributeNames[csv]);
 
@@ -132,6 +133,8 @@ function setMap() {
          //createSplitSymbols(total,test1,test2,us);
     };
 };
+
+
 
 function joinData(us, csvData, attribute){
 
@@ -161,6 +164,8 @@ function joinData(us, csvData, attribute){
     return us;
 
 };
+
+
 
 function setEnumerationUnits(us, map, path){
 
@@ -198,15 +203,15 @@ function createradio(data,path,map,test1,test2,test3,projection,total,us){
     j=0;
 //console.log(projection);
     var form1 = d3.select("#sideColumn")
-    .append("form")
-    .attr("class", "Classification1")
+        .append("form")
+        .attr("class", "Classification1")
   //  .text("Category 1:");
     //console.log(form1)
 
      var labelEnter = form1.selectAll("span")
-    .data(filterPhases)
-    .enter()
-    .append("span");
+        .data(filterPhases)
+        .enter()
+        .append("span");
 
 
     labelEnter.append("input")
@@ -226,7 +231,6 @@ function createradio(data,path,map,test1,test2,test3,projection,total,us){
 
     labelEnter.append("label").text(function(d) {return d;});
 
-
     createcheckbox(total, us, projection);
 };
 
@@ -236,76 +240,67 @@ function createcheckbox(total, us, projection){
     var candidatesNames = ["Ben Carson", "Bernie Sanders","Bobby Jindal"];
     //console.log(projection);
     var form2 = d3.select("#sideColumn")
-    .append("form")
-    .attr("class", "Classification2");
+        .append("form")
+        .attr("class", "Classification2");
 
      var labelEnter = form2.selectAll("span")
-    .data(candidatesNames)
-    .enter()
-    .append("span");
+        .data(candidatesNames)
+        .enter()
+        .append("span");
 
     labelEnter.append("input")
-    .attr({
-        type: "checkbox",
-        name: "mode",
-        class:"class1",
-        id:"claaa",
-        value: function(d) {return d;}
-    })
-    .on("click", function(d){
+        .attr({
+            type: "checkbox",
+            name: "mode",
+            class:"class1",
+            id:"claaa",
+            value: function(d) {return d;}
+        })
+        .on("click", function(d) {
       //console.log(projection);
 
 
-if(checkedArray.length == 0)
-{checkedArray.push(this.value);}
-
-else  if (checkedArray.length <= 1)
-{
-    if(this.checked)
-        {
-            for(var i = checkedArray.length-1; i >= 0; i--) {
-                if(checkedArray[i] == this.value) {
-                    checkedArray.splice(i, 1);
+        if (checkedArray.length == 0) {
+            checkedArray.push(this.value);
+        } else  if (checkedArray.length <= 1) {
+            if(this.checked){
+                for(var i = checkedArray.length-1; i >= 0; i--) {
+                    if(checkedArray[i] == this.value) {
+                        checkedArray.splice(i, 1);
+                    } else {
+                        checkedArray.push(this.value);
+                    }
                 }
-                else {checkedArray.push(this.value);}
+            } else {
+                for (var i = checkedArray.length-1; i >= 0; i--) {
+                    if(checkedArray[i] == this.value) {
+                        checkedArray.splice(i, 1);
+                    }
+                }
+            }
+        } else {
+            if (this.checked == false) {
+                for (var i = checkedArray.length-1; i >= 0; i--) {
+                    if(checkedArray[i] == this.value) {
+                        checkedArray.splice(i, 1);
+                    }
+                }
+            } else {
+                this.checked = false;
+                alert("You can only select a maximum of 2 candidates to compare");
             }
         }
-    else
-    {   for(var i = checkedArray.length-1; i >= 0; i--) {
-                if(checkedArray[i] == this.value) {
-                    checkedArray.splice(i, 1);
-                }
-            }
-     }
-}
 
-else {
-if (this.checked == false)
-{   for(var i = checkedArray.length-1; i >= 0; i--) {
-                if(checkedArray[i] == this.value) {
-                    checkedArray.splice(i, 1);
-                }
-            }
-     }
-
-else
-    {this.checked = false;
-        alert("You can only select a maximum of 2 candidates to compare");}
-}
-
-    if (checkedArray.length == 2)
-    {createSplitSymbols(total,checkedArray[0],checkedArray[1], us,projection);}
-
-    // {console.log("Using "+ checkedArray[0] + " and " + checkedArray[1]+" to make split symbols showing "+ radioName);}
-
-else if (checkedArray.length ==1)
-    {createSplitSymbols(total,checkedArray[0],us,projection);}
-  //{console.log("Using "+ checkedArray[0] +" to make symbols showing "+ radioName)}
-
-else if (checkedArray.length ==0)
-    {console.log("Only showing "+ radioName+ " in each state");}
-
-        });
+        if (checkedArray.length == 2) {
+            createSplitSymbols(total,checkedArray[0],checkedArray[1], us,projection);
+            // {console.log("Using "+ checkedArray[0] + " and " + checkedArray[1]+" to make split symbols showing "+ radioName);}
+        } else if (checkedArray.length ==1) {
+            createSplitSymbols(total,checkedArray[0],us,projection);
+            //{console.log("Using "+ checkedArray[0] +" to make symbols showing "+ radioName)}
+        } else if (checkedArray.length ==0) {
+            console.log("Only showing "+ radioName+ " in each state");
+        }
+    });
 
     labelEnter.append("label").text(function(d) {return d;});
 };
