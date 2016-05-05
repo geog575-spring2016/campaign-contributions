@@ -1,7 +1,7 @@
 var attrArray = ["Total", "Per Capita"];
 var expressed = attrArray[0];
 var attrArray2 = ["March_15", "April_15","May_15", "June_15",  "July_15","August_15","September_15","October_15","November_15","December_15","January_16","February_16","March_16"];
-var expressed2 = attrArray2[12];
+var expressed2 = attrArray2[0];
 var map;
 var svg;
 var projection;
@@ -66,7 +66,6 @@ function setMap() {
         .defer(d3.csv, "data/GoodCSVs/RickSantorum.csv")
         .defer(d3.csv, "data/GoodCSVs/ScottWalker.csv")
         .defer(d3.csv, "data/GoodCSVs/TedCruz.csv")
-
         .await(callback); // waits til both sets of data are loaded before it sends the data to the callback function
 
     // callback function that takes the data as two parameters and an error parameter that will report any errors that occur
@@ -121,20 +120,25 @@ function setMap() {
         //console.log(us);
         csvArray = [total, test1, test2, test3];
         //console.log(csvArray[0]);
-        attributeNames = ["Total", "Ben carson", "Bernie Sanders", "Bobby Jindal"];
-           for (csv in csvArray){
-            joinData(us, csvArray[csv], attributeNames[csv]);
+        attributeNames = ["total", "Ben Carson", "Bernie Sanders", "Bobby Jindal"];
+           for (i in csvArray){
+            joinData(us, csvArray[i], attributeNames[i]);
 
         };
+
+
+
          setEnumerationUnits(us, map, path);
          setCircles (path,map,total,projection);
-        //createDropdown(bobby);
+
          createradio(total,path,map,test1,test2,test3,projection,total,us);
-         //createSplitSymbols(total,test1,test2,us);
+
+         createcheckbox1(path,map,total, us, projection);
+          createcheckbox2(total, us, projection);
+
+
     };
 };
-
-
 
 function joinData(us, csvData, attribute){
 
@@ -165,8 +169,6 @@ function joinData(us, csvData, attribute){
 
 };
 
-
-
 function setEnumerationUnits(us, map, path){
 
 var states = map.selectAll(".states")
@@ -181,22 +183,73 @@ var states = map.selectAll(".states")
 
 function setCircles (path,map,data,projection){
 
-     var circles = map.selectAll(".circles")
+         var circles = map.selectAll(".circles")
         .data(data)
         .enter()
         .append("circle")
         .attr("class", function(d){
 
-        return "circles " + d.state;
-    })
-    .attr("fill", "green")
-    .attr('fill-opacity', 0.5)
-    .attr("cx", function(d) {
-        return projection([d.Lon, d.Lat])[0]; })
-    .attr("cy", function(d) { return projection([d.Lon, d.Lat])[1]; });
-
-    updateCircles(circles,data);
+            return "circles " + d.state;
+        })
+        .attr("fill", "green")
+        .attr('fill-opacity', 0.5)
+        .attr("cx", function(d) {
+            return projection([d.Lon, d.Lat])[0]; })
+        .attr("cy", function(d) { return projection([d.Lon, d.Lat])[1]; });
+        updateCircles(circles,data);
 };
+
+function setCircles2 (path,map,candidate1name,projection){
+  removeCircles = d3.selectAll(".circles").remove();
+var candidate1;
+for (var i=0; i<attributeNames.length; i++){
+  if(attributeNames[i] == candidate1name)
+    {candidate1 = csvArray[i];}
+};
+
+
+         var circles = map.selectAll(".circles")
+        .data(candidate1)
+        .enter()
+        .append("circle")
+        .attr("class", function(d){
+
+            return "circles " + d.state;
+        })
+        .attr("fill", "red")
+        .attr('fill-opacity', 0.5)
+        .attr("cx", function(d) {
+            return projection([d.Lon, d.Lat])[0]; })
+        .attr("cy", function(d) { return projection([d.Lon, d.Lat])[1]; });
+        updateCircles2(circles,candidate1);
+};
+
+
+
+function updateCircles2(circles, data)
+{
+    var domainArray = [];
+    for (var i=0; i<data.length; i++){
+        var val = parseFloat(data[i][expressed2]);
+        domainArray.push(val);
+    };
+        radiusMin = Math.min.apply(Math, domainArray);
+        radiusMax = Math.max.apply(Math, domainArray);
+
+        setRadius = d3.scale.sqrt()
+            .range([5, 100])
+            .domain([radiusMin, radiusMax]);
+    //create a second svg element to hold the bar chart
+var circleRadius= circles.attr("r", function(d){
+            return setRadius(d[expressed2]);
+        });
+
+};
+
+
+
+
+
 
 function createradio(data,path,map,test1,test2,test3,projection,total,us){
 
@@ -204,15 +257,15 @@ function createradio(data,path,map,test1,test2,test3,projection,total,us){
     j=0;
 //console.log(projection);
     var form1 = d3.select("#sideColumn")
-        .append("form")
-        .attr("class", "Classification1")
+    .append("form")
+    .attr("class", "Classification1")
   //  .text("Category 1:");
     //console.log(form1)
 
      var labelEnter = form1.selectAll("span")
-        .data(filterPhases)
-        .enter()
-        .append("span");
+    .data(filterPhases)
+    .enter()
+    .append("span");
 
 
     labelEnter.append("input")
@@ -232,79 +285,189 @@ function createradio(data,path,map,test1,test2,test3,projection,total,us){
 
     labelEnter.append("label").text(function(d) {return d;});
 
-    createcheckbox(total, us, projection);
+
+
 };
 
 
-function createcheckbox(total, us, projection){
+function createcheckbox1(path,map,total, us, projection){
 
     var candidatesNames = ["Ben Carson", "Bernie Sanders","Bobby Jindal"];
     //console.log(projection);
     var form2 = d3.select("#sideColumn")
-        .append("form")
-        .attr("class", "Classification2");
+    .append("form")
+    .attr("class", "Classification2");
 
      var labelEnter = form2.selectAll("span")
-        .data(candidatesNames)
-        .enter()
-        .append("span");
+    .data(candidatesNames)
+    .enter()
+    .append("span");
 
     labelEnter.append("input")
-        .attr({
-            type: "checkbox",
-            name: "mode",
-            class:"class1",
-            id:"claaa",
-            value: function(d) {return d;}
-        })
-        .on("click", function(d) {
-      //console.log(projection);
+    .attr({
+        type: "checkbox",
+        name: "mode",
+        class:"class1",
+        id:"claaa",
+        value: function(d) {return d;}
+    })
+    .on("click", function(d){
 
 
-        if (checkedArray.length == 0) {
-            checkedArray.push(this.value);
-        } else  if (checkedArray.length <= 1) {
-            if(this.checked){
-                for(var i = checkedArray.length-1; i >= 0; i--) {
-                    if(checkedArray[i] == this.value) {
-                        checkedArray.splice(i, 1);
-                    } else {
-                        checkedArray.push(this.value);
-                    }
+
+if(checkedArray.length == 0)
+{checkedArray.push(this.value);}
+
+else  if (checkedArray.length <= 1)
+{
+    if(this.checked)
+        {
+            for(var i = checkedArray.length-1; i >= 0; i--) {
+                if(checkedArray[i] == this.value) {
+                    checkedArray.splice(i, 1);
                 }
-            } else {
-                for (var i = checkedArray.length-1; i >= 0; i--) {
-                    if(checkedArray[i] == this.value) {
-                        checkedArray.splice(i, 1);
-                    }
-                }
-            }
-        } else {
-            if (this.checked == false) {
-                for (var i = checkedArray.length-1; i >= 0; i--) {
-                    if(checkedArray[i] == this.value) {
-                        checkedArray.splice(i, 1);
-                    }
-                }
-            } else {
-                this.checked = false;
-                alert("You can only select a maximum of 2 candidates to compare");
+                else {checkedArray.push(this.value);}
             }
         }
+    else
+    {   for(var i = checkedArray.length-1; i >= 0; i--) {
+                if(checkedArray[i] == this.value) {
+                    checkedArray.splice(i, 1);
+                }
+            }
+     }
+}
 
-        if (checkedArray.length == 2) {
-            createSplitSymbols(total,checkedArray[0],checkedArray[1], us,projection);
-            // {console.log("Using "+ checkedArray[0] + " and " + checkedArray[1]+" to make split symbols showing "+ radioName);}
-        } else if (checkedArray.length ==1) {
-            createSplitSymbols(total,checkedArray[0],us,projection);
-            //{console.log("Using "+ checkedArray[0] +" to make symbols showing "+ radioName)}
-        } else if (checkedArray.length ==0) {
-            console.log("Only showing "+ radioName+ " in each state");
-        }
-    });
+else {
+if (this.checked == false)
+{   for(var i = checkedArray.length-1; i >= 0; i--) {
+                if(checkedArray[i] == this.value) {
+                    checkedArray.splice(i, 1);
+                }
+            }
+     }
+
+else
+    {this.checked = false;
+        alert("You can only select a maximum of 2 candidates to compare");}
+}
+
+
+
+    if (checkedArray.length == 2)
+
+    { removeCircles = d3.selectAll(".circles").remove();
+        createSplitSymbols(total,checkedArray[0],checkedArray[1], us,projection);
+        console.log("Using "+ checkedArray[0] + " and " + checkedArray[1]+" to make split symbols showing "+ radioName);}
+
+else if (checkedArray.length ==1)
+    {setCircles2(path,map,checkedArray[0],projection);
+    console.log("Using "+ checkedArray[0] +" to make symbols showing "+ radioName)}
+
+
+else if (checkedArray.length ==0)
+    {removeCircles = d3.selectAll(".circles").remove();
+      setCircles (path,map,total,projection);
+
+      console.log("only use" + radioName)}
+
+        });
 
     labelEnter.append("label").text(function(d) {return d;});
 };
+
+
+
+function createcheckbox2(total, us, projection){
+
+    var democratNames = ["Hillary Clinton", "Donald Trump", "Martin O'Malley"];
+    //console.log(projection);
+    var form3 = d3.select("#sideColumn")
+    .append("form")
+    .attr("class", "Classification3")
+    ;
+
+     var labelEnter = form3.selectAll("span")
+    .data(democratNames)
+    .enter()
+    .append("span");
+
+    labelEnter.append("input")
+    .attr({
+        type: "checkbox",
+        name: "mode",
+        class:"class1",
+        id:"claaa",
+        value: function(d) {return d;}
+    })
+    .on("click", function(d){
+
+
+
+if(checkedArray.length == 0)
+{checkedArray.push(this.value);}
+
+else  if (checkedArray.length <= 1)
+{
+    if(this.checked)
+        {
+            for(var i = checkedArray.length-1; i >= 0; i--) {
+                if(checkedArray[i] == this.value) {
+                    checkedArray.splice(i, 1);
+                }
+                else {checkedArray.push(this.value);}
+            }
+        }
+    else
+    {   for(var i = checkedArray.length-1; i >= 0; i--) {
+                if(checkedArray[i] == this.value) {
+                    checkedArray.splice(i, 1);
+                }
+            }
+     }
+}
+
+else {
+if (this.checked == false)
+{   for(var i = checkedArray.length-1; i >= 0; i--) {
+                if(checkedArray[i] == this.value) {
+                    checkedArray.splice(i, 1);
+                }
+            }
+     }
+
+else
+    {this.checked = false;
+        alert("You can only select a maximum of 2 candidates to compare");}
+}
+
+
+
+    if (checkedArray.length == 2)
+    // {createSplitSymbols(total,checkedArray[0],checkedArray[1], us,projection);}
+
+    {console.log("Using "+ checkedArray[0] + " and " + checkedArray[1]+" to make split symbols showing "+ radioName);}
+
+else if (checkedArray.length ==1)
+    // {createSplitSymbols(total,checkedArray[0],us,projection);}
+  {console.log("Using "+ checkedArray[0] +" to make symbols showing "+ radioName)}
+
+else if (checkedArray.length ==0)
+    {
+      setCircles (path,map,total,projection);}
+
+        });
+
+    labelEnter.append("label").text(function(d) {return d;});
+};
+
+
+
+
+
+
+
+
 
 function changeAttribute(attribute, data){
     //change the expressed attribute
@@ -331,168 +494,98 @@ function updateCircles(circles, data)
 var circleRadius= circles.attr("r", function(d){
             return setRadius(d[expressed]);
         });
-        //createSplitSymbols(setRadius);
+
 };
 
-function createSplitSymbols(total,candidate1,candidate2,us,projection){
-  //loop through csv to assign each set of csv attribute values to geojson region
-  //console.log(projection);
-  // var firstCandidate;
-  // var secondCandidate;
-  //console.log(csvArray);
-  for (var i=0; i<csvArray.length; i++){
-    for (var j=0; j<csvArray[i].length; j++) {
-      //console.log(csvArray[i][j].state_total);
-        if (attributeNames[i] == candidate1){
-
-          //add j!!
-          var firstCandidate = csvArray[i][j].state_total;
-          //console.log(firstCandidate.state_total);
-          //console.log(csvArray[i][j]);
-          var arc = d3.svg.arc()
-              .innerRadius(0)
-              .outerRadius(function(d){
-                //console.log(firstCandidate.state_total);
-                  return setRadius(firstCandidate)
-              })
-              .startAngle(Math.PI)
-              .endAngle(Math.PI*2)
-              //console.log(firstCandidate);
+function createSplitSymbols(total,candidate1name,candidate2name,us,projection){
+var candidate_a;
+var candidate_b;
 
 
-            radiusMin = d3.min(candidate1, function(d){
-              return firstCandidate
-            })
-          //console.log(radiusMin);
-            radiusMax = d3.max(candidate1, function(d){
-              return firstCandidate
-            })
-            //console.log(firstCandidate);
-            setRadius = d3.scale.sqrt()
-                    .domain([radiusMin, radiusMax])
-                    .range([4, 40]);
-          //console.log(setRadius);
-          var candidateA = map.append("g");
-          candidateA.selectAll("path")
-              .data(firstCandidate)
-              .enter().append("path")
-              .style("fill", "blue")
-              .style("stroke", "red")
-              //length of line
-              .attr("transform", function(d){
-                  return "translate(" + projection([csvArray[i][j].Lon, csvArray[i][j].Lat])[0] + "," + projection([csvArray[i][j].Lon, csvArray[i][j].Lat])[1]+")";
-              })
+removeCircles = d3.selectAll(".circles").remove();
 
-              .attr("csvArray[i][j]", arc);
+for (var i=0; i<attributeNames.length; i++){
+  if(attributeNames[i] == candidate1name)
+    {candidate_a = csvArray[i];}
+};
 
 
-        }
+for (var i=0; i<attributeNames.length; i++){
+  if(attributeNames[i] == candidate2name)
+    {candidate_b = csvArray[i];}
+};
+ console.log(candidate_a.state, candidate_b);
 
-        else if (attributeNames[i] == candidate2) {
-          var secondCandidate = csvArray[i][j];
-          var arc2 = d3.svg.arc()
-              .innerRadius(0)
-              .outerRadius(function(d){
-                //console.log(setRadius(d.HillaryClinton));
-                  return setRadius(secondCandidate.state_total)
-              })
-              .startAngle(0)
-              .endAngle(Math.PI)
-            //console.log(totals);
 
-            radiusMin = d3.min(secondCandidate, function(d){
-              return secondCandidate.state_total
-            })
 
-            radiusMax = d3.max(secondCandidate, function(d){
-              return secondCandidate.state_total
-            })
-            //console.log(radiusMax);
-            setRadius = d3.scale.sqrt()
-                    .domain([radiusMin, radiusMax])
-                    .range([4, 40]);
+ var arc = d3.svg.arc()
+        .innerRadius(0)
+        .outerRadius(function(d){
+          //console.log(setRadius(d.BenCarson));
+            return setRadius(d.state_total)
+        })
+        .startAngle(Math.PI)
+        .endAngle(Math.PI*2)
+      //console.log(totals);
 
-          var candidateb = map.append("g");
-          candidateb.selectAll("path")
-              .data(secondCandidate)
-              .enter().append("path")
-              .style("fill", "blue")
-              .style("stroke", "red")
-              //length of line
-              .attr("transform", function(d){
-                  return "translate(" + projection([d.Lon, d.Lat])[0] + "," + projection([d.Lon, d.Lat])[1]+")";
-              })
-              .attr("d", arc2);
-        }
-      }
-    };
-  //split symbol for first candidate
-    // var arc = d3.svg.arc()
-    //     .innerRadius(0)
-    //     .outerRadius(function(d){
-    //       //console.log(setRadius(d.BenCarson));
-    //         return setRadius(a.state_total)
-    //     })
-    //     .startAngle(Math.PI)
-    //     .endAngle(Math.PI*2)
-    //   //console.log(totals);
-    //
-    //   radiusMin = d3.min(total, function(d){
-    //     return a.state_total
-    //   })
-    //
-    //   radiusMax = d3.max(total, function(d){
-    //     return a.state_total
-    //   })
-    //   //console.log(radiusMax);
-    //   setRadius = d3.scale.sqrt()
-    //           .domain([radiusMin, radiusMax])
-    //           .range([4, 40]);
-    //
-    // var candidate1 = map.append("g");
-    // candidate1.selectAll("path")
-    //     .data(totals)
-    //     .enter().append("path")
-    //     .style("fill", "blue")
-    //     .style("stroke", "red")
-    //     //length of line
-    //     .attr("transform", function(d){
-    //         return "translate(" + projection([d.Lon, d.Lat])[0] + "," + projection([d.Lon, d.Lat])[1]+")";
-    //     })
-    //     .attr("d", arc);
+      radiusMin = d3.min(candidate_a, function(d){
+        return d.state_total
+      })
+
+      radiusMax = d3.max(candidate_a, function(d){
+        return d.state_total
+      })
+      //console.log(radiusMax);
+      setRadius = d3.scale.sqrt()
+              .domain([radiusMin, radiusMax])
+              .range([4, 40]);
+
+    var candidate1 = map.append("g");
+    candidate1.selectAll("path")
+        .data(candidate_a)
+        .enter().append("path")
+        .style("fill", "yellow")
+
+        //length of line
+        .attr("transform", function(d){
+            return "translate(" + projection([d.Lon, d.Lat])[0] + "," + projection([d.Lon, d.Lat])[1]+")";
+        })
+        .attr("d", arc);
 
     //start split symbol for second candidate
-    // var arc2 = d3.svg.arc()
-    //     .innerRadius(0)
-    //     .outerRadius(function(d){
-    //       //console.log(setRadius(d.HillaryClinton));
-    //         return setRadius(b.state_total)
-    //     })
-    //     .startAngle(0)
-    //     .endAngle(Math.PI)
-    //   //console.log(totals);
-    //
-    //   radiusMin = d3.min(total, function(d){
-    //     return b.state_total
-    //   })
-    //
-    //   radiusMax = d3.max(total, function(d){
-    //     return b.state_total
-    //   })
-    //   //console.log(radiusMax);
-    //   setRadius = d3.scale.sqrt()
-    //           .domain([radiusMin, radiusMax])
-    //           .range([4, 40]);
-    //
-    // var candidate2 = map.append("g");
-    // candidate2.selectAll("path")
-    //     .data(totals)
-    //     .enter().append("path")
-    //     .style("fill", "blue")
-    //     .style("stroke", "red")
-    //     //length of line
-    //     .attr("transform", function(d){
-    //         return "translate(" + projection([d.Lon, d.Lat])[0] + "," + projection([d.Lon, d.Lat])[1]+")";
-    //     })
-    //     .attr("d", arc2);
+    var arc2 = d3.svg.arc()
+        .innerRadius(0)
+        .outerRadius(function(d){
+          //console.log(setRadius(d.HillaryClinton));
+            return setRadius(d.state_total)
+        })
+        .startAngle(0)
+        .endAngle(Math.PI)
+      //console.log(totals);
+
+      radiusMin = d3.min(candidate_b, function(d){
+        return d.state_total
+      })
+
+      radiusMax = d3.max(candidate_b, function(d){
+        return d.state_total
+      })
+      //console.log(radiusMax);
+      setRadius = d3.scale.sqrt()
+              .domain([radiusMin, radiusMax])
+              .range([4, 40]);
+
+    var candidate2 = map.append("g");
+    candidate2.selectAll("path")
+        .data(candidate_b)
+        .enter().append("path")
+        .style("fill", "purple")
+
+        //length of line
+        .attr("transform", function(d){
+            return "translate(" + projection([d.Lon, d.Lat])[0] + "," + projection([d.Lon, d.Lat])[1]+")";
+        })
+        .attr("d", arc2);
+
+
 };
