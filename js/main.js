@@ -5,7 +5,7 @@ var expressed2 = attrArray2[0];
 var map;
 var svg;
 var projection;
-//var setRadius;
+var setRadius;
 var radioName = expressed;
 var checkedArray = [];
 var width = window.innerWidth * 0.645,
@@ -129,7 +129,7 @@ function setMap() {
          setCircles (path,map,total,projection);
         //createDropdown(bobby);
          createradio(total,path,map,test1,test2,test3,projection,total,us);
-         //createSplitSymbols(total,candidate1,candidate2,us);
+         //createSplitSymbols(total,test1,test2,us);
     };
 };
 
@@ -299,7 +299,7 @@ else
     // {console.log("Using "+ checkedArray[0] + " and " + checkedArray[1]+" to make split symbols showing "+ radioName);}
 
 else if (checkedArray.length ==1)
-    {createSplitSymbols(total,checkedArray[0],checkedArray[1], us,projection);}
+    {createSplitSymbols(total,checkedArray[0],us,projection);}
   //{console.log("Using "+ checkedArray[0] +" to make symbols showing "+ radioName)}
 
 else if (checkedArray.length ==0)
@@ -341,67 +341,74 @@ var circleRadius= circles.attr("r", function(d){
 function createSplitSymbols(total,candidate1,candidate2,us,projection){
   //loop through csv to assign each set of csv attribute values to geojson region
   //console.log(projection);
-  var firstCandidate;
-  var secondCandidate;
+  // var firstCandidate;
+  // var secondCandidate;
   //console.log(csvArray);
   for (var i=0; i<csvArray.length; i++){
     for (var j=0; j<csvArray[i].length; j++) {
-      //console.log(csvArray[i][j].state);
+      //console.log(csvArray[i][j].state_total);
         if (attributeNames[i] == candidate1){
 
           //add j!!
-          firstCandidate = csvArray[i][j];
+          var firstCandidate = csvArray[i][j].state_total;
+          //console.log(firstCandidate.state_total);
+          //console.log(csvArray[i][j]);
           var arc = d3.svg.arc()
               .innerRadius(0)
               .outerRadius(function(d){
-                //console.log(a);
-                  return setRadius(firstCandidate.state_total)
+                //console.log(firstCandidate.state_total);
+                  return setRadius(firstCandidate)
               })
               .startAngle(Math.PI)
               .endAngle(Math.PI*2)
-            //console.log(totals);
+              //console.log(firstCandidate);
 
-            radiusMin = d3.min(firstCandidate, function(d){
-              return firstCandidate.state_total
-            })
 
-            radiusMax = d3.max(firstCandidate, function(d){
-              return firstCandidate.state_total
+            radiusMin = d3.min(candidate1, function(d){
+              return firstCandidate
             })
-            //console.log(radiusMax);
+          //console.log(radiusMin);
+            radiusMax = d3.max(candidate1, function(d){
+              return firstCandidate
+            })
+            //console.log(firstCandidate);
             setRadius = d3.scale.sqrt()
                     .domain([radiusMin, radiusMax])
                     .range([4, 40]);
-
-          var candidatea = map.append("g");
-          candidatea.selectAll("path")
+          //console.log(setRadius);
+          var candidateA = map.append("g");
+          candidateA.selectAll("path")
               .data(firstCandidate)
               .enter().append("path")
               .style("fill", "blue")
               .style("stroke", "red")
               //length of line
               .attr("transform", function(d){
-                  return "translate(" + projection([d.Lon, d.Lat])[0] + "," + projection([d.Lon, d.Lat])[1]+")";
+                  return "translate(" + projection([csvArray[i][j].Lon, csvArray[i][j].Lat])[0] + "," + projection([csvArray[i][j].Lon, csvArray[i][j].Lat])[1]+")";
               })
-              .attr("d", arc);
+
+              .attr("csvArray[i][j]", arc);
+
+
         }
+
         else if (attributeNames[i] == candidate2) {
-          secondCandidate = csvArray[i][j];
+          var secondCandidate = csvArray[i][j];
           var arc2 = d3.svg.arc()
               .innerRadius(0)
               .outerRadius(function(d){
                 //console.log(setRadius(d.HillaryClinton));
-                  return setRadius(b.state_total)
+                  return setRadius(secondCandidate.state_total)
               })
               .startAngle(0)
               .endAngle(Math.PI)
             //console.log(totals);
 
-            radiusMin = d3.min(b, function(d){
+            radiusMin = d3.min(secondCandidate, function(d){
               return secondCandidate.state_total
             })
 
-            radiusMax = d3.max(b, function(d){
+            radiusMax = d3.max(secondCandidate, function(d){
               return secondCandidate.state_total
             })
             //console.log(radiusMax);
