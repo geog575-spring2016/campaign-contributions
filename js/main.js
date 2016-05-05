@@ -1,23 +1,32 @@
-var attrArray = ["Total", "Per Capita"];
-var expressed = attrArray[0];
-var attrArray2 = ["March_15", "April_15","May_15", "June_15",  "July_15","August_15","September_15","October_15","November_15","December_15","January_16","February_16","March_16"];
-var expressed2 = attrArray2[0];
+var radioArray = ["Total", "Per Capita"];
+var radioExpressed = radioArray[0];
+var monthArray = ["March_15", "April_15","May_15", "June_15",  "July_15","August_15","September_15","October_15","November_15","December_15","January_16","February_16","March_16"];
+var monthExpressed = monthArray[12];
 var map;
 var svg;
 var projection;
+var menuInfoWidth = 100, menuInfoHeight = 100;
+var monthExpressedText;
 var setRadius;
-var radioName = expressed;
+var radioName = radioExpressed;
 var checkedArray = [];
 var width = window.innerWidth * 0.645,
-    height = 650;
+    height = 550;
 var attributeNames = [];
 var csvArray = [];
 
-window.onload = setMap();
-// set the width and height of the map
+window.onload = initialize();
+
+function  initialize(){
+    monthExpressed = monthArray[monthArray.length-1];
+    animateMap(monthExpressed, monthExpressedText);
+    setMap();
+    //disables buttons on load
+    $('.stepBackward').prop('disabled', true);
+    $('.stepForward').prop('disabled', true);
+}; //End initialize
+
 function setMap() {
-  // var width = window.innerWidth * 0.645,
-  //       height = 650;
 
     // creating the map as an svg and giving it attributes of width and height
     map = d3.select("#mapContainer")
@@ -31,7 +40,7 @@ function setMap() {
     //     .attr("class", "pageTitle")
     //     .html("We "+"don't".strike()+" need your money, money, money");
 
-    // creating projection - Albers USA which puts Alaska and Hawaii, projected in their own right below the 48 contiguous states
+    // creating projection - Albers USA d3 projections
     projection = d3.geo.albersUsa()
     // no center because it's already centered on the US as part of the projection code
         .scale(1000)
@@ -55,6 +64,7 @@ function setMap() {
         .defer(d3.csv, "data/GoodCSVs/HillaryClinton.csv")
         .defer(d3.csv, "data/GoodCSVs/JamesWebb.csv")
         .defer(d3.csv, "data/GoodCSVs/JebBush.csv")
+        .defer(d3.csv, "data/GoodCSVs/JillStein.csv")
         .defer(d3.csv, "data/GoodCSVs/JohnKasich.csv")
         .defer(d3.csv, "data/GoodCSVs/LawrenceLessig.csv")
         .defer(d3.csv, "data/GoodCSVs/LindseyGraham.csv")
@@ -134,7 +144,7 @@ function setMap() {
          createradio(total,path,map,test1,test2,test3,projection,total,us);
 
          createcheckbox1(path,map,total, us, projection);
-          createcheckbox2(total, us, projection);
+         createcheckbox2(total, us, projection);
 
 
     };
@@ -156,7 +166,7 @@ function joinData(us, csvData, attribute){
             if (geojsonKey == csvKey){
 
                 //assign all attributes and values
-                attrArray2.forEach(function(attr){
+                monthArray.forEach(function(attr){
                     var val = parseFloat(csvRegion[attr]); //get csv attribute value
                     geojsonProps[attr] = val; //assign attribute and value to geojson properties
 
@@ -230,7 +240,7 @@ function updateCircles2(circles, data)
 {
     var domainArray = [];
     for (var i=0; i<data.length; i++){
-        var val = parseFloat(data[i][expressed2]);
+        var val = parseFloat(data[i][monthExpressed]);
         domainArray.push(val);
     };
         radiusMin = Math.min.apply(Math, domainArray);
@@ -241,14 +251,10 @@ function updateCircles2(circles, data)
             .domain([radiusMin, radiusMax]);
     //create a second svg element to hold the bar chart
 var circleRadius= circles.attr("r", function(d){
-            return setRadius(d[expressed2]);
+            return setRadius(d[monthExpressed]);
         });
 
 };
-
-
-
-
 
 
 function createradio(data,path,map,test1,test2,test3,projection,total,us){
@@ -483,7 +489,7 @@ else if (checkedArray.length ==0)
 
 function changeAttribute(attribute, data){
     //change the expressed attribute
-    expressed = attribute;
+    radioExpressed = attribute;
     var circles = d3.selectAll(".circles");
     updateCircles(circles,data);
 
@@ -493,7 +499,7 @@ function updateCircles(circles, data)
 {
     var domainArray = [];
     for (var i=0; i<data.length; i++){
-        var val = parseFloat(data[i][expressed]);
+        var val = parseFloat(data[i][radioExpressed]);
         domainArray.push(val);
     };
         radiusMin = Math.min.apply(Math, domainArray);
@@ -504,15 +510,13 @@ function updateCircles(circles, data)
             .domain([radiusMin, radiusMax]);
     //create a second svg element to hold the bar chart
 var circleRadius= circles.attr("r", function(d){
-            return setRadius(d[expressed]);
+            return setRadius(d[radioExpressed]);
         });
 
 };
 
 function createLeftSplit(total,candidate1name,us,projection){
 var candidate_a;
-
-
 
 removeCircles = d3.selectAll(".circles").remove();
 
@@ -521,10 +525,7 @@ for (var i=0; i<attributeNames.length; i++){
     {candidate_a = csvArray[i];}
 };
 
-
  //console.log(candidate_a.state, candidate_b);
-
-
 
  var arc = d3.svg.arc()
         .innerRadius(0)
@@ -606,3 +607,67 @@ var candidate_b;
         .attr("d", arc2);
     //  };
 };
+
+
+function drawMenuInfo(monthExpressed){
+
+    menuInfoBox = d3.select(".menu-info")
+            .append("div")
+            .attr("widtdh", menuInfoWidth)
+            .attr("height", menuInfoHeight)
+            .attr("class", "menuInfoBox textBox")
+    //creates month for map menu
+    monthExpressedText = d3.select(".menu-info")
+        .append("text")
+        .attr("x", 0)
+        .attr("y", 0)
+        .attr("class", "monthExpressedText menu-info")
+        .text(monthExpressed)
+        .style({'font-size':'36px', 'font-weight': 'strong'});
+
+        // animateMap(monthExpressed, monthExpressedText)
+}; //End DrawMenuInfo
+
+function animateMap(monthExpressed, monthExpressedText){
+    //step backward functionality
+    $(".stepBackward").click(function(){
+        if (monthExpressed <= monthArray[monthArray.length-1] && monthExpressed > monthArray[0]){
+            monthExpressed--;
+            monthly(monthExpressed);
+        } else {
+            monthExpressed = monthArray[monthArray.length-1];
+            monthly(monthExpressed);
+        };
+    });
+    //step forward functionality
+    $(".stepForward").click(function(){
+        if (monthExpressed < monthArray[monthArray.length-1]){
+            monthExpressed++;
+            monthly(monthExpressed);
+        } else {
+            monthExpressed = monthArray[0];
+            monthly(monthExpressed);
+        };
+    });
+}; //end AnimateMAP
+
+function monthly(month){
+    var removeOldmonth = d3.selectAll(".monthExpressedText").remove();
+
+    for (x = 0; x < monthArray.length; x++){
+        if (month == monthArray[x]) {
+             monthExpressed = monthArray[x];
+        }
+    }
+    //changes prop symbol... somehow
+    d3.selectAll(".circles")
+        .style("fill", function(month){
+            return choropleth(month);
+        })
+        .select("desc")
+            .text(function(d) {
+                return choropleth(d);
+        });
+
+    drawMenuInfo(month);
+}; //END changeAttribute

@@ -38,6 +38,12 @@ h1 {
   margin: 10px;
 }
 
+.yearExpressedText {
+    float: right;
+    padding-right: 115px;
+    font-family: 'Roboto Slab', sans-serif;
+}
+
 .Classification1
 { position: relative;
     top: 20%;
