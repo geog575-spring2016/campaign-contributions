@@ -1,7 +1,8 @@
 /* 575 boilerplate style.css */
 .states {
- stroke: white;
-    stroke-width: 0.3px;
+ fill: #ddd;
+ stroke: black;
+    stroke-width: 0.4px;
     stroke-linecap: round;
 }
 

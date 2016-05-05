@@ -1,7 +1,7 @@
 var attrArray = ["Total", "Per Capita"];
 var expressed = attrArray[0];
 var attrArray2 = ["March_15", "April_15","May_15", "June_15",  "July_15","August_15","September_15","October_15","November_15","December_15","January_16","February_16","March_16"];
-var expressed2 = attrArray2[0];
+var expressed2 = attrArray2[12];
 var map;
 var svg;
 var projection;
@@ -121,7 +121,7 @@ function setMap() {
         //console.log(us);
         csvArray = [total, test1, test2, test3];
         //console.log(csvArray[0]);
-        attributeNames = ["total", "Ben carson", "Bernie Sanders", "Bobby Jindal"];
+        attributeNames = ["Total", "Ben carson", "Bernie Sanders", "Bobby Jindal"];
            for (csv in csvArray){
             joinData(us, csvArray[csv], attributeNames[csv]);
 
@@ -181,20 +181,21 @@ var states = map.selectAll(".states")
 
 function setCircles (path,map,data,projection){
 
-         var circles = map.selectAll(".circles")
+     var circles = map.selectAll(".circles")
         .data(data)
         .enter()
         .append("circle")
         .attr("class", function(d){
 
-            return "circles " + d.state;
-        })
-        .attr("fill", "grey")
-        .attr('fill-opacity', 0.5)
-        .attr("cx", function(d) {
-            return projection([d.Lon, d.Lat])[0]; })
-        .attr("cy", function(d) { return projection([d.Lon, d.Lat])[1]; });
-        updateCircles(circles,data);
+        return "circles " + d.state;
+    })
+    .attr("fill", "green")
+    .attr('fill-opacity', 0.5)
+    .attr("cx", function(d) {
+        return projection([d.Lon, d.Lat])[0]; })
+    .attr("cy", function(d) { return projection([d.Lon, d.Lat])[1]; });
+
+    updateCircles(circles,data);
 };
 
 function createradio(data,path,map,test1,test2,test3,projection,total,us){
