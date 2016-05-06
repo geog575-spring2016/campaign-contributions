@@ -381,7 +381,7 @@ else if (checkedArray.length ==1)
       //createRightSplit(total,checkedArray[1],us,projection);
 
       //put if's here!!
-          {if (document.getElementsByClassName('rightsplit').length==0 && document.getElementsByClassName('leftsplit').length==0){
+          {if ($('.rightsplit').length==0 && document.getElementsByClassName('leftsplit').length==0){
             createLeftSplit(total,checkedArray[0],us,projection);
 
             console.log("Using "+ checkedArray[0] +" to make symbols showing "+ radioName);
