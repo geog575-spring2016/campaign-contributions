@@ -12,6 +12,9 @@ var width = window.innerWidth * 0.645,
     height = 650;
 var attributeNames = [];
 var csvArray = [];
+//create an empty dictionary to be used for split symbol assignment
+//var dictionary = {right: undefined, left: undefined};
+//console.log(dictionary);
 
 window.onload = setMap();
 // set the width and height of the map
@@ -191,8 +194,8 @@ function setCircles (path,map,data,projection){
 
             return "circles " + d.state;
         })
-        .attr("fill", "green")
-        .attr('fill-opacity', 0.5)
+        .attr("fill", "black")
+        //.attr('fill-opacity', 0.5)
         .attr("cx", function(d) {
             return projection([d.Lon, d.Lat])[0]; })
         .attr("cy", function(d) { return projection([d.Lon, d.Lat])[1]; });
@@ -245,11 +248,6 @@ var circleRadius= circles.attr("r", function(d){
         });
 
 };
-
-
-
-
-
 
 function createradio(data,path,map,test1,test2,test3,projection,total,us){
 
@@ -319,6 +317,8 @@ if(checkedArray.length == 0)
 {checkedArray.push(this.value);}
 else  if (checkedArray.length <= 1)
 {
+      //d3.selectAll(".leftsplit").remove();
+//     d3.selectAll(".rightsplit").remove();
     if(this.checked)
         {
             for(var i = checkedArray.length-1; i >= 0; i--) {
@@ -352,33 +352,74 @@ else
 }
 
 
-
+    //if there are two things checked
     if (checkedArray.length == 2)
-
+    //if the right split doesn't exist
     {if (document.getElementsByClassName('rightsplit').length==0){
-       d3.selectAll(".circles").remove();
-
+      //remove total ($) circles
+       //d3.selectAll(".circles").remove();
+        //create the right symbol
         createRightSplit(total,checkedArray[1],us,projection);
         console.log("Using "+ checkedArray[0] + " and " + checkedArray[1]+" to make split symbols showing "+ radioName);}
         else {
+          //otherwise, create the left symbol
           createLeftSplit(total,checkedArray[1],us,projection);
         }
 }
 else if (checkedArray.length ==1)
+
 //nothing
 //both (create id for each symbol-for each candidate) document.elementby class name left split and get right.  if id matches right, create left for this new person
 //otherwise do right
-    { //put if's here!!
-      d3.selectAll(".leftsplit").remove();//embed these into if's
-            d3.selectAll(".rightsplit").remove();
+    {
+ d3.selectAll(".rightsplit").remove();
+ d3.selectAll(".rightsplit").remove();
+      //put if's here!!
+          {if (document.getElementsByClassName('rightsplit').length==0 && document.getElementsByClassName('leftsplit').length==0){
             createLeftSplit(total,checkedArray[0],us,projection);
+
+            console.log("Using "+ checkedArray[0] +" to make symbols showing "+ radioName);
+          }
+        }
+          {if (document.getElementsByClassName('rightsplit').length>0 && document.getElementsByClassName('leftsplit').length>0){
+              //createLeftSplit(total,checkedArray[0],us,projection);
+
+            {if (checkedArray = checkedArray[0]){
+                  d3.selectAll(".rightsplit").remove();
+                  //createRightSplit(total,checkedArray[1],us,projection);
+                }
+           }
+            {if (checkedArray = checkedArray[1]){
+                  d3.selectAll(".leftsplit").remove();
+                  //createLeftSplit(total,checkedArray[0],us,projection);
+                }
+              }
+             }
+        //
+        //     //d3.selectAll(".rightsplit").remove();
+        }
+
+        {if (document.getElementsByClassName('rightsplit').length==0 && document.getElementsByClassName('leftsplit').length>0){
+
+          //d3.selectAll(".rightsplit").remove();
+          createRightSplit(total,checkedArray[1],us,projection);
+          }
+        }
+        {if (document.getElementsByClassName('rightsplit').length>0 && document.getElementsByClassName('leftsplit').length==0){
+          createLeftSplit(total,checkedArray[1],us,projection);
+          }
+        }
+            //d3.selectAll(".leftsplit").remove();//embed these into if's
+            //d3.selectAll(".rightsplit").remove();
+            //createLeftSplit(total,checkedArray[0],us,projection);
             //setCircles2(path,map,checkedArray[0],projection);
 
     console.log("Using "+ checkedArray[0] +" to make symbols showing "+ radioName)}
 
 
 else if (checkedArray.length ==0)
-    {removeCircles = d3.selectAll(".circles").remove();
+    {d3.selectAll(".rightsplit").remove();
+    d3.selectAll(".leftsplit").remove();
       setCircles (path,map,total,projection);
 
       console.log("only use" + radioName)}
@@ -549,12 +590,13 @@ for (var i=0; i<attributeNames.length; i++){
               .range([0, 40]);
 
     var candidate1 = map.append("g");
+
     candidate1.selectAll("path")
         .data(candidate_a)
         .enter().append("path")
-        .style("fill", "yellow")
+        .style("fill", "purple")
         .attr("class", "leftsplit")
-
+        .attr("id", attributeNames)
         //length of line
         .attr("transform", function(d){
             return "translate(" + projection([d.Lon, d.Lat])[0] + "," + projection([d.Lon, d.Lat])[1]+")";
@@ -597,8 +639,9 @@ var candidate_b;
     candidate2.selectAll("path")
         .data(candidate_b)
         .enter().append("path")
-        .style("fill", "purple")
+        .style("fill", "orange")
         .attr("class", "rightsplit")
+        .attr("id", attributeNames)
         //length of line
         .attr("transform", function(d){
             return "translate(" + projection([d.Lon, d.Lat])[0] + "," + projection([d.Lon, d.Lat])[1]+")";
