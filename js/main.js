@@ -348,7 +348,10 @@ if (this.checked == false)
 
 else
     {this.checked = false;
-        alert("You can only select a maximum of 2 candidates to compare");}
+        alert("You can only select a maximum of 2 candidates to compare");
+        //d3.selectAll(".leftsplit").remove();
+        //d3.selectAll(".rightsplit").remove();
+      }
 }
 
 
@@ -371,9 +374,12 @@ else if (checkedArray.length ==1)
 //nothing
 //both (create id for each symbol-for each candidate) document.elementby class name left split and get right.  if id matches right, create left for this new person
 //otherwise do right
-    {
- d3.selectAll(".rightsplit").remove();
- d3.selectAll(".rightsplit").remove();
+{ //put if's here!!
+      d3.selectAll(".leftsplit").remove();//embed these into if's
+      d3.selectAll(".rightsplit").remove();
+      //       createLeftSplit(total,checkedArray[0],us,projection);
+      //createRightSplit(total,checkedArray[1],us,projection);
+
       //put if's here!!
           {if (document.getElementsByClassName('rightsplit').length==0 && document.getElementsByClassName('leftsplit').length==0){
             createLeftSplit(total,checkedArray[0],us,projection);
@@ -382,22 +388,14 @@ else if (checkedArray.length ==1)
           }
         }
           {if (document.getElementsByClassName('rightsplit').length>0 && document.getElementsByClassName('leftsplit').length>0){
-              //createLeftSplit(total,checkedArray[0],us,projection);
+            //d3.selectAll(".leftsplit").remove();
+            //d3.selectAll(".rightsplit").remove();
+            createRightSplit(total,checkedArray[1],us,projection);
+            createLeftSplit(total,checkedArray[0],us,projection);
 
-            {if (checkedArray = checkedArray[0]){
-                  d3.selectAll(".rightsplit").remove();
-                  //createRightSplit(total,checkedArray[1],us,projection);
-                }
-           }
-            {if (checkedArray = checkedArray[1]){
-                  d3.selectAll(".leftsplit").remove();
-                  //createLeftSplit(total,checkedArray[0],us,projection);
-                }
-              }
-             }
-        //
         //     //d3.selectAll(".rightsplit").remove();
         }
+      }
 
         {if (document.getElementsByClassName('rightsplit').length==0 && document.getElementsByClassName('leftsplit').length>0){
 
@@ -409,10 +407,7 @@ else if (checkedArray.length ==1)
           createLeftSplit(total,checkedArray[1],us,projection);
           }
         }
-            //d3.selectAll(".leftsplit").remove();//embed these into if's
-            //d3.selectAll(".rightsplit").remove();
-            //createLeftSplit(total,checkedArray[0],us,projection);
-            //setCircles2(path,map,checkedArray[0],projection);
+
 
     console.log("Using "+ checkedArray[0] +" to make symbols showing "+ radioName)}
 
@@ -427,6 +422,7 @@ else if (checkedArray.length ==0)
         });
 
     labelEnter.append("label").text(function(d) {return d;});
+    //CreateSplitLegend(minRadius, maxRadius);
 };
 
 
@@ -512,15 +508,8 @@ else if (checkedArray.length ==0)
         });
 
     labelEnter.append("label").text(function(d) {return d;});
+    //CreateSplitLegend(minRadius, maxRadius);
 };
-
-
-
-
-
-
-
-
 
 function changeAttribute(attribute, data){
     //change the expressed attribute
@@ -648,4 +637,13 @@ var candidate_b;
         })
         .attr("d", arc2);
     //  };
+};
+
+function CreateSplitLegend(minRadius, maxRadius){
+  var legend = svg.append("g")
+  legend.selectAll("text")
+      .data(["Legend"]).enter().append('text')
+      .attr("x", function(){return projection([-74.672189, 30.967841])[0]-radiusMin(mean)-5; })
+      .attr("y", function(){return projection([-74.672189, 30.967841])[1]-radiusMax(position)-5; })
+      .html(function (d){return d})
 };
