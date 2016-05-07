@@ -117,3 +117,7 @@ width: 200px;
     left: 45px;
     text-indent: -15px;
     color: blue;}
+
+.dropdownLeft {
+  padding: 5px;
+}

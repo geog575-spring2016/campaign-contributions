@@ -11,6 +11,7 @@ var checkedArray = [];
 var width = window.innerWidth * 0.645,
     height = 650;
 var attributeNames = [];
+var expressed3 = attributeNames[0];
 var csvArray = [];
 //create an empty dictionary to be used for split symbol assignment
 //var dictionary = {right: undefined, left: undefined};
@@ -72,12 +73,13 @@ function setMap() {
         .await(callback); // waits til both sets of data are loaded before it sends the data to the callback function
 
     // callback function that takes the data as two parameters and an error parameter that will report any errors that occur
-    function callback(error, total, test1, test2, test3, unitedStates) {
+    function callback(error, total, test1, test2, test3, unitedStates,candidate1name) {
       total.forEach(function(d) {
         d.Lat= +d.Lat
         d.Lon= +d.Lon
         d.DonaldTrump = +d.DonaldTrump
         d.HillaryClinton = +d.HillaryClinton
+        d.Total =+ d.Total
       })
       test1.forEach(function(d){
         d.Lat= +d.Lat
@@ -123,7 +125,7 @@ function setMap() {
         //console.log(us);
         csvArray = [total, test1, test2, test3];
         //console.log(csvArray[0]);
-        attributeNames = ["total", "Ben Carson", "Bernie Sanders", "Bobby Jindal"];
+        attributeNames = ["All Candidates", "Ben Carson", "Bernie Sanders", "Bobby Jindal"];
            for (i in csvArray){
             joinData(us, csvArray[i], attributeNames[i]);
 
@@ -133,11 +135,12 @@ function setMap() {
 
          setEnumerationUnits(us, map, path);
          setCircles (path,map,total,projection);
-
+         createDropdownLeft(total,candidate1name,us,projection);
+         createDropdownRight(total,candidate1name,us,projection);
          createradio(total,path,map,test1,test2,test3,projection,total,us);
 
-         createcheckbox1(path,map,total, us, projection);
-          createcheckbox2(total, us, projection);
+         //createcheckbox1(path,map,total, us, projection);
+        //createcheckbox2(total, us, projection);
 
 
     };
@@ -192,7 +195,7 @@ function setCircles (path,map,data,projection){
         .append("circle")
         .attr("class", function(d){
 
-            return "circles " + d.state;
+            return "circles " + d.Total;
         })
         .attr("fill", "black")
         //.attr('fill-opacity', 0.5)
@@ -202,52 +205,52 @@ function setCircles (path,map,data,projection){
         updateCircles(circles,data);
 };
 
-function setCircles2 (path,map,candidate1name,projection){
-  removeCircles = d3.selectAll(".circles").remove();
-var candidate1;
-for (var i=0; i<attributeNames.length; i++){
-  if(attributeNames[i] == candidate1name)
-    {candidate1 = csvArray[i];}
-};
+// function setCircles2 (path,map,candidate1name,projection){
+//   removeCircles = d3.selectAll(".circles").remove();
+// var candidate1;
+// for (var i=0; i<attributeNames.length; i++){
+//   if(attributeNames[i] == candidate1name)
+//     {candidate1 = csvArray[i];}
+// };
+//
+//
+//          var circles = map.selectAll(".circles")
+//         .data(candidate1)
+//         .enter()
+//         .append("circle")
+//         .attr("class", function(d){
+//
+//             return "circles " + d.state;
+//         })
+//         .attr("fill", "red")
+//         .attr('fill-opacity', 0.5)
+//         .attr("cx", function(d) {
+//             return projection([d.Lon, d.Lat])[0]; })
+//         .attr("cy", function(d) { return projection([d.Lon, d.Lat])[1]; });
+//         updateCircles2(circles,candidate1);
+// };
+//
 
 
-         var circles = map.selectAll(".circles")
-        .data(candidate1)
-        .enter()
-        .append("circle")
-        .attr("class", function(d){
-
-            return "circles " + d.state;
-        })
-        .attr("fill", "red")
-        .attr('fill-opacity', 0.5)
-        .attr("cx", function(d) {
-            return projection([d.Lon, d.Lat])[0]; })
-        .attr("cy", function(d) { return projection([d.Lon, d.Lat])[1]; });
-        updateCircles2(circles,candidate1);
-};
-
-
-
-function updateCircles2(circles, data)
-{
-    var domainArray = [];
-    for (var i=0; i<data.length; i++){
-        var val = parseFloat(data[i][expressed2]);
-        domainArray.push(val);
-    };
-        radiusMin = Math.min.apply(Math, domainArray);
-        radiusMax = Math.max.apply(Math, domainArray);
-
-        setRadius = d3.scale.sqrt()
-            .range([5, 100])
-            .domain([radiusMin, radiusMax]);
-    //create a second svg element to hold the bar chart
-var circleRadius= circles.attr("r", function(d){
-            return setRadius(d[expressed2]);
-        });
-
-};
+// function updateCircles2(circles, data)
+// {
+//     var domainArray = [];
+//     for (var i=0; i<data.length; i++){
+//         var val = parseFloat(data[i][expressed2]);
+//         domainArray.push(val);
+//     };
+//         radiusMin = Math.min.apply(Math, domainArray);
+//         radiusMax = Math.max.apply(Math, domainArray);
+//
+//         setRadius = d3.scale.sqrt()
+//             .range([5, 100])
+//             .domain([radiusMin, radiusMax]);
+//     //create a second svg element to hold the bar chart
+// var circleRadius= circles.attr("r", function(d){
+//             return setRadius(d[expressed2]);
+//         });
+//
+// };
 
 function createradio(data,path,map,test1,test2,test3,projection,total,us){
 
@@ -539,22 +542,15 @@ var circleRadius= circles.attr("r", function(d){
 
 };
 
-function createLeftSplit(total,candidate1name,us,projection){
+function createLeftSplit(candidate1name,us,projection){
+//console.log(candidate1name);
 var candidate_a;
-
-
-
 removeCircles = d3.selectAll(".circles").remove();
 
 for (var i=0; i<attributeNames.length; i++){
   if(attributeNames[i] == candidate1name)
     {candidate_a = csvArray[i];}
 };
-
-
- //console.log(candidate_a.state, candidate_b);
-
-
 
  var arc = d3.svg.arc()
         .innerRadius(0)
@@ -593,7 +589,35 @@ for (var i=0; i<attributeNames.length; i++){
         .attr("d", arc);
 };
 
-function createRightSplit(total,candidate1name,us,projection){
+//functin to create dropdown 1 for candidates
+function createDropdownLeft(data,candidate1name,us,projection){
+    //add select element
+    var dropdown = d3.select("#sideColumn")
+        .append("select")
+        .attr("class", "dropdownLeft")
+        .on("change", function(){
+            d3.selectAll(".leftsplit").remove();
+            createLeftSplit(this.value,us,projection)
+        });
+
+    //add initial option
+    var titleOption = dropdown.append("option")
+        .attr("class", "titleOption")
+        //.attr("disabled", "true")
+        .text("Select a Candidate or Party");
+
+    //add attribute name options
+    var attrOptions = dropdown.selectAll("attrOptions")
+        .data(attributeNames)
+        .enter()
+        .append("option")
+        .attr("value", function(d){ return d })
+        .text(function(d){ return d });
+
+};
+
+function createRightSplit(candidate1name,us,projection){
+  removeCircles = d3.selectAll(".circles").remove();
 var candidate_b;
 //if (candidate1name != "empty"){
         for (var i=0; i<attributeNames.length; i++){
@@ -637,6 +661,32 @@ var candidate_b;
         })
         .attr("d", arc2);
     //  };
+};
+
+//functin to create dropdown 2 for candidates
+function createDropdownRight(data,candidate1name,us,projection){
+    //add select element
+    var dropdown = d3.select("#sideColumn")
+        .append("select")
+        .attr("class", "dropdownRight")
+        .on("change", function(){
+            d3.selectAll(".rightsplit").remove();
+            createRightSplit(this.value,us,projection)
+        });
+
+    //add initial option
+    var titleOption = dropdown.append("option")
+        .attr("class", "titleOption")
+        //.attr("disabled", "true")
+        .text("Select a Candidate or Party");
+
+    //add attribute name options
+    var attrOptions = dropdown.selectAll("attrOptions")
+        .data(attributeNames)
+        .enter()
+        .append("option")
+        .attr("value", function(d){ return d })
+        .text(function(d){ return d });
 };
 
 function CreateSplitLegend(minRadius, maxRadius){
