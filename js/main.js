@@ -211,7 +211,7 @@ function setMap() {
         //console.log(us);
         csvArray = [total, dem, rep, Bush, Carson, Christie, Clinton, Cruz, Fiorina, Graham, Huckabee, Jindal, Kasich, Lessig, OMalley, Pataki, Paul, Perry, Rubio, Sanders, Santorum, Stein, Trump, Walker, Webb];
         //console.log(csvArray[0]);
-        attributeNames = ["All Candidates","All Democrats","All Republicans","Jeb Bush","Ben Carson","Chris Christie","Hillary Clinton","Ted Cruz","Carly Fiorina","Lindsey Graham","Mike Huckabee","Bobby Jindal","John Kasich","Lawrence Lessig","Martin OMalley","George Pataki","Rand Paul","Rick Perry","Marco Rubio","Bernie Sanders","Rick Santorum","Jill Stein","Donald Trump","Scott Walker","James Webb"];
+        attributeNames = ["All Candidates","All Democrats (D)","All Republicans (R)","Jeb Bush (R)","Ben Carson (R)","Chris Christie (R)","Hillary Clinton (D)","Ted Cruz (R)","Carly Fiorina (R)","Lindsey Graham (R)","Mike Huckabee (R)","Bobby Jindal (R)","John Kasich (R)","Lawrence Lessig (D)","Martin OMalley (D)","George Pataki (R)","Rand Paul (R)","Rick Perry (R)","Marco Rubio (R)","Bernie Sanders (D)","Rick Santorum (R)","Jill Stein (Green Party)","Donald Trump (R)","Scott Walker (R)","James Webb (D)"];
 
            for (i in csvArray){
             joinData(us, csvArray[i], attributeNames[i]);
