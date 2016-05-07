@@ -113,11 +113,34 @@ width: 200px;
 
     padding-left: 5px;
     position: relative;
+    margin-bottom: 2px;
     top: -17px;
     left: 45px;
     text-indent: -15px;
     color: blue;}
 
 .dropdownLeft {
-  padding: 5px;
+  padding: 2px;
+  position: relative;
+  top: 100px;
+  margin-bottom: 6px;
+  color: purple;
+}
+
+.dropdownRight {
+  padding: 2px;
+  position: relative;
+  top: 95px;
+  margin-top: 6px;
+  color: #FFA30D;
+}
+
+.leftsplit {
+  stroke: black;
+  stroke-width: .3;
+}
+
+.rightsplit {
+  stroke: black;
+  stroke-width: .3;
 }

@@ -48,84 +48,171 @@ function setMap() {
     // uses queue.js to parallelize asynchronous loading of the the CSV and shapefile data
     d3_queue.queue()
         .defer(d3.csv, "data/total_contributions_percandidate_perstate.csv")
-        .defer(d3.csv, "data/GoodCSVs/BenCarson.csv")
-        .defer(d3.csv, "data/GoodCSVs/BernieSanders.csv")
-        .defer(d3.csv, "data/GoodCSVs/BobbyJindal.csv")
-        .defer(d3.json, "data/US_shapefile.topojson")
-        .defer(d3.csv, "data/GoodCSVs/CarlyFiorina.csv")
-        .defer(d3.csv, "data/GoodCSVs/ChrisChristie.csv")
-        .defer(d3.csv, "data/GoodCSVs/DonaldTrump.csv")
-        .defer(d3.csv, "data/GoodCSVs/GeorgePataki.csv")
-        .defer(d3.csv, "data/GoodCSVs/HillaryClinton.csv")
-        .defer(d3.csv, "data/GoodCSVs/JamesWebb.csv")
+        .defer(d3.csv, "data/total_contributions_percandidate_perstate.csv")
+        .defer(d3.csv, "data/total_contributions_percandidate_perstate.csv")
         .defer(d3.csv, "data/GoodCSVs/JebBush.csv")
+        .defer(d3.csv, "data/GoodCSVs/BenCarson.csv")
+        .defer(d3.csv, "data/GoodCSVs/ChrisChristie.csv")
+        .defer(d3.csv, "data/GoodCSVs/HillaryClinton.csv")
+        .defer(d3.csv, "data/GoodCSVs/TedCruz.csv")
+        .defer(d3.csv, "data/GoodCSVs/CarlyFiorina.csv")
+        .defer(d3.csv, "data/GoodCSVs/LindseyGraham.csv")
+        .defer(d3.csv, "data/GoodCSVs/MikeHuckabee.csv")
+        .defer(d3.csv, "data/GoodCSVs/BobbyJindal.csv")
         .defer(d3.csv, "data/GoodCSVs/JohnKasich.csv")
         .defer(d3.csv, "data/GoodCSVs/LawrenceLessig.csv")
-        .defer(d3.csv, "data/GoodCSVs/LindseyGraham.csv")
-        .defer(d3.csv, "data/GoodCSVs/MarcoRubio.csv")
         .defer(d3.csv, "data/GoodCSVs/MartinOMalley.csv")
-        .defer(d3.csv, "data/GoodCSVs/MikeHuckabee.csv")
+        .defer(d3.csv, "data/GoodCSVs/GeorgePataki.csv")
         .defer(d3.csv, "data/GoodCSVs/RandPaul.csv")
         .defer(d3.csv, "data/GoodCSVs/RickPerry.csv")
+        .defer(d3.csv, "data/GoodCSVs/MarcoRubio.csv")
+        .defer(d3.csv, "data/GoodCSVs/BernieSanders.csv")
         .defer(d3.csv, "data/GoodCSVs/RickSantorum.csv")
+        .defer(d3.csv, "data/GoodCSVs/JillStein.csv")
+        .defer(d3.csv, "data/GoodCSVs/DonaldTrump.csv")
         .defer(d3.csv, "data/GoodCSVs/ScottWalker.csv")
-        .defer(d3.csv, "data/GoodCSVs/TedCruz.csv")
+        .defer(d3.csv, "data/GoodCSVs/JamesWebb.csv")
+        .defer(d3.json,"data/US_shapefile.topojson")
         .await(callback); // waits til both sets of data are loaded before it sends the data to the callback function
 
     // callback function that takes the data as two parameters and an error parameter that will report any errors that occur
-    function callback(error, total, test1, test2, test3, unitedStates,candidate1name) {
+    function callback(error, total, dem, rep, Bush, Carson, Christie, Clinton, Cruz, Fiorina, Graham, Huckabee, Jindal, Kasich, Lessig, OMalley, Pataki, Paul, Perry, Rubio, Sanders, Santorum, Stein, Trump, Walker, Webb, unitedStates, candidate1name) {
+
       total.forEach(function(d) {
         d.Lat= +d.Lat
         d.Lon= +d.Lon
-        d.DonaldTrump = +d.DonaldTrump
-        d.HillaryClinton = +d.HillaryClinton
         d.Total =+ d.Total
-      })
-      test1.forEach(function(d){
-        d.Lat= +d.Lat
-        d.Lon= +d.Lon
-        d.state_total= +d.state_total
-        // d.BenCarson = +d.BenCarson
-        // d.BernieSanders = +d.BernieSanders
-        // d.BobbyJindal = +d.BobbyJindal
-        // d.CarlyFiorina = +d.CarlyFiorina
-        // d.ChrisChristie = +d.ChrisChristie
-        // d.DonaldTrump = +d.DonaldTrump
-        // d.GeorgePataki = +d.GeorgePataki
-        // d.HillaryClinton = +d.HillaryClinton
-        // d.JamesWebb = +d.JamesWebb
-        // d.JebBush = +d.JebBush
-        // d.JohnKasich = +d.JohnKasich
-        // d.LawrenceLessig= +d.LawrenceLessig
-        // d.LindseyGraham = +d.LindseyGraham
-        // d.MarcoRubio = +d.MarcoRubio
-        // d.MartinOMalley = +d.MartinOMalley
-        // d.MikeHuckabee = +d.MikeHuckabee
-        // d.RandPaul = +d.RandPaul
-        // d.RickPerry = +d.RickPerry
-        // d.RickSantorum = +d.RickSantorum
-        // d.ScottWalker= +d.ScottWalker
-        // d.TedCruz = +d.TedCruz
       });
-
-      test2.forEach(function(d){
+      dem.forEach(function(d){
         d.Lat= +d.Lat
         d.Lon= +d.Lon
         d.state_total= +d.state_total
       });
-
-      test3.forEach(function(d){
+      rep.forEach(function(d){
         d.Lat= +d.Lat
         d.Lon= +d.Lon
         d.state_total= +d.state_total
-
       });
+      Bush.forEach(function(d){
+        d.Lat= +d.Lat
+        d.Lon= +d.Lon
+        d.state_total= +d.state_total
+      });
+      Carson.forEach(function(d){
+        d.Lat= +d.Lat
+        d.Lon= +d.Lon
+        d.state_total= +d.state_total
+      });
+      Christie.forEach(function(d) {
+        d.Lat= +d.Lat
+        d.Lon= +d.Lon
+        d.state_total= +d.state_total
+      });
+      Clinton.forEach(function(d) {
+        d.Lat= +d.Lat
+        d.Lon= +d.Lon
+        d.state_total= +d.state_total
+      });
+      Cruz.forEach(function(d) {
+        d.Lat= +d.Lat
+        d.Lon= +d.Lon
+        d.state_total= +d.state_total
+      });
+      Fiorina.forEach(function(d) {
+        d.Lat= +d.Lat
+        d.Lon= +d.Lon
+        d.state_total= +d.state_total
+      });
+      Graham.forEach(function(d) {
+        d.Lat= +d.Lat
+        d.Lon= +d.Lon
+        d.state_total= +d.state_total
+      });
+      Huckabee.forEach(function(d) {
+        d.Lat= +d.Lat
+        d.Lon= +d.Lon
+        d.state_total= +d.state_total
+      });
+      Jindal.forEach(function(d) {
+        d.Lat= +d.Lat
+        d.Lon= +d.Lon
+        d.state_total= +d.state_total
+      });
+      Kasich.forEach(function(d) {
+        d.Lat= +d.Lat
+        d.Lon= +d.Lon
+        d.state_total= +d.state_total
+      });
+      Lessig.forEach(function(d) {
+        d.Lat= +d.Lat
+        d.Lon= +d.Lon
+        d.state_total= +d.state_total
+      });
+      OMalley.forEach(function(d) {
+        d.Lat= +d.Lat
+        d.Lon= +d.Lon
+        d.state_total= +d.state_total
+      });
+      Pataki.forEach(function(d) {
+        d.Lat= +d.Lat
+        d.Lon= +d.Lon
+        d.state_total= +d.state_total
+      });
+      Paul.forEach(function(d) {
+        d.Lat= +d.Lat
+        d.Lon= +d.Lon
+        d.state_total= +d.state_total
+      });
+      Perry.forEach(function(d) {
+        d.Lat= +d.Lat
+        d.Lon= +d.Lon
+        d.state_total= +d.state_total
+      });
+      Rubio.forEach(function(d) {
+        d.Lat= +d.Lat
+        d.Lon= +d.Lon
+        d.state_total= +d.state_total
+      });
+      Sanders.forEach(function(d) {
+        d.Lat= +d.Lat
+        d.Lon= +d.Lon
+        d.state_total= +d.state_total
+      });
+      Santorum.forEach(function(d) {
+        d.Lat= +d.Lat
+        d.Lon= +d.Lon
+        d.state_total= +d.state_total
+      });
+      Stein.forEach(function(d) {
+        d.Lat= +d.Lat
+        d.Lon= +d.Lon
+        d.state_total= +d.state_total
+      });
+      Trump.forEach(function(d) {
+        d.Lat= +d.Lat
+        d.Lon= +d.Lon
+        d.state_total= +d.state_total
+      });
+      Walker.forEach(function(d) {
+        d.Lat= +d.Lat
+        d.Lon= +d.Lon
+        d.state_total= +d.state_total
+      });
+      Webb.forEach(function(d) {
+        d.Lat= +d.Lat
+        d.Lon= +d.Lon
+        d.state_total= +d.state_total
+      });
+
+
+
         // translate the topojson to GeoJSON within the DOM
         var us = topojson.feature(unitedStates, unitedStates.objects.US_shapefile).features; // pulls the array of features from the shapefile data and passes it to .data()
         //console.log(us);
-        csvArray = [total, test1, test2, test3];
+        csvArray = [total, dem, rep, Bush, Carson, Christie, Clinton, Cruz, Fiorina, Graham, Huckabee, Jindal, Kasich, Lessig, OMalley, Pataki, Paul, Perry, Rubio, Sanders, Santorum, Stein, Trump, Walker, Webb];
         //console.log(csvArray[0]);
-        attributeNames = ["All Candidates", "Ben Carson", "Bernie Sanders", "Bobby Jindal"];
+        attributeNames = ["All Candidates","All Democrats","All Republicans","Jeb Bush","Ben Carson","Chris Christie","Hillary Clinton","Ted Cruz","Carly Fiorina","Lindsey Graham","Mike Huckabee","Bobby Jindal","John Kasich","Lawrence Lessig","Martin OMalley","George Pataki","Rand Paul","Rick Perry","Marco Rubio","Bernie Sanders","Rick Santorum","Jill Stein","Donald Trump","Scott Walker","James Webb"];
+
            for (i in csvArray){
             joinData(us, csvArray[i], attributeNames[i]);
 
@@ -137,7 +224,7 @@ function setMap() {
          setCircles (path,map,total,projection);
          createDropdownLeft(total,candidate1name,us,projection);
          createDropdownRight(total,candidate1name,us,projection);
-         createradio(total,path,map,test1,test2,test3,projection,total,us);
+         createradio(total,path,map,total, dem, rep, Bush, Carson, Christie, Clinton, Cruz, Fiorina, Graham, Huckabee, Jindal, Kasich, Lessig, OMalley, Pataki, Paul, Perry, Rubio, Sanders, Santorum, Stein, Trump, Walker, Webb, projection,total,us);
 
          //createcheckbox1(path,map,total, us, projection);
         //createcheckbox2(total, us, projection);
@@ -252,7 +339,7 @@ function setCircles (path,map,data,projection){
 //
 // };
 
-function createradio(data,path,map,test1,test2,test3,projection,total,us){
+function createradio(data,path,map,total, dem, rep, Bush, Carson, Christie, Clinton, Cruz, Fiorina, Graham, Huckabee, Jindal, Kasich, Lessig, OMalley, Pataki, Paul, Perry, Rubio, Sanders, Santorum, Stein, Trump, Walker, Webb, projection,total,us){
 
     var filterPhases = ["Total", "Per Capita"],
     j=0;
@@ -652,7 +739,7 @@ var candidate_b;
     candidate2.selectAll("path")
         .data(candidate_b)
         .enter().append("path")
-        .style("fill", "orange")
+        .style("fill", "#FFA30D")
         .attr("class", "rightsplit")
         .attr("id", attributeNames)
         //length of line
