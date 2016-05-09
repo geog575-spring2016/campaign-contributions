@@ -18,7 +18,7 @@ var newarray;
 var projection;
 var setRadius;
 var radioName = expressed;
-var width = window.innerWidth * 0.645,
+var width = window.innerWidth * 0.6,
     height = 470;
 var attributeNames = [];
 var expressed3 = attributeNames[0];
@@ -31,7 +31,7 @@ function setMap() {
 
 
     // creating the map as an svg and giving it attributes of width and height
-    map = d3.select("#mapContainer")
+    map = d3.select("body")
         .append("svg")
 
         .attr("class", "map")
@@ -41,7 +41,7 @@ function setMap() {
     projection = d3.geo.albersUsa()
     // no center because it's already centered on the US as part of the projection code
         .scale(1000)
-        .translate([width / 2, height / 2.2]); // keeps map centered in the svg container
+        .translate([width / 1.9, height / 2.1]); // keeps map centered in the svg container
 
     // creating a path generator to draw the projection
     var path = d3.geo.path()
@@ -256,7 +256,7 @@ function setMap() {
         .attr("y", 0)
           .attr("class", "yearExpressedText menu-info")
             .text(timeExpressed)
-            .style({'font-size':'36px', 'font-weight': 'strong'});
+            .style({'font-size':'32px', 'font-weight': 'strong'});
 
             var a = timeArray.indexOf(timeExpressed);
 

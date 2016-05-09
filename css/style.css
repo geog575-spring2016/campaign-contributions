@@ -30,6 +30,7 @@ position: absolute;
   text-align: center;
   /*margin-top: 10px;*/
   /*margin-top: 12px;*/
+  margin: 2px;
   padding: 5px;
   font-family: Garamond;
 }
@@ -39,19 +40,22 @@ h1 {
 }
 
 
-
+.container {
+  margin: 2px;
+}
 
 
 #sideColumn {
   position: absolute;
-  margin-left: -2%;
+  margin-left: 1%;
   padding: 0px;
 
 }
 
 #infoPanel {
   float: right;
-  margin-right: -4%;
+  margin-right: -2%;
+  padding: 2px;
 }
 
 
@@ -106,6 +110,7 @@ h1 {
 {stroke: black;}
 
 .yearExpressedText {
+    position: relative;
     float: left;
     padding-right: 115px;
     font-family: garamond;
@@ -119,6 +124,11 @@ h1 {
     font-family: garamond;
     font-size:20px;
 
+}
+
+.sequence-buttons {
+  position: relative;
+  top: 500px;
 }
 
 .stepForward
@@ -157,3 +167,11 @@ background-color: blue;}
 margin-right: 10px;
 margin-top: -10px;
 background-color: gray;}
+
+.map{
+  padding: 0px;
+  margin: 2px;
+  position: relative;
+  top: 15%;
+  left: 15%
+}
