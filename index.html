@@ -6,9 +6,10 @@
 		<title>Campaign Contributions</title>
 
 		<!--put your external stylesheet links here-->
-		<link rel="stylesheet" href="CSS/bootstrap.min.css">
-		<link rel="stylesheet" href="CSS/bootstrap-theme.min.css">
-		<link rel="stylesheet" href="css/style.css"/>
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/bootstrap-theme.min.css">
+		<link rel="stylesheet" href="css/style.css">
+		 <link rel="stylesheet" href="css/d3.slider.css"/>
 		<!--[if IE<9]>
 			<link rel="stylesheet" href="css/style.ie.css">
 		<![endif]-->
@@ -23,49 +24,65 @@
 		<div class="center">
 			<div class="jumbotron">
 					<div class="container">
+
 						<h1>We D̶o̶n̶'̶t̶ Need Your Money, Money, Money</h1>
+<img class = "others" src = "img/ben.png" >
+<img class = "others" src = "img/chris.png" >
+<img class = "others" src = "img/jeb.png" >
+		<img class = "trump" src = "img/trump.png" >
+		<img class = "hilary" src = "img/hilary.png" >
+		<img class = "hilary" src = "img/bernie.png" >
+		<img class = "trump" src = "img/ted.png" >
+		<img class = "trump" src = "img/john.png" >
+		<img class = "others" src = "img/marco.png" >
+		<img class = "others" src = "img/carly.png" >
+		<img class = "others" src = "img/scott.png" >
+		
 					</div>
 			</div>
 		</div>
 
 		<div class="container">
 			<div id = "sideColumn" class="col-md-2"></div>
-		        <!-- <div class="overlay-menu">
-		            <div class="test1-section">
-		                <div class="test1" id ="test1-centers" style="width:125px;height:60px;">
-		                    <strong>Show: </strong><br>test1 contribution</div>
-		                <div class ="test1-inset" id="test1-inset" style="width:198px;height:60px;"></div>
-		            </div>
-		            <div class="test2-section">
-		                <div class="test2" id ="test2-centers" style="width:125px;height:60px;">
-		                    <strong>Show: </strong><br>test2 contribution</div>
-		                <div class ="test2-inset" id="test2-inset" style="width:198px;height:60px;"></div>
-		            </div>
-		            <div class="test3-section">
-		                <div class="test3" id ="test3-centers" style="width:125px;height:60px;">
-		                    <strong>Show: </strong><br>test3 contribution</div>
-		                <div class ="test3-inset" id="test3-inset" style="width:198px;height:60px;"></div>
-		            </div> -->
-
-				<!-- </div> -->
+		       
 
 				<div id = "mapContainer" class="col-md-8"></div>
+				<div id = "sequenceContainer" class="col-md-7"></div>
 
 				<div class="menu-info">
 				</div>
 
+
+
 				<div class="sequence-buttons">
-					<div class="button">
+					<div class="button" >
 						<button type="button" class="stepBackward">
-							<img class="img-responsive center-block" src="img/leftArrow_small.png" alt="Left Arrow">
+							<img id = "backButton" class="img-stepBackward" src="img/leftArrow_small.png" alt="Left Arrow">
 						</button>
 						<button type="button" class="stepForward">
-							<img class="img-responsive center-block" src="img/rightArrow_small.png" alt="Right Arrow">
+							<img class="img-stepForward" src="img/rightArrow_small.png" alt="Right Arrow">
 						</button>
 					</div>
 				</div>
 
-				<div id = "infoPanel" class="col-md-2">Info Panel goes here</div>
+								<div id="slider-container">
+     					 <div id="slider-div"></div>
+     					 <div id="slider-probe">
+     					 <p></p>
+        				<div></div>
+        				</div>
+     						 
+        	    </div>
+
+ 
+  
+
+
+
+
+                 
+				<div id = "infoPanel" class="col-md-3"></div>
+
 				<!-- </div> -->
 			</div>
 		<!--put your external script links here-->
@@ -74,6 +91,7 @@
 		<script type="text/javascript" src="lib/d3-queue.js"></script>
 		<script type="text/javascript" src="lib/topojson.v1.min.js"></script>
 		<script type="text/javascript" src="lib/bootstrap.min.js"></script>
+		<script src="lib/d3.slider.js"></script>
 		<script type="text/javascript" src="js/main.js"></script>
 
 
