@@ -1,7 +1,7 @@
 var attrArray = ["Total", "Per Capita"];
 var expressed = attrArray[0];
 var timeArray = ["March_15", "April_15","May_15", "June_15",  "July_15","August_15","September_15","October_15","November_15","December_15","January_16","February_16","March_16"];
-var count = 12; 
+var count = 12;
 var timeExpressed = timeArray[12];
 var eventArray=["Ben Carson, Donald Trump and Ted Cruz joined in election", "Rick Santorum, Hilary Clinton and Bernie Sanders joined the election","Carly Fiorina, Mike Huckabee, Martin O'Malley joined the election", "Rick Perry, Jeb Bush, Jill Stein, Bobby Jindal joined in election",  "James Webb, John Kasich joined in election","Lawrence Lessig joined the election","Rick Perry withdrawed election; South Carolina finalizes ballot for primary","First Democratic debate is held; James Webb withdrawed","Lawrence Lessig withdrawed; Alabama primary; Fourth Republican debate","Fifth Republican debate; Third Democratic debate","Third Democratic forum; Sixth and seventh Republican debates; Fourth Democratic debate","The Iowa Democratic caucus is won by Hillary Clinton; The Iowa Republican caucus is won by Ted Cruz"," Super Tuesday;Lots to stuffs.."]
 var eventExpressed = eventArray[12];
@@ -33,11 +33,11 @@ function setMap() {
     // creating the map as an svg and giving it attributes of width and height
     map = d3.select("#mapContainer")
         .append("svg")
-      
+
         .attr("class", "map")
         .attr("width", width)
         .attr("height", height);
-   
+
     projection = d3.geo.albersUsa()
     // no center because it's already centered on the US as part of the projection code
         .scale(1000)
@@ -49,9 +49,9 @@ function setMap() {
 
     // uses queue.js to parallelize asynchronous loading of the the CSV and shapefile data
     d3_queue.queue()
-        .defer(d3.csv, "data/total_contributions_percandidate_perstate.csv")
-        .defer(d3.csv, "data/total_contributions_percandidate_perstate.csv")
-        .defer(d3.csv, "data/total_contributions_percandidate_perstate.csv")
+
+        // .defer(d3.csv, "data/total_contributions_percandidate_perstate.csv")
+        // .defer(d3.csv, "data/total_contributions_percandidate_perstate.csv")
         .defer(d3.csv, "data/GoodCSVs/JebBush.csv")
         .defer(d3.csv, "data/GoodCSVs/BenCarson.csv")
         .defer(d3.csv, "data/GoodCSVs/ChrisChristie.csv")
@@ -74,28 +74,18 @@ function setMap() {
         .defer(d3.csv, "data/GoodCSVs/DonaldTrump.csv")
         .defer(d3.csv, "data/GoodCSVs/ScottWalker.csv")
         .defer(d3.csv, "data/GoodCSVs/JamesWebb.csv")
+        .defer(d3.csv, "data/total_contributions_percandidate_perstate.csv")
         .defer(d3.json,"data/US_shapefile.topojson")
         .await(callback); // waits til both sets of data are loaded before it sends the data to the callback function
 
     // callback function that takes the data as two parameters and an error parameter that will report any errors that occur
-    function callback(error, total, dem, rep, Bush, Carson, Christie, Clinton, Cruz, Fiorina, Graham, Huckabee, Jindal, Kasich, Lessig, OMalley, Pataki, Paul, Perry, Rubio, Sanders, Santorum, Stein, Trump, Walker, Webb, unitedStates, caname) {
+    function callback(error, Bush, Carson, Christie, Clinton, Cruz, Fiorina, Graham, Huckabee, Jindal, Kasich, Lessig, OMalley, Pataki, Paul, Perry, Rubio, Sanders, Santorum, Stein, Trump, Walker, Webb, total, unitedStates, caname) {
 
       total.forEach(function(d) {
 
         d.Lat= +d.Lat
         d.Lon= +d.Lon
         d.Total =+ d.Total
-      });
-      dem.forEach(function(d){
-        d.Lat= +d.Lat
-        d.Lon= +d.Lon
-        d.state_total= +d.state_total
-      });
-      rep.forEach(function(d){
-
-        d.Lat= +d.Lat
-        d.Lon= +d.Lon
-        d.state_total= +d.state_total
       });
       Bush.forEach(function(d){
         d.Lat= +d.Lat
@@ -212,8 +202,8 @@ function setMap() {
 
         // translate the topojson to GeoJSON within the DOM
         var us = topojson.feature(unitedStates, unitedStates.objects.US_shapefile).features; // pulls the array of features from the shapefile data and passes it to .data()
-        
-        csvArray = [total, dem, rep, Bush, Carson, Christie, Clinton, Cruz, Fiorina, Graham, Huckabee, Jindal, Kasich, Lessig, OMalley, Pataki, Paul, Perry, Rubio, Sanders, Santorum, Stein, Trump, Walker, Webb];
+
+        csvArray = [Bush, Carson, Christie, Clinton, Cruz, Fiorina, Graham, Huckabee, Jindal, Kasich, Lessig, OMalley, Pataki, Paul, Perry, Rubio, Sanders, Santorum, Stein, Trump, Walker, Webb, total];
         //for(var i=0; i<csvArray.length;i++) csvArray = +csvArray;
         //var values = parseFloat(total);
         //console.log(total);
@@ -227,12 +217,12 @@ function setMap() {
       for (j=0; j<csvArray[i].length; j++)
           {
             newarray = parseFloat(csvArray[i][j].July_15);
-            console.log(typeof(newarray));
-            console.log(newarray);
+            //console.log(typeof(newarray));
+            //console.log(newarray);
 }
     }
-  
-        attributeNames = ["All Candidates","All Democrats (D)","All Republicans (R)","Jeb Bush (R)","Ben Carson (R)","Chris Christie (R)","Hillary Clinton (D)","Ted Cruz (R)","Carly Fiorina (R)","Lindsey Graham (R)","Mike Huckabee (R)","Bobby Jindal (R)","John Kasich (R)","Lawrence Lessig (D)","Martin OMalley (D)","George Pataki (R)","Rand Paul (R)","Rick Perry (R)","Marco Rubio (R)","Bernie Sanders (D)","Rick Santorum (R)","Jill Stein (Green Party)","Donald Trump (R)","Scott Walker (R)","James Webb (D)"];
+
+        attributeNames = ["Jeb Bush (R)","Ben Carson (R)","Chris Christie (R)","Hillary Clinton (D)","Ted Cruz (R)","Carly Fiorina (R)","Lindsey Graham (R)","Mike Huckabee (R)","Bobby Jindal (R)","John Kasich (R)","Lawrence Lessig (D)","Martin OMalley (D)","George Pataki (R)","Rand Paul (R)","Rick Perry (R)","Marco Rubio (R)","Bernie Sanders (D)","Rick Santorum (R)","Jill Stein (Green Party)","Donald Trump (R)","Scott Walker (R)","James Webb (D)"];
 
            for (i in csvArray){
             joinData(us, csvArray[i], attributeNames[i]);
@@ -245,9 +235,9 @@ function setMap() {
          setCircles (path,map,total,projection, us);
          createDropdownLeft(us,projection);
          createDropdownRight(us,projection);
-         createradio(total,path,map,total, dem, rep, Bush, Carson, Christie, Clinton, Cruz, Fiorina, Graham, Huckabee, Jindal, Kasich, Lessig, OMalley, Pataki, Paul, Perry, Rubio, Sanders, Santorum, Stein, Trump, Walker, Webb, projection,total,us);
+         createradio(total,path,map,Bush, Carson, Christie, Clinton, Cruz, Fiorina, Graham, Huckabee, Jindal, Kasich, Lessig, OMalley, Pataki, Paul, Perry, Rubio, Sanders, Santorum, Stein, Trump, Walker, Webb,total, projection,total,us);
 
-        
+
          drawMenuInfo(timeExpressed,eventExpressed);
          createSlider();
          createButton(us,projection);
@@ -276,9 +266,9 @@ function setMap() {
           .attr("y", 0)
           .attr("class", "eventExpressedText menu-info")
             .text(eventArray[a]);
-    }; 
+    };
 
-     
+
 
 function createButton(us,projection)
 {
@@ -288,13 +278,13 @@ function createButton(us,projection)
         if (count < timeArray.length-1){
             count++;
           timeExpressed = timeArray[count];
-         
-           
+
+
         } else {
           count = 0;
             timeExpressed = timeArray[count];
-            
-        }; 
+
+        };
          var removeOldYear = d3.selectAll(".yearExpressedText").remove();
          var removeOldEvent = d3.selectAll(".eventExpressedText").remove();
 
@@ -313,12 +303,12 @@ function createButton(us,projection)
         if (count < timeArray.length && count > 0){
             count= count-1;
              timeExpressed = timeArray[count];
-              
+
         } else {
           count = 12;
             timeExpressed = timeArray[count];
-             
-        }; 
+
+        };
          var removeOldYear = d3.selectAll(".yearExpressedText").remove();
          var removeOldEvent = d3.selectAll(".eventExpressedText").remove();
         createRightSplit(candidaterightname,us,projection)
@@ -356,16 +346,16 @@ function createSlider(){
 
 
 function createSequencesd()
-{ 
+{
     var timeScale = d3.time.scale()
         .domain([new Date(timeArray[0]), d3.time.years(new Date(timeArray[timeArray.length-1]), 1)]); //domain is an array of 2 values: the first and last years in the keyArray (1973 and 2014)
-      
+
 
   var axis = d3.svg.axis()
         .scale(timeScale)
         .orient("bottom")
         .ticks(d3.time.years, 1)
-     
+
         .tickPadding(5) //distance between axis line and labels
         .innerTickSize(50);
 
@@ -384,7 +374,7 @@ function createSequencesd()
         .attr("width", chartWidth)
         .attr('transform', 'translate(' + timelineMargin.left + ',' + (chartHeight - timelineMargin.top - timelineMargin.bottom) + ')') //set the starting x,y coordinates for where the axis will be drawn
         .attr("class", "timeline")
-        .call(axis); //calls the axis function on the timeline        
+        .call(axis); //calls the axis function on the timeline
 
 
 
@@ -453,7 +443,7 @@ function setCircles (path,map,data,projection, us){
 
       var desc = circles.append("desc")
         .text('{"stroke": "white", "stroke-width": "0.7"}');
-        
+
 
         updateCircles(circles,data);
 };
@@ -467,7 +457,7 @@ function createradio(data,path,map,total, dem, rep, Bush, Carson, Christie, Clin
     var form1 = d3.select("#sideColumn")
     .append("form")
     .attr("class", "Classification1")
- 
+
 
      var labelEnter = form1.selectAll("span")
     .data(filterPhases)
@@ -485,7 +475,7 @@ function createradio(data,path,map,total, dem, rep, Bush, Carson, Christie, Clin
     .on("change", function(d){
             changeAttribute(this.value, data);
             radioName = d;
-          
+
         })
 
     .property("checked", function(d, i) {return i===j;})
@@ -517,7 +507,7 @@ function updateCircles(circles, data)
     };
         radiusMin = Math.min.apply(Math, domainArray);
         radiusMax = Math.max.apply(Math, domainArray);
-        
+
         setRadius = d3.scale.sqrt()
             .range([0, 40])
             .domain([radiusMin, radiusMax]);
@@ -544,13 +534,13 @@ if(timeExpressed == "March_15")
 {
  var arc = d3.svg.arc()
         .innerRadius(0)
-        .outerRadius(function(d){        
+        .outerRadius(function(d){
             return setRadius(d.March_15);
 
         })
         .startAngle(Math.PI)
         .endAngle(Math.PI*2)
-    
+
       radiusMin = d3.min(candidate_a, function(d){
         return d.March_15
       })
@@ -566,13 +556,13 @@ setRadius = d3.scale.sqrt()
 
 else if (timeExpressed == "March_16") {var arc = d3.svg.arc()
         .innerRadius(0)
-        .outerRadius(function(d){        
+        .outerRadius(function(d){
             return setRadius(d.March_16);
 
         })
         .startAngle(Math.PI)
         .endAngle(Math.PI*2)
-    
+
       radiusMin = d3.min(candidate_a, function(d){
         return d.March_16
       })
@@ -589,12 +579,12 @@ setRadius = d3.scale.sqrt()
 
 else if (timeExpressed == "April_15") {var arc = d3.svg.arc()
         .innerRadius(0)
-        .outerRadius(function(d){        
+        .outerRadius(function(d){
             return setRadius(d.April_15);
         })
         .startAngle(Math.PI)
         .endAngle(Math.PI*2)
-    
+
       radiusMin = d3.min(candidate_a, function(d){
         return d.April_15
       })
@@ -611,12 +601,12 @@ setRadius = d3.scale.sqrt()
 
 else if (timeExpressed == "May_15") {var arc = d3.svg.arc()
         .innerRadius(0)
-        .outerRadius(function(d){        
+        .outerRadius(function(d){
             return setRadius(d.May_15);
         })
         .startAngle(Math.PI)
         .endAngle(Math.PI*2)
-    
+
       radiusMin = d3.min(candidate_a, function(d){
         return d.May_15
       })
@@ -633,12 +623,12 @@ setRadius = d3.scale.sqrt()
 
 else if (timeExpressed == "May_15") {var arc = d3.svg.arc()
         .innerRadius(0)
-        .outerRadius(function(d){        
+        .outerRadius(function(d){
             return setRadius(d.May_15);
         })
         .startAngle(Math.PI)
         .endAngle(Math.PI*2)
-    
+
       radiusMin = d3.min(candidate_a, function(d){
         return d.May_15
       })
@@ -655,12 +645,12 @@ setRadius = d3.scale.sqrt()
 
 else if (timeExpressed == "June_15") {var arc = d3.svg.arc()
         .innerRadius(0)
-        .outerRadius(function(d){        
+        .outerRadius(function(d){
             return setRadius(d.June_15);
         })
         .startAngle(Math.PI)
         .endAngle(Math.PI*2)
-    
+
       radiusMin = d3.min(candidate_a, function(d){
         return d.June_15
       })
@@ -676,12 +666,12 @@ setRadius = d3.scale.sqrt()
 
 else if (timeExpressed == "July_15") {var arc = d3.svg.arc()
         .innerRadius(0)
-        .outerRadius(function(d){        
+        .outerRadius(function(d){
             return setRadius(d.July_15);
         })
         .startAngle(Math.PI)
         .endAngle(Math.PI*2)
-    
+
       radiusMin = d3.min(candidate_a, function(d){
         return d.July_15
       })
@@ -698,12 +688,12 @@ setRadius = d3.scale.sqrt()
 
 else if (timeExpressed == "August_15") {var arc = d3.svg.arc()
         .innerRadius(0)
-        .outerRadius(function(d){        
+        .outerRadius(function(d){
             return setRadius(d.August_15);
         })
         .startAngle(Math.PI)
         .endAngle(Math.PI*2)
-    
+
       radiusMin = d3.min(candidate_a, function(d){
         return d.August_15
       })
@@ -719,12 +709,12 @@ setRadius = d3.scale.sqrt()
 
 else if (timeExpressed == "September_15") {var arc = d3.svg.arc()
         .innerRadius(0)
-        .outerRadius(function(d){        
+        .outerRadius(function(d){
             return setRadius(d.September_15);
         })
         .startAngle(Math.PI)
         .endAngle(Math.PI*2)
-    
+
       radiusMin = d3.min(candidate_a, function(d){
         return d.September_15
       })
@@ -740,12 +730,12 @@ setRadius = d3.scale.sqrt()
 
 else if (timeExpressed == "October_15") {var arc = d3.svg.arc()
         .innerRadius(0)
-        .outerRadius(function(d){        
+        .outerRadius(function(d){
             return setRadius(d.October_15);
         })
         .startAngle(Math.PI)
         .endAngle(Math.PI*2)
-    
+
       radiusMin = d3.min(candidate_a, function(d){
         return d.October_15
       })
@@ -761,12 +751,12 @@ setRadius = d3.scale.sqrt()
 
 else if (timeExpressed == "November_15") {var arc = d3.svg.arc()
         .innerRadius(0)
-        .outerRadius(function(d){        
+        .outerRadius(function(d){
             return setRadius(d.November_15);
         })
         .startAngle(Math.PI)
         .endAngle(Math.PI*2)
-    
+
       radiusMin = d3.min(candidate_a, function(d){
         return d.November_15
       })
@@ -782,12 +772,12 @@ setRadius = d3.scale.sqrt()
 
 else if (timeExpressed == "December_15") {var arc = d3.svg.arc()
         .innerRadius(0)
-        .outerRadius(function(d){        
+        .outerRadius(function(d){
             return setRadius(d.December_15);
         })
         .startAngle(Math.PI)
         .endAngle(Math.PI*2)
-    
+
       radiusMin = d3.min(candidate_a, function(d){
         return d.December_15
       })
@@ -803,12 +793,12 @@ setRadius = d3.scale.sqrt()
 
 else if (timeExpressed == "January_16") {var arc = d3.svg.arc()
         .innerRadius(0)
-        .outerRadius(function(d){        
+        .outerRadius(function(d){
             return setRadius(d.December_15);
         })
         .startAngle(Math.PI)
         .endAngle(Math.PI*2)
-    
+
       radiusMin = d3.min(candidate_a, function(d){
         return d.January_16
       })
@@ -824,12 +814,12 @@ setRadius = d3.scale.sqrt()
 
 else if (timeExpressed == "February_16") {var arc = d3.svg.arc()
         .innerRadius(0)
-        .outerRadius(function(d){        
+        .outerRadius(function(d){
             return setRadius(d.December_15);
         })
         .startAngle(Math.PI)
         .endAngle(Math.PI*2)
-    
+
       radiusMin = d3.min(candidate_a, function(d){
         return d.February_16
       })
@@ -849,8 +839,8 @@ setRadius = d3.scale.sqrt()
     candidate1.selectAll("path")
         .data(candidate_a)
         .enter().append("path")
-        .style("fill", "purple") 
-        .style("fill-opacity", 0.5) 
+        .style("fill", "purple")
+        .style("fill-opacity", 0.5)
         .attr("class", "leftsplit")
         .attr("id", attributeNames)
         //length of line
@@ -862,7 +852,7 @@ setRadius = d3.scale.sqrt()
 
 //functin to create dropdown 1 for candidates
 function createDropdownLeft(us,projection){
-   
+
     var dropdown = d3.select("#sideColumn")
         .append("select")
         .attr("class", "dropdownLeft")
@@ -875,6 +865,7 @@ function createDropdownLeft(us,projection){
     //add initial option
     var titleOption = dropdown.append("option")
         .attr("class", "titleOption")
+        .attr("disabled", "true")
         .text("Select a Candidate or Party");
 
     //add attribute name options
@@ -902,12 +893,12 @@ if(timeExpressed == "March_15")
 {
  var arc2 = d3.svg.arc()
         .innerRadius(0)
-        .outerRadius(function(d){        
+        .outerRadius(function(d){
             return setRadius(d.March_15);
         })
         .startAngle(0)
         .endAngle(Math.PI)
-    
+
       radiusMin = d3.min(candidate_b, function(d){
         return d.March_15
       })
@@ -924,12 +915,12 @@ else if (timeExpressed == "March_16")
   {
  var arc2 = d3.svg.arc()
         .innerRadius(0)
-        .outerRadius(function(d){        
+        .outerRadius(function(d){
             return setRadius(d.March_16);
         })
         .startAngle(0)
         .endAngle(Math.PI)
-    
+
       radiusMin = d3.min(candidate_b, function(d){
         return d.March_16
       })
@@ -946,12 +937,12 @@ else if (timeExpressed == "April_15")
   {
  var arc2 = d3.svg.arc()
         .innerRadius(0)
-        .outerRadius(function(d){        
+        .outerRadius(function(d){
             return setRadius(d.April_15);
         })
         .startAngle(0)
         .endAngle(Math.PI)
-    
+
       radiusMin = d3.min(candidate_b, function(d){
         return d.April_15
       })
@@ -964,12 +955,12 @@ else if (timeExpressed == "May_15")
   {
  var arc2 = d3.svg.arc()
         .innerRadius(0)
-        .outerRadius(function(d){        
+        .outerRadius(function(d){
             return setRadius(d.May_15);
         })
         .startAngle(0)
         .endAngle(Math.PI)
-    
+
       radiusMin = d3.min(candidate_b, function(d){
         return d.May_15
       })
@@ -986,12 +977,12 @@ else if (timeExpressed == "June_15")
   {
  var arc2 = d3.svg.arc()
         .innerRadius(0)
-        .outerRadius(function(d){        
+        .outerRadius(function(d){
             return setRadius(d.June_15);
         })
         .startAngle(0)
         .endAngle(Math.PI)
-    
+
       radiusMin = d3.min(candidate_b, function(d){
         return d.June_15
       })
@@ -1008,12 +999,12 @@ else if (timeExpressed == "July_15")
   {
  var arc2 = d3.svg.arc()
         .innerRadius(0)
-        .outerRadius(function(d){        
+        .outerRadius(function(d){
             return setRadius(d.July_15);
         })
         .startAngle(0)
         .endAngle(Math.PI)
-    
+
       radiusMin = d3.min(candidate_b, function(d){
         return d.July_15
       })
@@ -1028,12 +1019,12 @@ else if (timeExpressed == "August_15")
   {
  var arc2 = d3.svg.arc()
         .innerRadius(0)
-        .outerRadius(function(d){        
+        .outerRadius(function(d){
             return setRadius(d.August_15);
         })
         .startAngle(0)
         .endAngle(Math.PI)
-    
+
       radiusMin = d3.min(candidate_b, function(d){
         return d.August_15
       })
@@ -1048,12 +1039,12 @@ else if (timeExpressed == "September_15")
   {
  var arc2 = d3.svg.arc()
         .innerRadius(0)
-        .outerRadius(function(d){        
+        .outerRadius(function(d){
             return setRadius(d.September_15);
         })
         .startAngle(0)
         .endAngle(Math.PI)
-    
+
       radiusMin = d3.min(candidate_b, function(d){
         return d.September_15
       })
@@ -1068,12 +1059,12 @@ else if (timeExpressed == "October_15")
   {
  var arc2 = d3.svg.arc()
         .innerRadius(0)
-        .outerRadius(function(d){        
+        .outerRadius(function(d){
             return setRadius(d.October_15);
         })
         .startAngle(0)
         .endAngle(Math.PI)
-    
+
       radiusMin = d3.min(candidate_b, function(d){
         return d.October_15
       })
@@ -1088,12 +1079,12 @@ else if (timeExpressed == "November_15")
   {
  var arc2 = d3.svg.arc()
         .innerRadius(0)
-        .outerRadius(function(d){        
+        .outerRadius(function(d){
             return setRadius(d.November_15);
         })
         .startAngle(0)
         .endAngle(Math.PI)
-    
+
       radiusMin = d3.min(candidate_b, function(d){
         return d.November_15
       })
@@ -1108,12 +1099,12 @@ else if (timeExpressed == "December_15")
   {
  var arc2 = d3.svg.arc()
         .innerRadius(0)
-        .outerRadius(function(d){        
+        .outerRadius(function(d){
             return setRadius(d.December_15);
         })
         .startAngle(0)
         .endAngle(Math.PI)
-    
+
       radiusMin = d3.min(candidate_b, function(d){
         return d.December_15
       })
@@ -1128,12 +1119,12 @@ else if (timeExpressed == "January_16")
   {
  var arc2 = d3.svg.arc()
         .innerRadius(0)
-        .outerRadius(function(d){        
+        .outerRadius(function(d){
             return setRadius(d.January_16);
         })
         .startAngle(0)
         .endAngle(Math.PI)
-    
+
       radiusMin = d3.min(candidate_b, function(d){
         return d.January_16
       })
@@ -1148,12 +1139,12 @@ else if (timeExpressed == "February_16")
   {
  var arc2 = d3.svg.arc()
         .innerRadius(0)
-        .outerRadius(function(d){        
+        .outerRadius(function(d){
             return setRadius(d.February_16);
         })
         .startAngle(0)
         .endAngle(Math.PI)
-    
+
       radiusMin = d3.min(candidate_b, function(d){
         return d.February_16
       })
@@ -1171,7 +1162,7 @@ else if (timeExpressed == "February_16")
         .data(candidate_b)
         .enter().append("path")
         .style("fill", "#FFA30D")
-        .style("fill-opacity", 0.5) 
+        .style("fill-opacity", 0.5)
         .attr("class", "rightsplit")
         .attr("id", attributeNames)
         //length of line
@@ -1199,7 +1190,7 @@ function createDropdownRight(us,projection){
     //add initial option
     var titleOption = dropdown.append("option")
         .attr("class", "titleOption")
-        //.attr("disabled", "true")
+        .attr("disabled", "true")
         .text("Select a Candidate or Party");
 
     //add attribute name options
@@ -1223,7 +1214,7 @@ function CreateSplitLegend(minRadius, maxRadius){
 function highlightCircles(props) {
   var selected = d3.selectAll("." + props.state)
     .style( {
-      "stroke": "#666", 
+      "stroke": "#666",
       "stroke-width": "0.7"
     });
 };
@@ -1253,7 +1244,7 @@ function dehighlightCircles (props) {
 function highlightSplits(props) {
   var selected = d3.selectAll("." + props.state)
     .style( {
-      "stroke": "#666", 
+      "stroke": "#666",
       "stroke-width": "0.7"
     });
 };

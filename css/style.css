@@ -44,7 +44,8 @@ h1 {
 
 #sideColumn {
   position: absolute;
-  margin-left: -8%;
+  margin-left: -2%;
+  padding: 0px;
 
 }
 
@@ -85,7 +86,7 @@ h1 {
 }
 
 /*.timeline {
- 
+
     fill: none;
     stroke: gray;
     shape-rendering: crispEdges;
@@ -94,30 +95,30 @@ h1 {
 .timeline path,
 .timeline line {
     fill: black;
-   
+
     stroke: red;
     stroke-width:3px;
 
-   
+
 }
 
 #sequenceContainer
 {stroke: black;}
 
 .yearExpressedText {
-    float: left; 
+    float: left;
     padding-right: 115px;
     font-family: garamond;
 }
 
 .eventExpressedText
 {/*width:100px;*/
-    float: left; 
+    float: left;
     position:relative;
     top:10%;
     font-family: garamond;
     font-size:20px;
-    
+
 }
 
 .stepForward
@@ -156,4 +157,3 @@ background-color: blue;}
 margin-right: 10px;
 margin-top: -10px;
 background-color: gray;}
-
