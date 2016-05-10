@@ -251,8 +251,9 @@ function setMap() {
          createDropdownLeft(us,projection);
          createDropdownRight(us,projection);
          createradio(total,path,map,Bush, Carson, Christie, Clinton, Cruz, Fiorina, Graham, Huckabee, Jindal, Kasich, Lessig, OMalley, Pataki, Paul, Perry, Rubio, Sanders, Santorum, Stein, Trump, Walker, Webb,total, projection,us);
-         drawMenuInfo(timeExpressed);
          createButton(us,projection);
+           createSlider(us,projection);
+            drawMenuInfo(timeExpressed);
     };
 };
 
@@ -274,6 +275,31 @@ function drawMenuInfo(time){
         .attr("y", 0)
         .attr("class", "eventExpressedText menu-info")
         .text(eventArray[a]);
+
+
+             //alters timeline year text    
+    var timelineYear = d3.select(".axis")
+        .selectAll('g')
+        .attr("font-weight", function(d){
+
+            if (timelineArray[a] == d) {
+                return "bold";
+            } else {
+                return "normal";
+            }
+        }).attr("font-size", function(d){
+            if (timelineArray[a] == d){
+                return "18px";
+            } else {
+                return "12px";
+            }
+        }).attr("stroke", function(d){
+            if (timelineArray[a] == d){
+                return "#986cb3";
+            } else {
+                return "gray";
+            }
+         });
 };
 
 function drawMenuInfo2(time){
@@ -351,14 +377,12 @@ function createButton(us,projection) {
         drawMenuInfo(timeExpressed);
     });
 
-    createSlider(us,projection);
 };
 
 function createSlider(us,projection){
     var y = d3.scale.ordinal()
        .domain(["Mar 15", "Apr 15","May 15", "June 15", "July 15","Aug 15","Sep 15","Oct 15","Nov 15","Dec 15","Jan 16","Feb 16","Mar 16"])
        .rangeRoundBands([0, 1000]);
-
 
     var yAxis = d3.svg.axis()
         .scale(y)
@@ -370,7 +394,7 @@ function createSlider(us,projection){
         .attr("class", "axis")
         .attr("transform", "translate(5, 0)")
         .call(yAxis);
-
+console.log(axis);
     //adds mouse events
     axis.selectAll('g')
         .each(function(d){
