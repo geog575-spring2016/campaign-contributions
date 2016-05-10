@@ -843,7 +843,7 @@ function CreateSplitLegend(){
       .text("$100,000,000")
       .attr("x", 4)
       .attr("y", 258)
-
+//adding text to legend
   legend.append("text")
       .text("$50,000,000")
       .attr("x", 8)
