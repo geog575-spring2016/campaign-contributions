@@ -1,16 +1,15 @@
 var attrArray = ["Total", "Per Capita"];
 var expressed = attrArray[0];
 var fullDate = ["March 2015", "April 2015","May 2015", "June 2015",  "July 2015","August 2015","September 2015","October 2015","November 2015","December 2015","January 2016","February 2016","March 2016"];
+var timeArray = ["March_15","April_15","May_15","June_15","July_15","August_15","September_15","October_15","November_15","December_15","January_16","February_16","March_16"];
 var timelineArray = ["Mar 15", "Apr 15","May 15", "June 15", "July 15","Aug 15","Sep 15","Oct 15","Nov 15","Dec 15","Jan 16","Feb 16","Mar 16"];
 var count = 12;
-var timeExpressed = timelineArray[12];
+var timeExpressed = timeArray[12];
 var eventArray=["Ben Carson, Donald Trump and Ted Cruz joined in election", "Rick Santorum, Hilary Clinton and Bernie Sanders joined the election","Carly Fiorina, Mike Huckabee, Martin O'Malley joined the election", "Rick Perry, Jeb Bush, Jill Stein, Bobby Jindal joined in election",  "James Webb, John Kasich joined in election","Lawrence Lessig joined the election","Rick Perry withdrawed election; South Carolina finalizes ballot for primary","First Democratic debate is held; James Webb withdrawed","Lawrence Lessig withdrawed; Alabama primary; Fourth Republican debate","Fifth Republican debate; Third Democratic debate","Third Democratic forum; Sixth and seventh Republican debates; Fourth Democratic debate","The Iowa Democratic caucus is won by Hillary Clinton; The Iowa Republican caucus is won by Ted Cruz"," Super Tuesday;Lots to stuffs.."]
 var eventExpressed = eventArray[12];
 var yearExpressedText;
 var chartHeight = 200;
 var chartWidth = 882;
-var dateScale, sliderScale, slider;
-var interval;
 var candidaterightname, candidateleftname;
 var currentFrame = 0;
 var map;
@@ -259,7 +258,7 @@ function setMap() {
 
 function drawMenuInfo(time){
     //create event and time
-    var a = timelineArray.indexOf(timeExpressed);
+    var a = timeArray.indexOf(timeExpressed);
 
     timeExpressedText = d3.select('#infoPanel')
         .append("text")
@@ -279,7 +278,7 @@ function drawMenuInfo(time){
 
 function drawMenuInfo2(time){
        //create event and time
-    var a = timelineArray.indexOf(time);
+    var a = timeArray.indexOf(time);
 
     timeExpressedText = d3.select('#infoPanel')
         .append("text")
@@ -302,12 +301,12 @@ function createButton(us,projection) {
 
     //step forward functionality
     $(".stepForward").click(function(){
-        if (count < timelineArray.length-1){
+        if (count < timeArray.length-1){
             count++;
-            timeExpressed = timelineArray[count];
+            timeExpressed = timeArray[count];
         } else {
           count = 0;
-          timeExpressed = timelineArray[count];
+          timeExpressed = timeArray[count];
         };
 
         var removeOldYear = d3.selectAll(".yearExpressedText").remove();
@@ -327,13 +326,13 @@ function createButton(us,projection) {
     });
 
     $(".stepBackward").click(function(){
-        if (count < timelineArray.length && count > 0){
+        if (count < timeArray.length && count > 0){
             count= count-1;
-            timeExpressed = timelineArray[count];
+            timeExpressed = timeArray[count];
 
         } else {
             count = 12;
-            timeExpressed = timelineArray[count];
+            timeExpressed = timeArray[count];
         };
 
         var removeOldYear = d3.selectAll(".yearExpressedText").remove();
@@ -397,9 +396,9 @@ function createSlider(us,projection){
                         .attr("font-size", "18px")
                         .attr("stroke", "#986cb3");
 
-                    timeExpressed = d;
+                   
                     count = timelineArray.indexOf(d);
-
+            timeExpressed = timeArray[count];
                     var removeOldYear = d3.selectAll(".yearExpressedText").remove();
                     var removeOldEvent = d3.selectAll(".eventExpressedText").remove();
 
@@ -419,38 +418,6 @@ function createSlider(us,projection){
         });
 }
 
-
-// function createSequencesd()
-// {
-//     var timeScale = d3.time.scale()
-//         .domain([timelineArray[0], d3.time.years(new Date(timelineArray[timelineArray.length-1]), 1)]); //domain is an array of 2 values: the first and last years in the keyArray (1973 and 2014)
-
-
-//   var axis = d3.svg.axis()
-//         .scale(timeScale)
-//         .orient("bottom")
-//         .ticks(d3.time.years, 1)
-
-//         //distance between axis line and labels
-
-
-
-//     //sets the thickness of the line between the ticks and the corresponding squares in the chart
-//     var timelineLine = axis.tickSize(1);
-
-//     //sets the margins for the timeline transform
-//     var timelineMargin = {top: 50, right: 20, bottom: 30, left:40};
-
-
-//     //draw the timeline as a g element on the chart
-//     var timeline = d3.select("#mapContainer")
-//    .append("svg")
-//         .attr("height", chartHeight)
-//         .attr("width", chartWidth)
-//         .attr('transform', 'translate(' + timelineMargin.left + ',' + (chartHeight - timelineMargin.top - timelineMargin.bottom) + ')') //set the starting x,y coordinates for where the axis will be drawn
-//         .attr("class", "timeline")
-//         .call(axis); //calls the axis function on the timeline
-// }
 
 
 function joinData(us, csvData, attribute){
@@ -590,280 +557,27 @@ function createLeftSplit(caname,us,projection){
     };
 
 
-    if(timeExpressed == timelineArray[0]){
+   
         var arc = d3.svg.arc()
             .innerRadius(0)
             .outerRadius(function(d){
-                return setRadius(d.March_15);
+                return setRadius(d[timeExpressed]);
             })
             .startAngle(Math.PI)
             .endAngle(Math.PI*2)
 
           radiusMin = d3.min(candidate_a, function(d){
-              return d.March_15
+              return d[timeExpressed]
           })
 
           radiusMax = d3.max(candidate_a, function(d){
-              return d.March_15
+              return d[timeExpressed]
           })
 
           setRadius = d3.scale.sqrt()
               .domain([radiusMin, radiusMax])
               .range([0, 40]);
 
-    } else if (timeExpressed == timelineArray[12]) {
-        var arc = d3.svg.arc()
-            .innerRadius(0)
-            .outerRadius(function(d){
-                return setRadius(d.March_16);
-            })
-            .startAngle(Math.PI)
-            .endAngle(Math.PI*2)
-      radiusMin = d3.min(candidate_a, function(d){
-          return d.March_16
-      })
-
-      radiusMax = d3.max(candidate_a, function(d){
-          return d.March_16
-      })
-
-      setRadius = d3.scale.sqrt()
-              .domain([radiusMin, radiusMax])
-              .range([0, 40]);
-
-    } else if (timeExpressed == timelineArray[1] ) {
-        var arc = d3.svg.arc()
-            .innerRadius(0)
-            .outerRadius(function(d){
-                return setRadius(d.April_15);
-            })
-            .startAngle(Math.PI)
-            .endAngle(Math.PI*2)
-
-        radiusMin = d3.min(candidate_a, function(d){
-            return d.April_15
-        })
-
-        radiusMax = d3.max(candidate_a, function(d){
-            return d.April_15
-        })
-
-        setRadius = d3.scale.sqrt()
-          .domain([radiusMin, radiusMax])
-          .range([0, 40]);
-
-    } else if (timeExpressed == timelineArray[2]) {
-        var arc = d3.svg.arc()
-            .innerRadius(0)
-            .outerRadius(function(d){
-                return setRadius(d.May_15);
-            })
-            .startAngle(Math.PI)
-            .endAngle(Math.PI*2)
-
-        radiusMin = d3.min(candidate_a, function(d){
-            return d.May_15
-        })
-
-        radiusMax = d3.max(candidate_a, function(d){
-            return d.May_15
-        })
-
-        setRadius = d3.scale.sqrt()
-          .domain([radiusMin, radiusMax])
-          .range([0, 40]);
-
-    } else if (timeExpressed == timelineArray[3]) {
-        var arc = d3.svg.arc()
-            .innerRadius(0)
-            .outerRadius(function(d){
-                return setRadius(d.June_15);
-            })
-            .startAngle(Math.PI)
-            .endAngle(Math.PI*2)
-
-        radiusMin = d3.min(candidate_a, function(d){
-            return d.June_15
-        })
-
-        radiusMax = d3.max(candidate_a, function(d){
-            return d.June_15
-        })
-
-        setRadius = d3.scale.sqrt()
-          .domain([radiusMin, radiusMax])
-          .range([0, 40]);
-
-
-    } else if (timeExpressed == timelineArray[4] ) {var arc = d3.svg.arc()
-        .innerRadius(0)
-        .outerRadius(function(d){
-            return setRadius(d.July_15);
-        })
-        .startAngle(Math.PI)
-        .endAngle(Math.PI*2)
-
-      radiusMin = d3.min(candidate_a, function(d){
-        return d.July_15
-      })
-
-      radiusMax = d3.max(candidate_a, function(d){
-        return d.July_15
-      })
-
-setRadius = d3.scale.sqrt()
-              .domain([radiusMin, radiusMax])
-              .range([0, 40]);
-}
-
-else if (timeExpressed == timelineArray[5]) {var arc = d3.svg.arc()
-        .innerRadius(0)
-        .outerRadius(function(d){
-            return setRadius(d.August_15);
-        })
-        .startAngle(Math.PI)
-        .endAngle(Math.PI*2)
-
-      radiusMin = d3.min(candidate_a, function(d){
-        return d.August_15
-      })
-
-      radiusMax = d3.max(candidate_a, function(d){
-        return d.August_15
-      })
-
-setRadius = d3.scale.sqrt()
-              .domain([radiusMin, radiusMax])
-              .range([0, 40]);
-
-}
-
-else if (timeExpressed == timelineArray[6]) {var arc = d3.svg.arc()
-        .innerRadius(0)
-        .outerRadius(function(d){
-            return setRadius(d.September_15);
-        })
-        .startAngle(Math.PI)
-        .endAngle(Math.PI*2)
-
-      radiusMin = d3.min(candidate_a, function(d){
-        return d.September_15
-      })
-
-      radiusMax = d3.max(candidate_a, function(d){
-        return d.September_15
-      })
-
-setRadius = d3.scale.sqrt()
-              .domain([radiusMin, radiusMax])
-              .range([0, 40]);
-}
-
-else if (timeExpressed == timelineArray[7]) {var arc = d3.svg.arc()
-        .innerRadius(0)
-        .outerRadius(function(d){
-            return setRadius(d.October_15);
-        })
-        .startAngle(Math.PI)
-        .endAngle(Math.PI*2)
-
-      radiusMin = d3.min(candidate_a, function(d){
-        return d.October_15
-      })
-
-      radiusMax = d3.max(candidate_a, function(d){
-        return d.October_15
-      })
-
-setRadius = d3.scale.sqrt()
-              .domain([radiusMin, radiusMax])
-              .range([0, 40]);
-}
-
-else if (timeExpressed == timelineArray[8]) {var arc = d3.svg.arc()
-        .innerRadius(0)
-        .outerRadius(function(d){
-            return setRadius(d.November_15);
-        })
-        .startAngle(Math.PI)
-        .endAngle(Math.PI*2)
-
-      radiusMin = d3.min(candidate_a, function(d){
-        return d.November_15
-      })
-
-      radiusMax = d3.max(candidate_a, function(d){
-        return d.November_15
-      })
-
-setRadius = d3.scale.sqrt()
-              .domain([radiusMin, radiusMax])
-              .range([0, 40]);
-}
-
-
-else if (timeExpressed == timelineArray[9]) {var arc = d3.svg.arc()
-        .innerRadius(0)
-        .outerRadius(function(d){
-            return setRadius(d.December_15);
-        })
-        .startAngle(Math.PI)
-        .endAngle(Math.PI*2)
-
-      radiusMin = d3.min(candidate_a, function(d){
-        return d.December_15
-      })
-
-      radiusMax = d3.max(candidate_a, function(d){
-        return d.December_15
-      })
-
-setRadius = d3.scale.sqrt()
-              .domain([radiusMin, radiusMax])
-              .range([0, 40]);
-}
-
-else if (timeExpressed == timelineArray[10]) {var arc = d3.svg.arc()
-        .innerRadius(0)
-        .outerRadius(function(d){
-            return setRadius(d.January_16);
-        })
-        .startAngle(Math.PI)
-        .endAngle(Math.PI*2)
-
-      radiusMin = d3.min(candidate_a, function(d){
-        return d.January_16
-      })
-
-      radiusMax = d3.max(candidate_a, function(d){
-        return d.January_16
-      })
-
-setRadius = d3.scale.sqrt()
-              .domain([radiusMin, radiusMax])
-              .range([0, 40]);
-}
-
-else if (timeExpressed == timelineArray[11]) {var arc = d3.svg.arc()
-        .innerRadius(0)
-        .outerRadius(function(d){
-            return setRadius(d.February_16);
-        })
-        .startAngle(Math.PI)
-        .endAngle(Math.PI*2)
-
-      radiusMin = d3.min(candidate_a, function(d){
-        return d.February_16
-      })
-
-      radiusMax = d3.max(candidate_a, function(d){
-        return d.February_16
-      })
-
-setRadius = d3.scale.sqrt()
-              .domain([radiusMin, radiusMax])
-              .range([0, 40]);
-}
 
     var candidate1 = map.append("g");
 
@@ -932,272 +646,25 @@ var candidate_b;
         };
 
 
-if(timeExpressed == timelineArray[0])
-{
  var arc2 = d3.svg.arc()
         .innerRadius(0)
         .outerRadius(function(d){
-            return setRadius(d.March_15);
+            return setRadius(d[timeExpressed]);
         })
         .startAngle(0)
         .endAngle(Math.PI)
 
       radiusMin = d3.min(candidate_b, function(d){
-        return d.March_15
+        return d[timeExpressed]
       })
 
       radiusMax = d3.max(candidate_b, function(d){
-        return d.March_15
+        return d[timeExpressed]
       })
 
 setRadius = d3.scale.sqrt()
               .domain([radiusMin, radiusMax])
               .range([0, 40]);
-}
-else if (timeExpressed == timelineArray[12])
-  {
- var arc2 = d3.svg.arc()
-        .innerRadius(0)
-        .outerRadius(function(d){
-            return setRadius(d.March_16);
-        })
-        .startAngle(0)
-        .endAngle(Math.PI)
-
-      radiusMin = d3.min(candidate_b, function(d){
-        return d.March_16
-      })
-
-      radiusMax = d3.max(candidate_b, function(d){
-        return d.March_16
-      })
-
-setRadius = d3.scale.sqrt()
-              .domain([radiusMin, radiusMax])
-              .range([0, 40]);
-}
-else if (timeExpressed == timelineArray[1])
-  {
- var arc2 = d3.svg.arc()
-        .innerRadius(0)
-        .outerRadius(function(d){
-            return setRadius(d.April_15);
-        })
-        .startAngle(0)
-        .endAngle(Math.PI)
-
-      radiusMin = d3.min(candidate_b, function(d){
-        return d.April_15
-      })
-
-      radiusMax = d3.max(candidate_b, function(d){
-        return d.April_15
-      })
-      }
-else if (timeExpressed == timelineArray[2])
-  {
- var arc2 = d3.svg.arc()
-        .innerRadius(0)
-        .outerRadius(function(d){
-            return setRadius(d.May_15);
-        })
-        .startAngle(0)
-        .endAngle(Math.PI)
-
-      radiusMin = d3.min(candidate_b, function(d){
-        return d.May_15
-      })
-
-      radiusMax = d3.max(candidate_b, function(d){
-        return d.May_15
-      })
-
-setRadius = d3.scale.sqrt()
-              .domain([radiusMin, radiusMax])
-              .range([0, 40]);
-}
-else if (timeExpressed == timelineArray[3])
-  {
- var arc2 = d3.svg.arc()
-        .innerRadius(0)
-        .outerRadius(function(d){
-            return setRadius(d.June_15);
-        })
-        .startAngle(0)
-        .endAngle(Math.PI)
-
-      radiusMin = d3.min(candidate_b, function(d){
-        return d.June_15
-      })
-
-      radiusMax = d3.max(candidate_b, function(d){
-        return d.June_15
-      })
-
-setRadius = d3.scale.sqrt()
-              .domain([radiusMin, radiusMax])
-              .range([0, 40]);
-}
-else if (timeExpressed == timelineArray[4])
-  {
- var arc2 = d3.svg.arc()
-        .innerRadius(0)
-        .outerRadius(function(d){
-            return setRadius(d.July_15);
-        })
-        .startAngle(0)
-        .endAngle(Math.PI)
-
-      radiusMin = d3.min(candidate_b, function(d){
-        return d.July_15
-      })
-      radiusMax = d3.max(candidate_b, function(d){
-        return d.July_15
-      })
-setRadius = d3.scale.sqrt()
-              .domain([radiusMin, radiusMax])
-              .range([0, 40]);
-}
-else if (timeExpressed == timelineArray[5])
-  {
- var arc2 = d3.svg.arc()
-        .innerRadius(0)
-        .outerRadius(function(d){
-            return setRadius(d.August_15);
-        })
-        .startAngle(0)
-        .endAngle(Math.PI)
-
-      radiusMin = d3.min(candidate_b, function(d){
-        return d.August_15
-      })
-      radiusMax = d3.max(candidate_b, function(d){
-        return d.August_15
-      })
-      setRadius = d3.scale.sqrt()
-              .domain([radiusMin, radiusMax])
-              .range([0, 40]);
-}
-else if (timeExpressed == timelineArray[6])
-  {
- var arc2 = d3.svg.arc()
-        .innerRadius(0)
-        .outerRadius(function(d){
-            return setRadius(d.September_15);
-        })
-        .startAngle(0)
-        .endAngle(Math.PI)
-
-      radiusMin = d3.min(candidate_b, function(d){
-        return d.September_15
-      })
-      radiusMax = d3.max(candidate_b, function(d){
-        return d.September_15
-      })
-      setRadius = d3.scale.sqrt()
-              .domain([radiusMin, radiusMax])
-              .range([0, 10]);
-}
-else if (timeExpressed == timelineArray[7])
-  {
- var arc2 = d3.svg.arc()
-        .innerRadius(0)
-        .outerRadius(function(d){
-            return setRadius(d.October_15);
-        })
-        .startAngle(0)
-        .endAngle(Math.PI)
-
-      radiusMin = d3.min(candidate_b, function(d){
-        return d.October_15
-      })
-      radiusMax = d3.max(candidate_b, function(d){
-        return d.October_15
-      })
-      setRadius = d3.scale.sqrt()
-              .domain([radiusMin, radiusMax])
-              .range([0, 40]);
-}
-else if (timeExpressed == timelineArray[8])
-  {
- var arc2 = d3.svg.arc()
-        .innerRadius(0)
-        .outerRadius(function(d){
-            return setRadius(d.November_15);
-        })
-        .startAngle(0)
-        .endAngle(Math.PI)
-
-      radiusMin = d3.min(candidate_b, function(d){
-        return d.November_15
-      })
-      radiusMax = d3.max(candidate_b, function(d){
-        return d.November_15
-      })
-      setRadius = d3.scale.sqrt()
-              .domain([radiusMin, radiusMax])
-              .range([0, 40]);
-}
-else if (timeExpressed == timelineArray[9])
-  {
- var arc2 = d3.svg.arc()
-        .innerRadius(0)
-        .outerRadius(function(d){
-            return setRadius(d.December_15);
-        })
-        .startAngle(0)
-        .endAngle(Math.PI)
-
-      radiusMin = d3.min(candidate_b, function(d){
-        return d.December_15
-      })
-      radiusMax = d3.max(candidate_b, function(d){
-        return d.December_15
-      })
-      setRadius = d3.scale.sqrt()
-              .domain([radiusMin, radiusMax])
-              .range([0, 40]);
-}
-else if (timeExpressed == timelineArray[10])
-  {
- var arc2 = d3.svg.arc()
-        .innerRadius(0)
-        .outerRadius(function(d){
-            return setRadius(d.January_16);
-        })
-        .startAngle(0)
-        .endAngle(Math.PI)
-
-      radiusMin = d3.min(candidate_b, function(d){
-        return d.January_16
-      })
-      radiusMax = d3.max(candidate_b, function(d){
-        return d.January_16
-      })
-      setRadius = d3.scale.sqrt()
-              .domain([radiusMin, radiusMax])
-              .range([0, 40]);
-}
-else if (timeExpressed == timelineArray[11])
-  {
- var arc2 = d3.svg.arc()
-        .innerRadius(0)
-        .outerRadius(function(d){
-            return setRadius(d.February_16);
-        })
-        .startAngle(0)
-        .endAngle(Math.PI)
-
-      radiusMin = d3.min(candidate_b, function(d){
-        return d.February_16
-      })
-      radiusMax = d3.max(candidate_b, function(d){
-        return d.February_16
-      })
-      setRadius = d3.scale.sqrt()
-              .domain([radiusMin, radiusMax])
-              .range([0, 40]);
-}
 
 
     var candidate2 = map.append("g");
