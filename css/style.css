@@ -13,15 +13,6 @@ position: absolute;
     margin: 5% 0 0 1%;
 }
 
-.pageTitle {
-    position: absolute;
-    top: 1%;
-    right: 25%;
-    font-size: 50px;
-    font-weight: bold;
-    font-family: Garamond;
-}
-
 .map {
   padding-top: 25px;
 }
@@ -31,15 +22,28 @@ position: absolute;
   /*margin-top: 10px;*/
   /*margin-top: 12px;*/
   padding: 5px;
-  font-family: Garamond;
+  font-family: 'Roboto', sans-serif;
 }
 
 h1 {
   margin: 10px;
+  font-family: Chevalier;
+
 }
-.Classification1
-{position: relative;
-  bottom: 40px;}
+
+@font-face {
+    font-family: Chevalier;
+    src: url(Chevalier.ttf);
+
+}
+
+div {
+    font-family: myFirstFont;
+}
+
+.Classification1{
+    position: relative;
+    bottom: 40px;}
 
 #sideColumn {
   position: absolute;
@@ -52,33 +56,31 @@ h1 {
   margin-right: -4%;
 }
 
-
+.Classification1 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: normal;
+    font-size: 1.3em;
+}
 .dropdownLeft {
   padding: 5px;
   position: relative;
-  top: 90px;
+  top: 95px;
   left: -15px;
   margin-bottom: 6px;
   color: purple;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.2em;
 }
 
 .dropdownRight {
-  padding: 2px;
+  padding: 5px;
   position: relative;
   top: 95px;
   left: -15px;
   margin-top: 6px;
   color: #FFA30D;
-}
-
-.leftsplit {
-  stroke: white;
-  stroke-width: .3;
-}
-
-.rightsplit {
-  stroke: white;
-  stroke-width: .3;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.2em;
 }
 
 .axis path,
@@ -91,27 +93,26 @@ h1 {
     shape-rendering: crispEdges;
 }
 
-.axis
-{  position: relative;
-  top: 450px;
-  height: 50px;
-
-  width:1000px;}
-
-.axis text {
-    font-family: garamond;
-    font-size: 1em;
-
-
+.axis {
+    position: relative;
+    top: 450px;
+    height: 50px;
+    width:1000px;
 }
 
+.axis text {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.1em;
+
+}
 
 
 .yearExpressedText {
     float: left;
     position:relative;
     top:30px;
-    font-family: garamond;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 600;
 }
 
 .eventExpressedText
@@ -119,8 +120,9 @@ h1 {
     float: left;
     position:relative;
     top:30px;
-    font-family: garamond;
-    font-size:20px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
 
 }
 
@@ -158,12 +160,12 @@ margin-right: 10px;
 margin-top: -10px;
 background-color: blue;}
 
-.others
-{height:40px;
-  width:40px;
-margin-right: 10px;
-margin-top: -10px;
-background-color: gray;}
+.others{
+    height:40px;
+    width:40px;
+    margin-right: 10px;
+    margin-top: -10px;
+    background-color: gray;}
 
 .infolabel {
     position: absolute;

@@ -4,8 +4,6 @@ var fullDate = ["March 2015", "April 2015","May 2015", "June 2015",  "July 2015"
 var timelineArray = ["March_15", "April_15","May_15", "June_15", "July_15","August_15","September_15","October_15","November_15","December_15","January_16","February_16","March_16"];
 var count = 12;
 var timeExpressed = timelineArray[12];
-var eventArray=["Ben Carson, Donald Trump and Ted Cruz joined in election", "Rick Santorum, Hilary Clinton and Bernie Sanders joined the election","Carly Fiorina, Mike Huckabee, Martin O'Malley joined the election", "Rick Perry, Jeb Bush, Jill Stein, Bobby Jindal joined in election",  "James Webb, John Kasich joined in election","Lawrence Lessig joined the election","Rick Perry withdrawed election; South Carolina finalizes ballot for primary","First Democratic debate is held; James Webb withdrawed","Lawrence Lessig withdrawed; Alabama primary; Fourth Republican debate","Fifth Republican debate; Third Democratic debate","Third Democratic forum; Sixth and seventh Republican debates; Fourth Democratic debate","The Iowa Democratic caucus is won by Hillary Clinton; The Iowa Republican caucus is won by Ted Cruz"," Super Tuesday;Lots to stuffs.."]
-var eventExpressed = eventArray[12];
 var yearExpressedText;
 var chartHeight = 200;
 var chartWidth = 882;
@@ -20,7 +18,7 @@ var projection;
 var setRadius;
 var radioName = expressed;
 var width = window.innerWidth * 0.645,
-    height = 470;
+    height = 650;
 var attributeNames = [];
 var csvArray = [];
 var oldcsvArray = [];
@@ -32,7 +30,6 @@ window.onload = setMap();
 // set the width and height of the map
 function setMap() {
 
-
     // creating the map as an svg and giving it attributes of width and height
     map = d3.select("#mapContainer")
         .append("svg")
@@ -42,7 +39,7 @@ function setMap() {
 
     projection = d3.geo.albersUsa()
     // no center because it's already centered on the US as part of the projection code
-        .scale(1000)
+        .scale(1300)
         .translate([width / 2, height / 2.2]); // keeps map centered in the svg container
 
     // creating a path generator to draw the projection
@@ -89,11 +86,12 @@ function setMap() {
         .defer(d3.csv, "data/GoodCSVs/ScottWalker.csv")
         .defer(d3.csv, "data/GoodCSVs/JamesWebb.csv")
         .defer(d3.csv, "data/total_contributions_percandidate_perstate.csv")
+        .defer(d3.csv, "data/events.csv")
         .defer(d3.json,"data/US_shapefile.topojson")
         .await(callback); // waits til both sets of data are loaded before it sends the data to the callback function
 
     // callback function that takes the data as two parameters and an error parameter that will report any errors that occur
-    function callback(error, Bush, Carson, Christie, Clinton, Cruz, Fiorina, Graham, Huckabee, Jindal, Kasich, Lessig, OMalley, Pataki, Paul, Perry, Rubio, Sanders, Santorum, Stein, Trump, Walker, Webb, total, unitedStates) {
+    function callback(error, Bush, Carson, Christie, Clinton, Cruz, Fiorina, Graham, Huckabee, Jindal, Kasich, Lessig, OMalley, Pataki, Paul, Perry, Rubio, Sanders, Santorum, Stein, Trump, Walker, Webb, total, events, unitedStates) {
 
         total.forEach(function(d) {
             d.Lat= +d.Lat
@@ -253,9 +251,10 @@ function setMap() {
          setCircles (path,map,total,projection, us);
          createDropdownLeft(us,projection);
          createDropdownRight(us,projection);
-         createradio(total,path,map,Bush, Carson, Christie, Clinton, Cruz, Fiorina, Graham, Huckabee, Jindal, Kasich, Lessig, OMalley, Pataki, Paul, Perry, Rubio, Sanders, Santorum, Stein, Trump, Walker, Webb,total, projection,us);
+         createradio(total, path,map,Bush, Carson, Christie, Clinton, Cruz, Fiorina, Graham, Huckabee, Jindal, Kasich, Lessig, OMalley, Pataki, Paul, Perry, Rubio, Sanders, Santorum, Stein, Trump, Walker, Webb,total, projection,us);
          drawMenuInfo(timeExpressed);
-         createButton(us,projection);
+         createButton(us, projection)
+        //  displayEvents(events);
     };
 };
 
@@ -276,30 +275,14 @@ function drawMenuInfo(time){
         .attr("x", 0)
         .attr("y", 0)
         .attr("class", "eventExpressedText menu-info")
-        .text(eventArray[a]);
+        // .html(displayEvents);
 };
 
-function drawMenuInfo2(time){
-       //create event and time
-    var a = timelineArray.indexOf(time);
-    console.log(a);
-
-    timeExpressedText = d3.select('#infoPanel')
-        .append("text")
-        .attr("x", 0)
-        .attr("y", 0)
-        .attr("class", "yearExpressedText menu-info")
-        .text(fullDate[a])
-        .style({'font-size':'36px', 'font-weight': 'strong'});
-
-
-    eventExpressedText = d3.select('#infoPanel')
-        .append("text")
-        .attr("x", 0)
-        .attr("y", 0)
-        .attr("class", "eventExpressedText menu-info")
-        .text(eventArray[a]);
-};
+// function displayEvents(events) {
+//
+//     var monthEvents = ;
+//
+// }
 
 function createButton(us,projection) {
 
