@@ -251,7 +251,7 @@ function setMap() {
          createDropdownLeft(us,projection);
          createDropdownRight(us,projection);
          createradio(total,path,map,Bush, Carson, Christie, Clinton, Cruz, Fiorina, Graham, Huckabee, Jindal, Kasich, Lessig, OMalley, Pataki, Paul, Perry, Rubio, Sanders, Santorum, Stein, Trump, Walker, Webb,total, projection,us);
-         drawMenuInfo(timeExpressed);
+         //drawMenuInfo(timeExpressed);
          //createButton(us,projection);
     };
 };
@@ -543,6 +543,7 @@ function createradio(data,path,map,Bush, Carson, Christie, Clinton, Cruz, Fiorin
             if (d == "Compare Candidates"){
               //console.log("Hi");
                   //changeAttribute(this.value, data);
+                  drawMenuInfo(timeExpressed);
                   d3.selectAll(".circles").remove();
                   createButton(us,projection);
                   $(".stepForward").attr("disabled", false);
@@ -555,8 +556,9 @@ function createradio(data,path,map,Bush, Carson, Christie, Clinton, Cruz, Fiorin
                 d3.selectAll(".rightsplit").remove();
                 setCircles2 (path, map, data, projection, us)
                 changeAttribute(this.value, data);
-                // $(".yearExpressedText menu-info").text("March 2016");
-                // $(".eventExpressedText menu-info").text("March 2016");
+                $(".yearExpressedText menu-info").remove();
+                $(".eventExpressedText menu-info").remove();
+                $(".axis").remove();
                 $(".stepForward").attr("disabled", true);
                 $(".stepBackward").attr("disabled", true);
                 $('.dropdownLeft').attr("disabled", true);
@@ -569,8 +571,9 @@ function createradio(data,path,map,Bush, Carson, Christie, Clinton, Cruz, Fiorin
               d3.selectAll(".rightsplit").remove();
               setCircles2 (path, map, data, projection, us)
               changeAttribute(this.value, data);
-              //$(".yearExpressedText").remove();
-              //$(".eventExpressedText").remove();
+              $(".yearExpressedText").remove();
+              $(".eventExpressedText").remove();
+              $(".axis").remove();
               $(".stepForward").attr("disabled", true);
               $(".stepBackward").attr("disabled", true);
               $('.dropdownLeft').attr("disabled", true);
