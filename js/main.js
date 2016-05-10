@@ -207,11 +207,11 @@ function setMap() {
             d.Lon= +d.Lon
             d.state_total= +d.state_total
         });
-
-        total.sort(function (a, b) {
-            return b.Total - a.Total;
-            return b.PerCapita - a.PerCapita;
-        });
+        //
+        // total.sort(function (a, b) {
+        //     return b.Total - a.Total;
+        //     return b.PerCapita - a.PerCapita;
+        // });
 
 
         // translate the topojson to GeoJSON within the DOM
@@ -252,7 +252,7 @@ function setMap() {
          createDropdownRight(us,projection);
          createradio(total,path,map,Bush, Carson, Christie, Clinton, Cruz, Fiorina, Graham, Huckabee, Jindal, Kasich, Lessig, OMalley, Pataki, Paul, Perry, Rubio, Sanders, Santorum, Stein, Trump, Walker, Webb,total, projection,us);
          drawMenuInfo(timeExpressed);
-         createButton(us,projection);
+         //createButton(us,projection);
     };
 };
 
@@ -396,7 +396,7 @@ function createSlider(us,projection){
                         .attr("font-size", "18px")
                         .attr("stroke", "#986cb3");
 
-                   
+
                     count = timelineArray.indexOf(d);
             timeExpressed = timeArray[count];
                     var removeOldYear = d3.selectAll(".yearExpressedText").remove();
@@ -466,6 +466,7 @@ function setCircles (path, map, data, projection, us){
             .attr("class", function(d){
                 return "circles " + d.state;
             })
+            .attr("id", "radioCircle")
             .attr("fill", "black")
             .attr("fill-opacity", 0.5)
             .attr("stroke", "white")
@@ -485,10 +486,39 @@ function setCircles (path, map, data, projection, us){
 };
 
 
+function setCircles2 (path, map, data, projection, us){
+
+      var circles = map.selectAll(".circles")
+            .data(data)
+            .enter()
+            .append("circle")
+            .attr("class", function(d){
+                return "circles " + d.state;
+            })
+            .attr("id", "redraw")
+            .attr("fill", "black")
+            .attr("fill-opacity", 0.5)
+            .attr("stroke", "white")
+            .attr("stroke-width", 0.7)
+            .attr("cx", function(d) {
+                return projection([d.Lon, d.Lat])[0];
+            })
+            .attr("cy", function(d) { return projection([d.Lon, d.Lat])[1];
+            })
+            .on("mouseover", highlightCircles)
+            .on("mouseout", dehighlightCircles);
+
+      var desc = circles.append("desc")
+            .text('{"stroke": "white", "stroke-width": "0.7", "fill-opacity": "0.5"}');
+
+        updateCircles(circles,data);
+};
+
 function createradio(data,path,map,Bush, Carson, Christie, Clinton, Cruz, Fiorina, Graham, Huckabee, Jindal, Kasich, Lessig, OMalley, Pataki, Paul, Perry, Rubio, Sanders, Santorum, Stein, Trump, Walker, Webb,total, projection,us){
 
-    var filterPhases = ["Total", "PerCapita"],
+    var filterPhases = ["Total", "PerCapita", "Compare Candidates"],
     j=0;
+    //console.log(filterPhases);
 
     var form1 = d3.select("#sideColumn")
         .append("form")
@@ -499,7 +529,6 @@ function createradio(data,path,map,Bush, Carson, Christie, Clinton, Cruz, Fiorin
         .enter()
         .append("span");
 
-
     labelEnter.append("input")
         .attr({
             type: "radio",
@@ -508,14 +537,51 @@ function createradio(data,path,map,Bush, Carson, Christie, Clinton, Cruz, Fiorin
         value: function(d) {return d;}
         })
         .on("change", function(d){
-            changeAttribute(this.value, data);
+            //changeAttribute(this.value, data);
             radioName = d;
+            //console.log(d);
+            if (d == "Compare Candidates"){
+              //console.log("Hi");
+                  //changeAttribute(this.value, data);
+                  d3.selectAll(".circles").remove();
+                  createButton(us,projection);
+                  $(".stepForward").attr("disabled", false);
+                  $(".stepBackward").attr("disabled", false);
+                  $('.dropdownLeft').attr("disabled", false);
+                  $('.dropdownRight').attr("disabled", false);
+                };
+            if (d == "Total"){
+                d3.selectAll(".leftsplit").remove();
+                d3.selectAll(".rightsplit").remove();
+                setCircles2 (path, map, data, projection, us)
+                changeAttribute(this.value, data);
+                // $(".yearExpressedText menu-info").text("March 2016");
+                // $(".eventExpressedText menu-info").text("March 2016");
+                $(".stepForward").attr("disabled", true);
+                $(".stepBackward").attr("disabled", true);
+                $('.dropdownLeft').attr("disabled", true);
+                $('.dropdownRight').attr("disabled", true);
+                //changeAttribute(this.value, data);
+                console.log(this.value);
+                };
+            if (d == "PerCapita"){
+              d3.selectAll(".leftsplit").remove();
+              d3.selectAll(".rightsplit").remove();
+              setCircles2 (path, map, data, projection, us)
+              changeAttribute(this.value, data);
+              //$(".yearExpressedText").remove();
+              //$(".eventExpressedText").remove();
+              $(".stepForward").attr("disabled", true);
+              $(".stepBackward").attr("disabled", true);
+              $('.dropdownLeft').attr("disabled", true);
+              $('.dropdownRight').attr("disabled", true);
+              };
+              console.log(this.value);
         })
 
     .property("checked", function(d, i) {return i===j;})
 
-    labelEnter.append("label").text(function(d) {return d;});
-
+    labelEnter.append("label").text(function(d) {return d;})
 };
 
 function changeAttribute(attribute, data){
@@ -523,9 +589,31 @@ function changeAttribute(attribute, data){
     expressed = attribute;
     var circles = d3.selectAll(".circles");
     updateCircles(circles, data);
+    var circles2 = d3.selectAll("#redraw");
+    updateCircles2(circles, data);
+
+
 }
 
 function updateCircles(circles, data){
+    var domainArray = [];
+    for (var i=0; i<data.length; i++){
+        var val = parseFloat(data[i][expressed]);
+        domainArray.push(val);
+    };
+        radiusMin = Math.min.apply(Math, domainArray);
+        radiusMax = Math.max.apply(Math, domainArray);
+
+        setRadius = d3.scale.sqrt()
+            .range([0, 100])
+            .domain([radiusMin, radiusMax]);
+    //create a second svg element to hold the bar chart
+    var circleRadius= circles.attr("r", function(d){
+        return setRadius(d[expressed]);
+    });
+};
+
+function updateCircles2(circles, data){
     var domainArray = [];
     for (var i=0; i<data.length; i++){
         var val = parseFloat(data[i][expressed]);
@@ -547,7 +635,7 @@ function updateCircles(circles, data){
 function createLeftSplit(caname,us,projection){
 
     var candidate_a;
-    removeCircles = d3.selectAll(".circles").remove();
+    removeCircles = d3.selectAll("#radioCircle").remove();
     remorveSplit = d3.selectAll(".leftsplit").remove();
 
     for (var i=0; i<attributeNames.length; i++){
@@ -556,8 +644,6 @@ function createLeftSplit(caname,us,projection){
         }
     };
 
-
-   
         var arc = d3.svg.arc()
             .innerRadius(0)
             .outerRadius(function(d){
@@ -609,11 +695,12 @@ function createLeftSplit(caname,us,projection){
 };
 
 //functin to create dropdown 1 for candidates
-function createDropdownLeft(us,projection){
+function createDropdownLeft(us,projection, data){
 
     var dropdown = d3.select("#sideColumn")
         .append("select")
         .attr("class", "dropdownLeft")
+        .attr("disabled", "true")
         .on("change", function(){
             d3.selectAll(".leftsplit").remove();
             candidateleftname = this.value;
@@ -633,10 +720,13 @@ function createDropdownLeft(us,projection){
         .attr("value", function(d){ return d })
         .text(function(d){ return d });
 
+
+
+
 };
 
 function createRightSplit(caname,us,projection){
-  var removeCircles = d3.selectAll(".circles").remove();
+  var removeCircles = d3.selectAll("#radioCircle").remove();
   var removeright = d3.selectAll(".rightsplit").remove();
 var candidate_b;
 
@@ -702,6 +792,7 @@ function createDropdownRight(us,projection){
     var dropdown = d3.select("#sideColumn")
         .append("select")
         .attr("class", "dropdownRight")
+        .attr("disabled", "true")
         .on("change", function(){
             d3.selectAll(".rightsplit").remove();
             candidaterightname = this.value;
@@ -711,7 +802,7 @@ function createDropdownRight(us,projection){
     //add initial option
     var titleOption = dropdown.append("option")
         .attr("class", "titleOption")
-        //.attr("disabled", "true")
+        //.attr("disabled", "disabled")
         .text("Select a Candidate or Party");
 
     //add attribute name options
