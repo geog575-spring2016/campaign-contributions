@@ -102,13 +102,13 @@ h1 {
     font-family: garamond;
     font-size: 1em;
 
-    
+
 }
 
 
 
 .yearExpressedText {
-    float: left; 
+    float: left;
     position:relative;
     top:30px;
     font-family: garamond;
@@ -116,12 +116,12 @@ h1 {
 
 .eventExpressedText
 {/*width:100px;*/
-    float: left; 
+    float: left;
     position:relative;
     top:30px;
     font-family: garamond;
     font-size:20px;
-    
+
 }
 
 .stepForward
@@ -165,3 +165,19 @@ margin-right: 10px;
 margin-top: -10px;
 background-color: gray;}
 
+.infolabel {
+    position: absolute;
+    min-height: 50px;
+    min-width: 100px;
+    color: #fff;
+    background-color: #000;
+    border: solid thin #fff;
+    padding: 5px 10px;
+}
+
+.infolabel h1 {
+    margin: 0 20px 0 0;
+    padding: 0;
+    display: inline-block;
+    line-height: 1em;
+}

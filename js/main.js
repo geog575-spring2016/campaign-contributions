@@ -24,6 +24,8 @@ var width = window.innerWidth * 0.645,
 var attributeNames = [];
 var csvArray = [];
 var oldcsvArray = [];
+var format = d3.format(",");
+
 
 
 window.onload = setMap();
@@ -500,7 +502,7 @@ function setCircles (path, map, data, projection, us){
             .attr("class", function(d){
                 return "circles " + d.state_total + d.state;
             })
-            .attr("fill", "black")
+            .attr("fill", "#666")
             .attr("fill-opacity", 0.5)
             .attr("stroke", "white")
             .attr("stroke-width", 0.7)
@@ -519,7 +521,7 @@ function setCircles (path, map, data, projection, us){
 };
 
 
-function createradio(data,path,map,Bush, Carson, Christie, Clinton, Cruz, Fiorina, Graham, Huckabee, Jindal, Kasich, Lessig, OMalley, Pataki, Paul, Perry, Rubio, Sanders, Santorum, Stein, Trump, Walker, Webb,total, projection,us){
+function createradio(data, path, map, Bush, Carson, Christie, Clinton, Cruz, Fiorina, Graham, Huckabee, Jindal, Kasich, Lessig, OMalley, Pataki, Paul, Perry, Rubio, Sanders, Santorum, Stein, Trump, Walker, Webb,total, projection,us){
 
     var filterPhases = ["Total", "PerCapita"],
     j=0;
@@ -569,7 +571,7 @@ function updateCircles(circles, data){
         radiusMax = Math.max.apply(Math, domainArray);
 
         setRadius = d3.scale.sqrt()
-            .range([0, 100])
+            .range([0, 70])
             .domain([radiusMin, radiusMax]);
     //create a second svg element to hold the bar chart
     var circleRadius= circles.attr("r", function(d){
@@ -610,7 +612,7 @@ function createLeftSplit(caname,us,projection){
 
           setRadius = d3.scale.sqrt()
               .domain([radiusMin, radiusMax])
-              .range([0, 40]);
+              .range([0, 70]);
 
     } else if (timeExpressed == timelineArray[12]) {
         var arc = d3.svg.arc()
@@ -630,7 +632,7 @@ function createLeftSplit(caname,us,projection){
 
       setRadius = d3.scale.sqrt()
               .domain([radiusMin, radiusMax])
-              .range([0, 40]);
+              .range([0, 70]);
 
     } else if (timeExpressed == timelineArray[1] ) {
         var arc = d3.svg.arc()
@@ -651,7 +653,7 @@ function createLeftSplit(caname,us,projection){
 
         setRadius = d3.scale.sqrt()
           .domain([radiusMin, radiusMax])
-          .range([0, 40]);
+          .range([0, 70]);
 
     } else if (timeExpressed == timelineArray[2]) {
         var arc = d3.svg.arc()
@@ -672,7 +674,7 @@ function createLeftSplit(caname,us,projection){
 
         setRadius = d3.scale.sqrt()
           .domain([radiusMin, radiusMax])
-          .range([0, 40]);
+          .range([0, 70]);
 
     } else if (timeExpressed == timelineArray[3]) {
         var arc = d3.svg.arc()
@@ -693,7 +695,7 @@ function createLeftSplit(caname,us,projection){
 
         setRadius = d3.scale.sqrt()
           .domain([radiusMin, radiusMax])
-          .range([0, 40]);
+          .range([0, 70]);
 
 
     } else if (timeExpressed == timelineArray[4] ) {var arc = d3.svg.arc()
@@ -714,7 +716,7 @@ function createLeftSplit(caname,us,projection){
 
 setRadius = d3.scale.sqrt()
               .domain([radiusMin, radiusMax])
-              .range([0, 40]);
+              .range([0, 70]);
 }
 
 else if (timeExpressed == timelineArray[5]) {var arc = d3.svg.arc()
@@ -735,7 +737,7 @@ else if (timeExpressed == timelineArray[5]) {var arc = d3.svg.arc()
 
 setRadius = d3.scale.sqrt()
               .domain([radiusMin, radiusMax])
-              .range([0, 40]);
+              .range([0, 70]);
 
 }
 
@@ -757,7 +759,7 @@ else if (timeExpressed == timelineArray[6]) {var arc = d3.svg.arc()
 
 setRadius = d3.scale.sqrt()
               .domain([radiusMin, radiusMax])
-              .range([0, 40]);
+              .range([0, 70]);
 }
 
 else if (timeExpressed == timelineArray[7]) {var arc = d3.svg.arc()
@@ -778,7 +780,7 @@ else if (timeExpressed == timelineArray[7]) {var arc = d3.svg.arc()
 
 setRadius = d3.scale.sqrt()
               .domain([radiusMin, radiusMax])
-              .range([0, 40]);
+              .range([0, 70]);
 }
 
 else if (timeExpressed == timelineArray[8]) {var arc = d3.svg.arc()
@@ -799,7 +801,7 @@ else if (timeExpressed == timelineArray[8]) {var arc = d3.svg.arc()
 
 setRadius = d3.scale.sqrt()
               .domain([radiusMin, radiusMax])
-              .range([0, 40]);
+              .range([0, 70]);
 }
 
 
@@ -821,7 +823,7 @@ else if (timeExpressed == timelineArray[9]) {var arc = d3.svg.arc()
 
 setRadius = d3.scale.sqrt()
               .domain([radiusMin, radiusMax])
-              .range([0, 40]);
+              .range([0, 70]);
 }
 
 else if (timeExpressed == timelineArray[10]) {var arc = d3.svg.arc()
@@ -842,7 +844,7 @@ else if (timeExpressed == timelineArray[10]) {var arc = d3.svg.arc()
 
 setRadius = d3.scale.sqrt()
               .domain([radiusMin, radiusMax])
-              .range([0, 40]);
+              .range([0, 70]);
 }
 
 else if (timeExpressed == timelineArray[11]) {var arc = d3.svg.arc()
@@ -863,7 +865,7 @@ else if (timeExpressed == timelineArray[11]) {var arc = d3.svg.arc()
 
 setRadius = d3.scale.sqrt()
               .domain([radiusMin, radiusMax])
-              .range([0, 40]);
+              .range([0, 70]);
 }
 
     var candidate1 = map.append("g");
@@ -954,7 +956,7 @@ if(timeExpressed == timelineArray[0])
 
 setRadius = d3.scale.sqrt()
               .domain([radiusMin, radiusMax])
-              .range([0, 40]);
+              .range([0, 70]);
 }
 else if (timeExpressed == timelineArray[12])
   {
@@ -976,7 +978,7 @@ else if (timeExpressed == timelineArray[12])
 
 setRadius = d3.scale.sqrt()
               .domain([radiusMin, radiusMax])
-              .range([0, 40]);
+              .range([0, 70]);
 }
 else if (timeExpressed == timelineArray[1])
   {
@@ -1016,7 +1018,7 @@ else if (timeExpressed == timelineArray[2])
 
 setRadius = d3.scale.sqrt()
               .domain([radiusMin, radiusMax])
-              .range([0, 40]);
+              .range([0, 70]);
 }
 else if (timeExpressed == timelineArray[3])
   {
@@ -1038,7 +1040,7 @@ else if (timeExpressed == timelineArray[3])
 
 setRadius = d3.scale.sqrt()
               .domain([radiusMin, radiusMax])
-              .range([0, 40]);
+              .range([0, 70]);
 }
 else if (timeExpressed == timelineArray[4])
   {
@@ -1058,7 +1060,7 @@ else if (timeExpressed == timelineArray[4])
       })
 setRadius = d3.scale.sqrt()
               .domain([radiusMin, radiusMax])
-              .range([0, 40]);
+              .range([0, 70]);
 }
 else if (timeExpressed == timelineArray[5])
   {
@@ -1078,7 +1080,7 @@ else if (timeExpressed == timelineArray[5])
       })
       setRadius = d3.scale.sqrt()
               .domain([radiusMin, radiusMax])
-              .range([0, 40]);
+              .range([0, 70]);
 }
 else if (timeExpressed == timelineArray[6])
   {
@@ -1118,7 +1120,7 @@ else if (timeExpressed == timelineArray[7])
       })
       setRadius = d3.scale.sqrt()
               .domain([radiusMin, radiusMax])
-              .range([0, 40]);
+              .range([0, 70]);
 }
 else if (timeExpressed == timelineArray[8])
   {
@@ -1138,7 +1140,7 @@ else if (timeExpressed == timelineArray[8])
       })
       setRadius = d3.scale.sqrt()
               .domain([radiusMin, radiusMax])
-              .range([0, 40]);
+              .range([0, 70]);
 }
 else if (timeExpressed == timelineArray[9])
   {
@@ -1158,7 +1160,7 @@ else if (timeExpressed == timelineArray[9])
       })
       setRadius = d3.scale.sqrt()
               .domain([radiusMin, radiusMax])
-              .range([0, 40]);
+              .range([0, 70]);
 }
 else if (timeExpressed == timelineArray[10])
   {
@@ -1178,7 +1180,7 @@ else if (timeExpressed == timelineArray[10])
       })
       setRadius = d3.scale.sqrt()
               .domain([radiusMin, radiusMax])
-              .range([0, 40]);
+              .range([0, 70]);
 }
 else if (timeExpressed == timelineArray[11])
   {
@@ -1198,7 +1200,7 @@ else if (timeExpressed == timelineArray[11])
       })
       setRadius = d3.scale.sqrt()
               .domain([radiusMin, radiusMax])
-              .range([0, 40]);
+              .range([0, 70]);
 }
 
 
@@ -1271,10 +1273,11 @@ function CreateSplitLegend(minRadius, maxRadius){
 function highlightCircles(data) {
     var selected = d3.selectAll("." + data.state_total + data.state)
         .style( {
-            "stroke": "#666",
+            "stroke": "#000",
             "stroke-width": "0.7",
             "fill-opacity": "1"
         });
+    setLabelCircles(data);
 };
 
 function dehighlightCircles (data) {
@@ -1300,6 +1303,9 @@ function dehighlightCircles (data) {
 
         return styleObject[styleName];
     };
+
+    d3.select(".infolabel")
+        .remove();
 };
 
 function highlightSplitsL(data) {
@@ -1310,6 +1316,7 @@ function highlightSplitsL(data) {
             "stroke-width": "0.7",
             "fill-opacity": "1"
         });
+    setLabelSplits(data)
 };
 
 function dehighlightSplitsL (data) {
@@ -1320,6 +1327,8 @@ function dehighlightSplitsL (data) {
         "stroke-width": "0.5",
         "fill-opacity": "0.7"
     });
+    d3.select(".infolabel")
+        .remove();
 };
 
 function highlightSplitsR(data) {
@@ -1330,6 +1339,7 @@ function highlightSplitsR(data) {
             "stroke-width": "0.7",
             "fill-opacity": "1"
         });
+    setLabelSplits(data)
 };
 
 function dehighlightSplitsR(data) {
@@ -1340,23 +1350,35 @@ function dehighlightSplitsR(data) {
         "stroke-width": "0.5",
         "fill-opacity": "0.7"
     });
+    d3.select(".infolabel")
+        .remove();
 };
 
-function setLabel(data){
+function setLabelCircles(data){
     //label content
-    var labelAttribute = "<h1>" + props[expressed] +
-        "</h1><b>" + expressed + "</b>";
+    var labelAttribute = "<h1>" + data.name +
+        "</h1><br><h2<b>$" + format(d3.round(data.Total, 0)) + "</b></h2><br><h2<b>$" + format(d3.round(data.PerCapita, 2)) + "</b></h2>";
 
     //create info label div
-    var infolabel = d3.select("body")
-        .append("div")
+    var infolabel = d3.select("#infoPanel")
+        .append("text")
         .attr({
             "class": "infolabel",
             "id": data.state + "_label"
         })
         .html(labelAttribute);
+};
+function setLabelSplits(data){
+    //label content
+    var labelAttribute = "<h1>" + data.name +
+        "</h1><br><h2<b>$" + format(d3.round(data.state_total, 0)) + "</b></h2>";
 
-    var regionName = infolabel.append("div")
-        .attr("class", "labelname")
-        .html(data.March_16);
+    //create info label div
+    var infolabel = d3.select("#infoPanel")
+        .append("text")
+        .attr({
+            "class": "infolabel",
+            "id": data.state + "_label"
+        })
+        .html(labelAttribute);
 };
