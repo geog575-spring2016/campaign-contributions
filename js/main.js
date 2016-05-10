@@ -5,8 +5,6 @@ var timeArray = ["March_15","April_15","May_15","June_15","July_15","August_15",
 var timelineArray = ["Mar 15", "Apr 15","May 15", "June 15", "July 15","Aug 15","Sep 15","Oct 15","Nov 15","Dec 15","Jan 16","Feb 16","Mar 16"];
 var count = 12;
 var timeExpressed = timeArray[12];
-var eventArray=["Ben Carson, Donald Trump and Ted Cruz joined in election", "Rick Santorum, Hilary Clinton and Bernie Sanders joined the election","Carly Fiorina, Mike Huckabee, Martin O'Malley joined the election", "Rick Perry, Jeb Bush, Jill Stein, Bobby Jindal joined in election",  "James Webb, John Kasich joined in election","Lawrence Lessig joined the election","Rick Perry withdrawed election; South Carolina finalizes ballot for primary","First Democratic debate is held; James Webb withdrawed","Lawrence Lessig withdrawed; Alabama primary; Fourth Republican debate","Fifth Republican debate; Third Democratic debate","Third Democratic forum; Sixth and seventh Republican debates; Fourth Democratic debate","The Iowa Democratic caucus is won by Hillary Clinton; The Iowa Republican caucus is won by Ted Cruz"," Super Tuesday;Lots to stuffs.."]
-var eventExpressed = eventArray[12];
 var yearExpressedText;
 var chartHeight = 200;
 var chartWidth = 882;
@@ -23,7 +21,7 @@ var width = window.innerWidth * 0.645,
 var attributeNames = [];
 var csvArray = [];
 var oldcsvArray = [];
-
+var format = d3.format(",");
 
 window.onload = setMap();
 // set the width and height of the map
@@ -86,11 +84,12 @@ function setMap() {
         .defer(d3.csv, "data/GoodCSVs/ScottWalker.csv")
         .defer(d3.csv, "data/GoodCSVs/JamesWebb.csv")
         .defer(d3.csv, "data/total_contributions_percandidate_perstate.csv")
+        .defer(d3.csv, "data/events.csv")
         .defer(d3.json,"data/US_shapefile.topojson")
         .await(callback); // waits til both sets of data are loaded before it sends the data to the callback function
 
     // callback function that takes the data as two parameters and an error parameter that will report any errors that occur
-    function callback(error, Bush, Carson, Christie, Clinton, Cruz, Fiorina, Graham, Huckabee, Jindal, Kasich, Lessig, OMalley, Pataki, Paul, Perry, Rubio, Sanders, Santorum, Stein, Trump, Walker, Webb, total, unitedStates) {
+    function callback(error, Bush, Carson, Christie, Clinton, Cruz, Fiorina, Graham, Huckabee, Jindal, Kasich, Lessig, OMalley, Pataki, Paul, Perry, Rubio, Sanders, Santorum, Stein, Trump, Walker, Webb, total,events, unitedStates) {
 
         total.forEach(function(d) {
             d.Lat= +d.Lat
@@ -251,10 +250,11 @@ function setMap() {
          createDropdownLeft(us,projection);
          createDropdownRight(us,projection);
          createradio(total,path,map,Bush, Carson, Christie, Clinton, Cruz, Fiorina, Graham, Huckabee, Jindal, Kasich, Lessig, OMalley, Pataki, Paul, Perry, Rubio, Sanders, Santorum, Stein, Trump, Walker, Webb,total, projection,us);
-         createButton(us,projection);
-        createSlider(us,projection);
+         //createButton(us,projection);
+        //createSlider(us,projection);
         drawMenuInfo(timeExpressed);
         CreateSplitLegend();
+        // displayEvents(events)
     };
 };
 
@@ -275,8 +275,7 @@ function drawMenuInfo(time){
         .attr("x", 0)
         .attr("y", 0)
         .attr("class", "eventExpressedText menu-info")
-        .text(eventArray[a]);
-
+        // .html(displayEvents);
 
              //alters timeline year text
     var timelineYear = d3.select(".axis")
@@ -303,26 +302,11 @@ function drawMenuInfo(time){
          });
 };
 
-function drawMenuInfo2(time){
-       //create event and time
-    var a = timeArray.indexOf(time);
-
-    timeExpressedText = d3.select('#infoPanel')
-        .append("text")
-        .attr("x", 0)
-        .attr("y", 0)
-        .attr("class", "yearExpressedText menu-info")
-        .text(fullDate[a])
-        .style({'font-size':'36px', 'font-weight': 'strong'});
-
-
-    eventExpressedText = d3.select('#infoPanel')
-        .append("text")
-        .attr("x", 0)
-        .attr("y", 0)
-        .attr("class", "eventExpressedText menu-info")
-        .text(eventArray[a]);
-};
+// function displayEvents(events) {
+//
+//     var monthEvents = ;
+//
+// }
 
 function createButton(us,projection) {
 
@@ -484,59 +468,57 @@ function setEnumerationUnits(us, map, path){
 
 function setCircles (path, map, data, projection, us){
 
-      var circles = map.selectAll(".circles")
-            .data(data)
-            .enter()
-            .append("circle")
-            .attr("class", function(d){
-                return "circles " + d.state;
-            })
-            .attr("fill", "black")
-            .attr("fill-opacity", 0.5)
-            .attr("stroke", "white")
-            .attr("stroke-width", 0.7)
-            .attr("cx", function(d) {
-                return projection([d.Lon, d.Lat])[0];
-            })
-            .attr("cy", function(d) { return projection([d.Lon, d.Lat])[1];
-            })
-            .on("mouseover", highlightCircles)
-            .on("mouseout", dehighlightCircles);
+  var circles = map.selectAll(".circles")
+        .data(data)
+        .enter()
+        .append("circle")
+        .attr("class", function(d){
+            return "circles " + d.state_total + d.state;
+        })
+        .attr("fill", "#666")
+        .attr("fill-opacity", 0.5)
+        .attr("stroke", "white")
+        .attr("stroke-width", 0.7)
+        .attr("cx", function(d) {
+            return projection([d.Lon, d.Lat])[0];
+        })
+        .attr("cy", function(d) { return projection([d.Lon, d.Lat])[1];
+        })
+        .on("mouseover", highlightCircles)
+        .on("mouseout", dehighlightCircles);
 
-      var desc = circles.append("desc")
-            .text('{"stroke": "white", "stroke-width": "0.7", "fill-opacity": "0.5"}');
+  var desc = circles.append("desc")
+        .text('{"stroke": "white", "stroke-width": "0.7", "fill-opacity": "0.5"}');
 
-        updateCircles(circles,data);
+    updateCircles(circles,data);
 };
 
 function setCircles2 (path, map, data, projection, us){
 
-      var circles = map.selectAll(".circles")
-            .data(data)
-            .enter()
-            .append("circle")
-            .attr("class", function(d){
-                return "circles " + d.state;
-            })
-            .attr("id", "redraw")
-            .attr("fill", "black")
-            .attr("fill-opacity", 0.5)
-            .attr("stroke", "white")
-            .attr("stroke-width", 0.7)
-            .attr("cx", function(d) {
-                return projection([d.Lon, d.Lat])[0];
-            })
-            .attr("cy", function(d) { return projection([d.Lon, d.Lat])[1];
-            })
-            .on("mouseover", highlightCircles)
-            .on("mouseout", dehighlightCircles);
+  var circles = map.selectAll(".circles")
+        .data(data)
+        .enter()
+        .append("circle")
+        .attr("class", function(d){
+            return "circles " + d.state_total + d.state;
+        })
+        .attr("fill", "#666")
+        .attr("fill-opacity", 0.5)
+        .attr("stroke", "white")
+        .attr("stroke-width", 0.7)
+        .attr("cx", function(d) {
+            return projection([d.Lon, d.Lat])[0];
+        })
+        .attr("cy", function(d) { return projection([d.Lon, d.Lat])[1];
+        })
+        .on("mouseover", highlightCircles)
+        .on("mouseout", dehighlightCircles);
 
-      var desc = circles.append("desc")
-            .text('{"stroke": "white", "stroke-width": "0.7", "fill-opacity": "0.5"}');
+  var desc = circles.append("desc")
+        .text('{"stroke": "white", "stroke-width": "0.7", "fill-opacity": "0.5"}');
 
-        updateCircles(circles,data);
+    updateCircles(circles,data);
 };
-
 
 function createradio(data,path,map,Bush, Carson, Christie, Clinton, Cruz, Fiorina, Graham, Huckabee, Jindal, Kasich, Lessig, OMalley, Pataki, Paul, Perry, Rubio, Sanders, Santorum, Stein, Trump, Walker, Webb,total, projection,us){
 
@@ -570,6 +552,7 @@ function createradio(data,path,map,Bush, Carson, Christie, Clinton, Cruz, Fiorin
                     drawMenuInfo(timeExpressed);
                     d3.selectAll(".circles").remove();
                     createButton(us,projection);
+                    createSlider(us,projection);
                     $(".stepForward").attr("disabled", false);
                     $(".stepBackward").attr("disabled", false);
                     $('.dropdownLeft').attr("disabled", false);
@@ -713,7 +696,8 @@ function createLeftSplit(caname,us,projection){
         .attr("class", "leftsplit")
 
         .attr("class", function(d){
-            return "leftsplit " + d.state
+            y = timeExpressed
+            return "leftsplit " + d.y + d.state
         })
         .attr("id", attributeNames)
         //length of line
@@ -801,7 +785,8 @@ setRadius = d3.scale.sqrt()
         .attr("class", "rightsplit")
 
         .attr("class", function(d){
-            return "rightsplit " + d.state
+            y = timeExpressed
+            return "rightsplit " + d.y + d.state
         })
         .attr("id", attributeNames)
         //length of line
@@ -871,17 +856,18 @@ function CreateSplitLegend(){
 
 };
 
-function highlightCircles(props) {
-    var selected = d3.selectAll("." + props.state)
+function highlightCircles(data) {
+    var selected = d3.selectAll("." + data.state_total + data.state)
         .style( {
-            "stroke": "#666",
+            "stroke": "#000",
             "stroke-width": "0.7",
             "fill-opacity": "1"
         });
+    setLabelCircles(data);
 };
 
-function dehighlightCircles (props) {
-    var selected = d3.selectAll("." + props.state)
+function dehighlightCircles (data) {
+    var selected = d3.selectAll("." + data.state_total + data.state)
       .style({
         "stroke": function (){
           return getStyle(this, "stroke")
@@ -903,40 +889,82 @@ function dehighlightCircles (props) {
 
         return styleObject[styleName];
     };
+
+    d3.select(".infolabel")
+        .remove();
 };
 
 function highlightSplitsL(data) {
-    map.selectAll("." + data.state)
+    y = timeExpressed
+    map.selectAll("." + data.y + data.state)
         .style( {
             "stroke": "#666",
             "stroke-width": "0.7",
             "fill-opacity": "1"
         });
+    setLabelSplits(data)
 };
 
 function dehighlightSplitsL (data) {
-    map.selectAll("." + data.state)
+    y = timeExpressed
+    map.selectAll("." + data.y + data.state)
     .style( {
         "stroke": "white",
         "stroke-width": "0.5",
         "fill-opacity": "0.7"
     });
+    d3.select(".infolabel")
+        .remove();
 };
 
 function highlightSplitsR(data) {
-    map.selectAll("." + data.state)
+    y = timeExpressed
+    map.selectAll("." + data.y + data.state)
         .style( {
             "stroke": "#666",
             "stroke-width": "0.7",
             "fill-opacity": "1"
         });
+    setLabelSplits(data)
 };
 
 function dehighlightSplitsR(data) {
-    map.selectAll("." + data.state)
+    y = timeExpressed
+    map.selectAll("." + data.y + data.state)
     .style( {
         "stroke": "white",
         "stroke-width": "0.5",
         "fill-opacity": "0.7"
     });
+    d3.select(".infolabel")
+        .remove();
+};
+
+function setLabelCircles(data){
+    //label content
+    var labelAttribute = "<h1>" + data.name +
+        "</h1><br><h2<b>$" + format(d3.round(data.Total, 0)) + "</b></h2><br><h2<b>$" + format(d3.round(data.PerCapita, 2)) + "</b></h2>";
+
+    //create info label div
+    var infolabel = d3.select("#infoPanel")
+        .append("text")
+        .attr({
+            "class": "infolabel",
+            "id": data.state + "_label"
+        })
+        .html(labelAttribute);
+};
+function setLabelSplits(data){
+    //label content
+    var labelAttribute = "<h1>" + data.name +
+        "</h1><br><h2<b>$" + format(d3.round(data.state_total, 0)) + "</b></h2>";
+
+    //create info label div
+    var infolabel = d3.select("#infoPanel")
+        .append("text")
+        .attr({
+            "class": "infolabel",
+            "id": data.state + "_label"
+        })
+        .html(labelAttribute);
 };

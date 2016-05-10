@@ -13,15 +13,6 @@ position: absolute;
     margin: 5% 0 0 1%;
 }
 
-.pageTitle {
-    position: absolute;
-    top: 1%;
-    right: 25%;
-    font-size: 50px;
-    font-weight: bold;
-    font-family: Garamond;
-}
-
 .map {
   padding-top: 25px;
 }
@@ -31,15 +22,26 @@ position: absolute;
   /*margin-top: 10px;*/
   /*margin-top: 12px;*/
   padding: 5px;
-  font-family: Garamond;
+  font-family: 'Roboto', sans-serif;
 }
 
 h1 {
   margin: 10px;
+  font-family: Chevalier;
 }
-.Classification1
-{position: relative;
-  bottom: 40px;}
+
+@font-face {
+    font-family: Chevalier;
+    src: url(Chevalier.ttf);
+}
+
+.Classification1{
+  position: relative;
+  bottom: 40px;
+  font-family: 'Roboto', sans-serif;
+    font-weight: normal;
+    font-size: 1.3em;
+}
 
 #sideColumn {
   position: absolute;
@@ -56,29 +58,23 @@ h1 {
 .dropdownLeft {
   padding: 5px;
   position: relative;
-  top: 90px;
+  top: 95px;
   left: -15px;
   margin-bottom: 6px;
   color: purple;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.2em;
 }
 
 .dropdownRight {
-  padding: 2px;
+  padding: 5px;
   position: relative;
   top: 95px;
   left: -15px;
   margin-top: 6px;
   color: #FFA30D;
-}
-
-.leftsplit {
-  stroke: white;
-  stroke-width: .3;
-}
-
-.rightsplit {
-  stroke: white;
-  stroke-width: .3;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.2em;
 }
 
 .axis path,
@@ -99,29 +95,29 @@ h1 {
   width:1000px;}
 
 .axis text {
-    font-family: garamond;
-    font-size: 1em;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.1em;
 
-    
 }
 
 
 
 .yearExpressedText {
-    float: left; 
+    float: left;
     position:relative;
     top:30px;
-    font-family: garamond;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 600;
 }
 
 .eventExpressedText
 {/*width:100px;*/
-    float: left; 
+    float: left;
     position:relative;
     top:30px;
-    font-family: garamond;
-    font-size:20px;
-    
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
 }
 
 .stepForward
@@ -165,3 +161,19 @@ margin-right: 10px;
 margin-top: -10px;
 background-color: gray;}
 
+.infolabel {
+    position: absolute;
+    min-height: 50px;
+    min-width: 100px;
+    color: #fff;
+    background-color: #000;
+    border: solid thin #fff;
+    padding: 5px 10px;
+}
+
+.infolabel h1 {
+    margin: 0 20px 0 0;
+    padding: 0;
+    display: inline-block;
+    line-height: 1em;
+}
