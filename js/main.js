@@ -1,7 +1,7 @@
 var attrArray = ["Total", "Per Capita"];
 var expressed = attrArray[0];
 var fullDate = ["March 2015", "April 2015","May 2015", "June 2015",  "July 2015","August 2015","September 2015","October 2015","November 2015","December 2015","January 2016","February 2016","March 2016"];
-var timelineArray = ["Mar 15", "Apr 15","May 15", "June 15", "July 15","Aug 15","Sep 15","Oct 15","Nov 15","Dec 15","Jan 16","Feb 16","Mar 16"];
+var timelineArray = ["March_15", "April_15","May_15", "June_15", "July_15","August_15","September_15","October_15","November_15","December_15","January_16","February_16","March_16"];
 var count = 12;
 var timeExpressed = timelineArray[12];
 var eventArray=["Ben Carson, Donald Trump and Ted Cruz joined in election", "Rick Santorum, Hilary Clinton and Bernie Sanders joined the election","Carly Fiorina, Mike Huckabee, Martin O'Malley joined the election", "Rick Perry, Jeb Bush, Jill Stein, Bobby Jindal joined in election",  "James Webb, John Kasich joined in election","Lawrence Lessig joined the election","Rick Perry withdrawed election; South Carolina finalizes ballot for primary","First Democratic debate is held; James Webb withdrawed","Lawrence Lessig withdrawed; Alabama primary; Fourth Republican debate","Fifth Republican debate; Third Democratic debate","Third Democratic forum; Sixth and seventh Republican debates; Fourth Democratic debate","The Iowa Democratic caucus is won by Hillary Clinton; The Iowa Republican caucus is won by Ted Cruz"," Super Tuesday;Lots to stuffs.."]
@@ -280,6 +280,7 @@ function drawMenuInfo(time){
 function drawMenuInfo2(time){
        //create event and time
     var a = timelineArray.indexOf(time);
+    console.log(a);
 
     timeExpressedText = d3.select('#infoPanel')
         .append("text")
@@ -497,7 +498,7 @@ function setCircles (path, map, data, projection, us){
             .enter()
             .append("circle")
             .attr("class", function(d){
-                return "circles " + d.state;
+                return "circles " + d.state_total + d.state;
             })
             .attr("fill", "black")
             .attr("fill-opacity", 0.5)
@@ -884,7 +885,8 @@ setRadius = d3.scale.sqrt()
         .attr("class", "leftsplit")
 
         .attr("class", function(d){
-            return "leftsplit " + d.state
+            y = timeExpressed
+            return "leftsplit " + d.y + d.state
         })
         .attr("id", attributeNames)
         //length of line
@@ -1219,7 +1221,8 @@ else if (timeExpressed == timelineArray[11])
         .attr("class", "rightsplit")
 
         .attr("class", function(d){
-            return "rightsplit " + d.state
+            y = timeExpressed
+            return "rightsplit " + d.y + d.state
         })
         .attr("id", attributeNames)
         //length of line
@@ -1265,8 +1268,8 @@ function CreateSplitLegend(minRadius, maxRadius){
         .html(function (d){return d})
 };
 
-function highlightCircles(props) {
-    var selected = d3.selectAll("." + props.state)
+function highlightCircles(data) {
+    var selected = d3.selectAll("." + data.state_total + data.state)
         .style( {
             "stroke": "#666",
             "stroke-width": "0.7",
@@ -1274,8 +1277,8 @@ function highlightCircles(props) {
         });
 };
 
-function dehighlightCircles (props) {
-    var selected = d3.selectAll("." + props.state)
+function dehighlightCircles (data) {
+    var selected = d3.selectAll("." + data.state_total + data.state)
       .style({
         "stroke": function (){
           return getStyle(this, "stroke")
@@ -1300,7 +1303,8 @@ function dehighlightCircles (props) {
 };
 
 function highlightSplitsL(data) {
-    map.selectAll("." + data.state)
+    y = timeExpressed
+    map.selectAll("." + data.y + data.state)
         .style( {
             "stroke": "#666",
             "stroke-width": "0.7",
@@ -1309,7 +1313,8 @@ function highlightSplitsL(data) {
 };
 
 function dehighlightSplitsL (data) {
-    map.selectAll("." + data.state)
+    y = timeExpressed
+    map.selectAll("." + data.y + data.state)
     .style( {
         "stroke": "white",
         "stroke-width": "0.5",
@@ -1318,7 +1323,8 @@ function dehighlightSplitsL (data) {
 };
 
 function highlightSplitsR(data) {
-    map.selectAll("." + data.state)
+    y = timeExpressed
+    map.selectAll("." + data.y + data.state)
         .style( {
             "stroke": "#666",
             "stroke-width": "0.7",
@@ -1327,10 +1333,30 @@ function highlightSplitsR(data) {
 };
 
 function dehighlightSplitsR(data) {
-    map.selectAll("." + data.state)
+    y = timeExpressed
+    map.selectAll("." + data.y + data.state)
     .style( {
         "stroke": "white",
         "stroke-width": "0.5",
         "fill-opacity": "0.7"
     });
+};
+
+function setLabel(data){
+    //label content
+    var labelAttribute = "<h1>" + props[expressed] +
+        "</h1><b>" + expressed + "</b>";
+
+    //create info label div
+    var infolabel = d3.select("body")
+        .append("div")
+        .attr({
+            "class": "infolabel",
+            "id": data.state + "_label"
+        })
+        .html(labelAttribute);
+
+    var regionName = infolabel.append("div")
+        .attr("class", "labelname")
+        .html(data.March_16);
 };
