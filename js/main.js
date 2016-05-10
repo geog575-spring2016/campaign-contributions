@@ -339,8 +339,16 @@ function createButton(us,projection) {
         var removeOldYear = d3.selectAll(".yearExpressedText").remove();
         var removeOldEvent = d3.selectAll(".eventExpressedText").remove();
 
-        createRightSplit(candidaterightname,us,projection)
-        createLeftSplit(candidateleftname,us,projection)
+         if (candidaterightname && candidateleftname)
+        {
+          createRightSplit(candidaterightname,us,projection);
+        createLeftSplit(candidateleftname,us,projection);}
+
+         else if (candidaterightname)
+         {createRightSplit(candidaterightname,us,projection)}
+       else if (candidateleftname)
+         {
+        createLeftSplit(candidateleftname,us,projection)}
         drawMenuInfo(timeExpressed);
     });
 
