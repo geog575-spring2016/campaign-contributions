@@ -30,7 +30,6 @@ position: absolute;
   text-align: center;
   /*margin-top: 10px;*/
   /*margin-top: 12px;*/
-  margin: 2px;
   padding: 5px;
   font-family: Garamond;
 }
@@ -38,31 +37,27 @@ position: absolute;
 h1 {
   margin: 10px;
 }
-
-
-.container {
-  margin: 2px;
-}
-
+.Classification1
+{position: relative;
+  bottom: 40px;}
 
 #sideColumn {
   position: absolute;
-  margin-left: 1%;
-  padding: 0px;
+  margin-left: -8%;
 
 }
 
 #infoPanel {
   float: right;
-  margin-right: -2%;
-  padding: 2px;
+  margin-right: -4%;
 }
 
 
 .dropdownLeft {
-  padding: 2px;
+  padding: 5px;
   position: relative;
-  top: 100px;
+  top: 90px;
+  left: -15px;
   margin-bottom: 6px;
   color: purple;
 }
@@ -71,74 +66,76 @@ h1 {
   padding: 2px;
   position: relative;
   top: 95px;
+  left: -15px;
   margin-top: 6px;
   color: #FFA30D;
 }
 
 .leftsplit {
-  stroke: black;
+  stroke: white;
   stroke-width: .3;
 }
 
 .rightsplit {
-  stroke: black;
+  stroke: white;
   stroke-width: .3;
 }
 
-.axis {
-    background-color: #000;
-}
-
-/*.timeline {
-
+.axis path,
+.axis line {
+ position: absolute;
+  left:20%;
     fill: none;
     stroke: gray;
+    stroke-width: 2px;
     shape-rendering: crispEdges;
-}*/
-
-.timeline path,
-.timeline line {
-    fill: black;
-
-    stroke: red;
-    stroke-width:3px;
-
-
 }
 
-#sequenceContainer
-{stroke: black;}
+.axis
+{  position: relative;
+  top: 450px;
+  height: 50px;
+
+  width:1000px;}
+
+.axis text {
+    font-family: garamond;
+    font-size: 1em;
+
+    
+}
+
+
 
 .yearExpressedText {
-    position: relative;
-    float: left;
-    padding-right: 115px;
+    float: left; 
+    position:relative;
+    top:30px;
     font-family: garamond;
 }
 
 .eventExpressedText
 {/*width:100px;*/
-    float: left;
+    float: left; 
     position:relative;
-    top:10%;
+    top:30px;
     font-family: garamond;
     font-size:20px;
-
-}
-
-.sequence-buttons {
-  position: relative;
-  top: 500px;
+    
 }
 
 .stepForward
 
-{height:35px;
+{position:relative;
+    top:20px;
+  height:35px;
   width:35px;
 margin-left: 10px}
 
 .stepBackward
-{height:35px;
+{position:relative;
+    top:20px;
+  height:35px;
   width:35px;}
 
 .img-stepForward
@@ -168,10 +165,3 @@ margin-right: 10px;
 margin-top: -10px;
 background-color: gray;}
 
-.map{
-  padding: 0px;
-  margin: 2px;
-  position: relative;
-  top: 15%;
-  left: 15%
-}
