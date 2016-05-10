@@ -253,6 +253,7 @@ function setMap() {
          createradio(total,path,map,Bush, Carson, Christie, Clinton, Cruz, Fiorina, Graham, Huckabee, Jindal, Kasich, Lessig, OMalley, Pataki, Paul, Perry, Rubio, Sanders, Santorum, Stein, Trump, Walker, Webb,total, projection,us);
          //drawMenuInfo(timeExpressed);
          //createButton(us,projection);
+         CreateSplitLegend();
     };
 };
 
@@ -556,8 +557,8 @@ function createradio(data,path,map,Bush, Carson, Christie, Clinton, Cruz, Fiorin
                 d3.selectAll(".rightsplit").remove();
                 setCircles2 (path, map, data, projection, us)
                 changeAttribute(this.value, data);
-                $(".yearExpressedText menu-info").remove();
-                $(".eventExpressedText menu-info").remove();
+                $(".yearExpressedText").remove();
+                $(".eventExpressedText").remove();
                 $(".axis").remove();
                 $(".stepForward").attr("disabled", true);
                 $(".stepBackward").attr("disabled", true);
@@ -817,13 +818,37 @@ function createDropdownRight(us,projection){
         .text(function(d){ return d });
 };
 
-function CreateSplitLegend(minRadius, maxRadius){
-    var legend = svg.append("g")
-    legend.selectAll("text")
-        .data(["Legend"]).enter().append('text')
-        .attr("x", function(){return projection([-74.672189, 30.967841])[0]-radiusMin(mean)-5; })
-        .attr("y", function(){return projection([-74.672189, 30.967841])[1]-radiusMax(position)-5; })
-        .html(function (d){return d})
+function CreateSplitLegend(){
+    var legend = d3.selectAll("#infoPanel").append("svg")
+        .attr("width", 200)
+        .attr("height", 500)
+
+    var legendDetails = legend.append("circle")
+        .attr("r", 20)
+        .attr("cx", 50)
+        .attr("cy", 320)
+        .style("fill", "none")
+        .style("stroke", "black")
+        .style("stroke-width", "1.5")
+
+    var legendDetails2 = legend.append("circle")
+        .attr("r", 40)
+        .attr("cx", 50)
+        .attr("cy", 300)
+        .style("fill", "none")
+        .style("stroke", "black")
+        .style("stroke-width", "1.5")
+
+  legend.append("text")
+      .text("$100,000,000")
+      .attr("x", 4)
+      .attr("y", 258)
+
+  legend.append("text")
+      .text("$50,000,000")
+      .attr("x", 8)
+      .attr("y", 298)
+
 };
 
 function highlightCircles(props) {
