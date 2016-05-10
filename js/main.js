@@ -820,34 +820,34 @@ function createDropdownRight(us,projection){
 
 function CreateSplitLegend(){
     var legend = d3.selectAll("#infoPanel").append("svg")
-        .attr("width", 200)
+        .attr("width", 250)
         .attr("height", 500)
 
     var legendDetails = legend.append("circle")
-        .attr("r", 20)
-        .attr("cx", 50)
+        .attr("r", 100)
+        .attr("cx", 105)
         .attr("cy", 320)
         .style("fill", "none")
         .style("stroke", "black")
         .style("stroke-width", "1.5")
 
     var legendDetails2 = legend.append("circle")
-        .attr("r", 40)
-        .attr("cx", 50)
-        .attr("cy", 300)
+        .attr("r", 50)
+        .attr("cx", 105)
+        .attr("cy", 370)
         .style("fill", "none")
         .style("stroke", "black")
         .style("stroke-width", "1.5")
 
   legend.append("text")
       .text("$100,000,000")
-      .attr("x", 4)
-      .attr("y", 258)
+      .attr("x", 60)
+      .attr("y", 215)
 //adding text to legend
   legend.append("text")
       .text("$50,000,000")
-      .attr("x", 8)
-      .attr("y", 298)
+      .attr("x", 70)
+      .attr("y", 315)
 
 };
 
