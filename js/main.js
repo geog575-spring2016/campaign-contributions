@@ -294,9 +294,9 @@ function drawMenuInfo(time){
             }
         }).attr("stroke", function(d){
             if (timelineArray[a] == d){
-                return "#986cb3";
+                return "#9fa696";
             } else {
-                return "gray";
+                return "#4d4543";
             }
          });
 };
@@ -474,7 +474,7 @@ function setCircles (path, map, data, projection, us){
         .attr("class", function(d){
             return "circles " + d.state_total + d.state;
         })
-        .attr("fill", "#666")
+        .attr("fill", "#4d4543")
         .attr("fill-opacity", 0.5)
         .attr("stroke", "white")
         .attr("stroke-width", 0.7)
@@ -987,7 +987,7 @@ function highlightSplitsL(data) {
             "stroke-width": "0.7",
             "fill-opacity": "1"
         });
-    setLabelSplits(data)
+    setLabelSplitsL(data)
 };
 
 function dehighlightSplitsL (data) {
@@ -1010,7 +1010,7 @@ function highlightSplitsR(data) {
             "stroke-width": "0.7",
             "fill-opacity": "1"
         });
-    setLabelSplits(data)
+    setLabelSplitsR(data)
 };
 
 function dehighlightSplitsR(data) {
@@ -1027,8 +1027,8 @@ function dehighlightSplitsR(data) {
 
 function setLabelCircles(data){
     //label content
-    var labelAttribute = "<h1>" + data.name +
-        "</h1><br><h2<b>$" + format(d3.round(data.Total, 0)) + "</b></h2><br><h2<b>$" + format(d3.round(data.PerCapita, 2)) + "</b></h2>";
+    var labelAttribute = "<h3>" + data.name +
+        "</h3><br><p><b>Total amount given by citizens*:</b> $" + format(d3.round(data.Total, 0)) + "</p><p><b>Per capita amount:</b> $" + format(d3.round(data.PerCapita, 2)) + "</p>";
 
     //create info label div
     var infolabel = d3.select("#infoPanel")
@@ -1039,10 +1039,25 @@ function setLabelCircles(data){
         })
         .html(labelAttribute);
 };
-function setLabelSplits(data){
+function setLabelSplitsL(data){
     //label content
-    var labelAttribute = "<h1>" + data.name +
-        "</h1><br><h2<b>$" + format(d3.round(data.state_total, 0)) + "</b></h2>";
+    var labelAttribute = "<h3>" + data.name +
+        "</h3><br><p><b>Monthly total for " + candidateleftname + ":</b> $" + format(d3.round(data.state_total, 0)) + "</p>";
+
+    //create info label div
+    var infolabel = d3.select("#infoPanel")
+        .append("text")
+        .attr({
+            "class": "infolabel",
+            "id": data.state + "_label"
+        })
+        .html(labelAttribute);
+};
+
+function setLabelSplitsR(data){
+    //label content
+    var labelAttribute = "<h3>" + data.name +
+        "</h3><br><p><b>Monthly total for " + candidaterightname + ":</b> $" + format(d3.round(data.state_total, 0)) + "</p>";
 
     //create info label div
     var infolabel = d3.select("#infoPanel")
