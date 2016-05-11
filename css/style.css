@@ -83,8 +83,9 @@ h2 {
 }
 
 #infoPanel {
+    position: relative;
   float: right;
-  margin-right: -4%;
+  margin-right: -10%;
 }
 
 .dropdownLeft {
@@ -138,7 +139,7 @@ h2 {
 
 .legendInfo {
   position: relative;
-  top: 20%;
+  top: 20px;
   font-family: 'Roboto', sans-serif;
   color: #4d4543;
 }
