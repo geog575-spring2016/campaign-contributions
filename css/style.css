@@ -1,20 +1,9 @@
 /* 575 boilerplate style.css */
 .state-boundary {
- fill: #eff0ee;
+ fill: #e7e9e5;
  stroke: white;
     stroke-linecap: round;
     stroke-linejoin: round;
-}
-
-.map {
-position: absolute;
-    top: 5%;
-    left: 15%;
-    margin: 2% 0 0 1%;
-}
-
-.map {
-  padding-top: 25px;
 }
 
 .jumbotron {
@@ -25,11 +14,31 @@ position: absolute;
 
 }
 
+
+
+h5 {
+    padding: 0.4em;
+    font-family: 'Roboto', sans-serif;
+    color: #4d4543;
+    font-weight: bold;
+    font-size: 1.3em;
+    text-align: center;
+
+}
+
+p {
+    font-family: 'Roboto', sans-serif;
+    color: #4d4543;
+    font-size: 1em;
+    text-align: center;
+    line-height: 1.3em;
+}
+
 h2 {
   margin: 10px;
   font-family: Chevalier;
   color: #4d4543;
-  font-size: 36px;
+  font-size: 40px;
   line-height: 1.7em;
 }
 
@@ -68,8 +77,8 @@ h2 {
 }
 
 #sideColumn {
-  position: absolute;
-  margin-left: -7%;
+  /*position: absolute;*/
+  margin-left: -11%;
 
 }
 
@@ -77,7 +86,6 @@ h2 {
   float: right;
   margin-right: -4%;
 }
-
 
 .dropdownLeft {
   padding: 2px;
@@ -121,8 +129,8 @@ h2 {
 }
 
 .axis
-{  position: relative;
-  top: 330px;
+{  position: absolute;
+  top: 300px;
   left:-10px;
   height: 50px;
 
@@ -170,21 +178,23 @@ h2 {
 {width:350px;
 
     position:absolute;
-    top:180px;
+    top:190px;
     left:10px;
     font-family: 'Roboto', sans-serif;
+    color: #4d4543;
     font-weight: 400;
-    font-size: 16px;
+    font-size: 1em;
 }
 .eventExpressedText2
 {width:350px;
-  
+
    position:absolute;
     top:230px;
     left:10px;
     font-family: 'Roboto', sans-serif;
+    color: #4d4543;
     font-weight: 400;
-    font-size: 16px;
+    font-size: 1em;
 }
 .eventExpressedText3
 {width:350px;
@@ -193,17 +203,10 @@ h2 {
     top:290px;
     left:10px;
     font-family: 'Roboto', sans-serif;
+    color: #4d4543;
     font-weight: 400;
-    font-size: 16px;
+    font-size: 1em;px;
 }
-
-
-
-
-
-
-
-
 
 .stepForward {
     position:relative;
@@ -249,9 +252,9 @@ background-color: gray;}
 
 .infolabel {
     position: absolute;
-    top: 94px;
+    top: 110px;
     left: 5%;
-    min-height: 50px;
+    min-height: 45px;
     width: 330px;
     color: #4d4543;
     background-color: #b2b7ab;
@@ -269,4 +272,29 @@ background-color: gray;}
     line-height: 1.7em;
     font-family: 'Roboto', sans-serif;
     font-style: italic;
+}
+
+.infolabel p {
+    text-align: left;
+    line-height: 0.8em;
+}
+
+h4 {
+    background-color: #b2b7ab;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    text-align: center;
+    font-size: 2em;
+    color: #4d4543;
+}
+
+#timeline {
+    margin-left: -7%;
+}
+#context p {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.1em;
+    text-align: left;
+    color: #4d4543;
+
 }
