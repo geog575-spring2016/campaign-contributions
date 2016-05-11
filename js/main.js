@@ -308,7 +308,7 @@ function drawMenuInfo(time){
 
 
     var timelineYear = d3.select(".axis")
-        .selectAll('g')
+        .selectAll("g")
         .attr("font-weight", function(d){
 
             if (timelineArray[a] == d) {
@@ -403,14 +403,14 @@ function createSlider(us,projection){
         .orient("bottom")
         .tickPadding(2)
 
-    var axis = d3.select("#sideColumn")
+    var axis = d3.select("#timeline")
         .append("svg")
         .attr("class", "axis")
         .attr("transform", "translate(5, 0)")
         .call(yAxis);
 console.log(axis);
     //adds mouse events
-    axis.selectAll('g')
+    axis.selectAll("g")
         .each(function(d){
             d3.select(this)
                 .on("mouseover", function(){
@@ -434,8 +434,7 @@ console.log(axis);
                         .attr("font-size", "18px")
                         .attr("stroke", "#986cb3");
 
-
-                    count = timelineArray.indexOf(d);
+            count = timelineArray.indexOf(d);
             timeExpressed = timeArray[count];
                     var removeOldYear = d3.selectAll(".yearExpressedText").remove();
                     var removeOldEvent = d3.selectAll(".eventExpressedText1").remove();
@@ -700,8 +699,6 @@ function createLeftSplit(caname,us,projection){
         }
     };
 
-
-
         var arc = d3.svg.arc()
             .innerRadius(0)
             .outerRadius(function(d){
@@ -869,7 +866,9 @@ function createDropdownRight(us,projection){
         .text(function(d){ return d });
 };
 
-function CreateSplitLegend(){    var legend = d3.selectAll("#sideColumn").append("svg")
+function CreateSplitLegend(){
+    var legend = d3.selectAll("#sideColumn")
+        .append("svg")
         .attr("width", 250)
         .attr("height", 250)
         .attr("class", "legendInfo")
@@ -877,7 +876,7 @@ function CreateSplitLegend(){    var legend = d3.selectAll("#sideColumn").append
 
     var legendDetails = legend.append("circle")
         .attr("r", 40)
-          .attr("cx", 76)
+        .attr("cx", 76)
         .attr("cy", 180)
         .style("fill", "none")
         .style("stroke", "#4d4543")
@@ -905,7 +904,8 @@ function CreateSplitLegend(){    var legend = d3.selectAll("#sideColumn").append
 
 
 function CreateTotalLegend(){
-    var legend = d3.selectAll("#sideColumn").append("svg")
+    var legend = d3.selectAll("#sideColumn")
+        .append("svg")
         .attr("width", 250)
         .attr("height", 300)
         .attr("class", "legendTotal")
@@ -941,7 +941,8 @@ function CreateTotalLegend(){
 
 
 function CreatePerCapitaLegend(){
-    var legend = d3.selectAll("#sideColumn").append("svg")
+    var legend = d3.selectAll("#sideColumn")
+        .append("svg")
         .attr("width", 250)
         .attr("height", 300)
         .attr("class", "legendPer")
@@ -964,13 +965,13 @@ function CreatePerCapitaLegend(){
         .style("stroke-width", "1.5")
 
   legend.append("text")
-      .text("$1.74")
+      .text("$12.26")
       .attr("x", 160)
       .attr("y", 170)
 
 //adding text to legend
   legend.append("text")
-      .text("$1.59")
+      .text("$3.58")
       .attr("x", 160)
       .attr("y", 250)
 
