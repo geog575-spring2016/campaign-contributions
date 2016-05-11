@@ -5,20 +5,18 @@ var timeArray = ["March_15","April_15","May_15","June_15","July_15","August_15",
 var timelineArray = ["Mar 15", "Apr 15","May 15", "June 15", "July 15","Aug 15","Sep 15","Oct 15","Nov 15","Dec 15","Jan 16","Feb 16","Mar 16"];
 var eventArray1=["Ted Cruz joined race", "Hilary Clinton, Rand Paul, Marco Rubio and Bernie Sanders joined race","Carly Fiorina, Ben Carson, Rick Santorum, Mike Huckabee, Martin O'Malley and George Pataki joined race", "Rick Perry, Jeb Bush, Jill Stein, Donald Trump, Bobby Jindal, Lindsey Graham and  Chris Christie joined race",  "James Webb, John Kasich and Scott Walker joined race"," ","Lawrence Lessig joined race"," "," ",""," "," "," "]
 var eventArray2=[" ", " "," ", " ",  " "," ","Rick Perry and Scott Walker dropped out of race","James Webb dropped out of race","Lawrence Lessig and Bobby Jindal dropped out of race","Lindsey Graham and George Pataki dropped out of race"," "," Martin O'Malley, Mike Huckabee, Rand Paul, Rick Santorum, Chris Christie, and Carly Fiorina drop out of race "," "]
-var eventArray3=[" ", "  "," ", "",  "","1st Republican Forum in New Hampshire; 1st Republican Debate in Ohio","South Carolina finalizes ballot for primary; 2nd Republican Debate in California","1st Democratic Debate in Nevada; 3rd Republican Debate in Colorado","1st Democratic Forum in South Carolina; 4th Republican Debate in Wisconsin; 2nd Democratic Debate in Iowa; Presidential Family (Republican) Forum in Iowa","Republican Jewish Coalition Presidentail Candidates Forum in D.C.; 5th Republican Debate in Nevada; 3rd Democratic Debate in New Hampshire","Republican's Kemp Forum in South Carolina; 3rd Democratic Forum in Iowa; 6th Republican Debate in South Carolina; Democratic Forum in Iowa; 7th Republican Debate in Iowa","Democratic Town Hall Forum in New Hampshire; 5th Democratic Debate in New Hampshire; 8th Republican Debate - New Hampshire; 6th Democratic Debate in Wisconsin; 2 Republican Town Halls in South Carolina; Democratic Town Hall Forum in Nevada; CNN Democratic Town Hall in South Carolina; 10th Republican Debate in Texas; Hillary Clinton and Ted Cruz win Iowa caucuses; Donald Trump and Bernie Sanders win New Hampshire primaries; Hillary Clinton and Donald Trump win Nevada caucuses; Donald Trump and Hillary Clinton win South Carolina primaries"," 11th Republican Debate in Michigan; 7th Democratic Debate in Michigan; 8th/Final Democratic Debate in Florida; 12th Republican Debate in Florida; Republican Town Hall; Hillary wins primaries in Alabama, Arizona, Arkansas, Florida, Georgia, Illinois, Louisiana, Massachusetts, Missouri, Mississippi, North Carolina, Ohio, Tennessee, Texas, and Virginia; Bernie Sanders wins primaries in Colorado, Michigan, Oklahoma, and Vermont; Bernie Sanders wins caucuses in Alaska, Kansas, Hawaii, Idaho, Maine, Minnesota, Nebraska, Utah, and Washington; Donald Trump wins primaries in Alabama, Arizona, Arkansas, Florida, Georgia, Illinois, Louisiana, Massachusetts, Michigan, Mississippi, Missouri, North Carolina, Tennessee, Vermont, Virginia; Donald Trump wins caucuses In Hawaii and Kentucky; Ted Cruz wins primaries in Alaska, Oklahoma, and Texas; Ted Cruz wins Wyoming County Conventions; Marco Rubio wins Minnesota and D.C. caucuses; John Kasich wins Ohio caucus"]
+var eventArray3=[" ", "  "," ", "",  "","1st Republican Forum in New Hampshire; 1st Republican Debate in Ohio","South Carolina finalizes ballot for primary; 2nd Republican Debate in California","1st Democratic Debate in Nevada; 3rd Republican Debate in Colorado","1st Democratic Forum in South Carolina; 4th Republican Debate in Wisconsin; 2nd Democratic Debate in Iowa; Presidential Family (Republican) Forum in Iowa","Republican Jewish Coalition Presidential Candidates Forum in D.C.; 5th Republican Debate in Nevada; 3rd Democratic Debate in New Hampshire","Republican's Kemp Forum in South Carolina; 3rd Democratic Forum in Iowa; 6th Republican Debate in South Carolina; Democratic Forum in Iowa; 7th Republican Debate in Iowa","Democratic Town Hall Forum in New Hampshire; 5th Democratic Debate in New Hampshire; 8th Republican Debate - New Hampshire; 6th Democratic Debate in Wisconsin; 2 Republican Town Halls in South Carolina; Democratic Town Hall Forum in Nevada; CNN Democratic Town Hall in South Carolina; 10th Republican Debate in Texas; Hillary Clinton and Ted Cruz win Iowa caucuses; Donald Trump and Bernie Sanders win New Hampshire primaries; Hillary Clinton and Donald Trump win Nevada caucuses; Donald Trump and Hillary Clinton win South Carolina primaries"," 11th Republican Debate in Michigan; 7th Democratic Debate in Michigan; 8th/Final Democratic Debate in Florida; 12th Republican Debate in Florida; Republican Town Hall; Hillary wins primaries in Alabama, Arizona, Arkansas, Florida, Georgia, Illinois, Louisiana, Massachusetts, Missouri, Mississippi, North Carolina, Ohio, Tennessee, Texas, and Virginia; Bernie Sanders wins primaries in Colorado, Michigan, Oklahoma, and Vermont; Bernie Sanders wins caucuses in Alaska, Kansas, Hawaii, Idaho, Maine, Minnesota, Nebraska, Utah, and Washington; Donald Trump wins primaries in Alabama, Arizona, Arkansas, Florida, Georgia, Illinois, Louisiana, Massachusetts, Michigan, Mississippi, Missouri, North Carolina, Tennessee, Vermont, Virginia; Donald Trump wins caucuses In Hawaii and Kentucky; Ted Cruz wins primaries in Alaska, Oklahoma, and Texas; Ted Cruz wins Wyoming County Conventions; Marco Rubio wins Minnesota and D.C. caucuses; John Kasich wins Ohio caucus"]
 var count = 12;
 var timeExpressed = timeArray[12];
 var yearExpressedText;
 var eventExpressedText1,eventExpressedText2,eventExpressedText3;
 var candidaterightname, candidateleftname;
 var currentFrame = 0;
-var map;
-var svg;
 var newarray;
 var projection;
 var setRadius;
 var radioName = expressed;
-var width = window.innerWidth * 0.55,
+var width = 900,
     height= 500;
 var attributeNames = [];
 var csvArray = [];
@@ -29,18 +27,29 @@ window.onload = setMap();
 // set the width and height of the map
 function setMap() {
 
-
     // creating the map as an svg and giving it attributes of width and height
-    map = d3.select("#mapContainer")
+    var svg = d3.select("#mapContainer")
         .append("svg")
-        .attr("class", "map")
+        // .attr("class", "map")
         .attr("width", width)
         .attr("height", height);
+
+    var g = svg.append("g");
+
+    g.append("rect")
+    .attr("width", width)
+    .attr("height", height)
+    .attr("fill", "white")
+    .attr("opacity", 0);
+
+    var map = g.append("g")
+        .attr("id", "map");
+
 
     projection = d3.geo.albersUsa()
     // no center because it's already centered on the US as part of the projection code
         .scale(1000)
-        .translate([width / 1.95, height / 2.3]); // keeps map centered in the svg container
+        .translate([width / 2, height / 2]); // keeps map centered in the svg container
 
     // creating a path generator to draw the projection
     var path = d3.geo.path()
@@ -265,6 +274,7 @@ function drawMenuInfo(time){
     //create event and time
     var a = timeArray.indexOf(timeExpressed);
 
+
     timeExpressedText = d3.select('#infoPanel')
         .append("text")
         .attr("x", 0)
@@ -278,7 +288,7 @@ function drawMenuInfo(time){
         .attr("x", 0)
         .attr("y", 0)
         .attr("class", "eventExpressedText1")
-        .text(eventArray1[a]);
+        .text(eventsDisplay[a]);
 
  eventExpressedText2 = d3.select('#infoPanel')
         .append("text")
@@ -287,7 +297,7 @@ function drawMenuInfo(time){
         .attr("class", "eventExpressedText2")
         .text(eventArray2[a]);
 
-        eventExpressedText3 = d3.select('#infoPanel')
+    eventExpressedText3 = d3.select('#infoPanel')
         .append("text")
         .attr("x", 0)
         .attr("y", 0)
@@ -430,7 +440,7 @@ console.log(axis);
                     var removeOldYear = d3.selectAll(".yearExpressedText").remove();
                     var removeOldEvent = d3.selectAll(".eventExpressedText1").remove();
                     var removeOldEvent = d3.selectAll(".eventExpressedText2").remove();
-                      var removeOldEvent = d3.selectAll(".eventExpressedText3").remove();
+                    var removeOldEvent = d3.selectAll(".eventExpressedText3").remove();
 
                     drawMenuInfo(timeExpressed);
 
@@ -523,7 +533,7 @@ function setCircles2 (path, map, data, projection, us){
         .attr("class", function(d){
             return "circles " + d.state_total + d.state;
         })
-        .attr("fill", "#666")
+        .attr("fill", "#4d4543")
         .attr("fill-opacity", 0.5)
         .attr("stroke", "white")
         .attr("stroke-width", 0.7)
@@ -870,7 +880,7 @@ function CreateSplitLegend(){    var legend = d3.selectAll("#sideColumn").append
           .attr("cx", 76)
         .attr("cy", 180)
         .style("fill", "none")
-        .style("stroke", "black")
+        .style("stroke", "#4d4543")
         .style("stroke-width", "1.5")
 
     var legendDetails2 = legend.append("circle")
@@ -878,7 +888,7 @@ function CreateSplitLegend(){    var legend = d3.selectAll("#sideColumn").append
         .attr("cx", 76)
         .attr("cy", 200)
         .style("fill", "none")
-        .style("stroke", "black")
+        .style("stroke", "#4d4543")
         .style("stroke-width", "1.5")
 
   legend.append("text")
