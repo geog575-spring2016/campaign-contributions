@@ -248,10 +248,11 @@ function setMap() {
          createDropdownLeft(us,projection);
          createDropdownRight(us,projection);
          createradio(total,path,map,Bush, Carson, Christie, Clinton, Cruz, Fiorina, Graham, Huckabee, Jindal, Kasich, Lessig, OMalley, Pataki, Paul, Perry, Rubio, Sanders, Santorum, Stein, Trump, Walker, Webb,total, projection,us);
+         CreateTotalLegend();
          //createButton(us,projection);
         //createSlider(us,projection);
-        drawMenuInfo(timeExpressed);
-        CreateSplitLegend();
+        //drawMenuInfo(timeExpressed);
+      //  CreateSplitLegend();
         // displayEvents(events)
     };
 };
@@ -551,14 +552,21 @@ function createradio(data,path,map,Bush, Carson, Christie, Clinton, Cruz, Fiorin
                     d3.selectAll(".circles").remove();
                     createButton(us,projection);
                     createSlider(us,projection);
+                    d3.selectAll(".legendPer").remove();
+                    d3.selectAll(".legendTotal").remove();
+                    CreateSplitLegend();
                     $(".stepForward").attr("disabled", false);
                     $(".stepBackward").attr("disabled", false);
                     $('.dropdownLeft').attr("disabled", false);
                     $('.dropdownRight').attr("disabled", false);
                   };
               if (d == "Total"){
+                  //CreateTotalLegend();
                   d3.selectAll(".leftsplit").remove();
                   d3.selectAll(".rightsplit").remove();
+                  d3.selectAll(".legendInfo").remove();
+                  d3.selectAll(".legendPer").remove();
+                  CreateTotalLegend();
                   setCircles2 (path, map, data, projection, us)
                   changeAttribute(this.value, data);
                   $(".yearExpressedText").remove();
@@ -574,7 +582,11 @@ function createradio(data,path,map,Bush, Carson, Christie, Clinton, Cruz, Fiorin
               if (d == "PerCapita"){
                 d3.selectAll(".leftsplit").remove();
                 d3.selectAll(".rightsplit").remove();
+                d3.selectAll(".legendInfo").remove();
+                d3.selectAll(".legendTotal").remove();
+                CreatePerCapitaLegend();
                 setCircles2 (path, map, data, projection, us)
+                //CreatePerCapitaLegend();
                 changeAttribute(this.value, data);
                 $(".yearExpressedText").remove();
                 $(".eventExpressedText").remove();
@@ -824,12 +836,14 @@ function createDropdownRight(us,projection){
 function CreateSplitLegend(){
     var legend = d3.selectAll("#infoPanel").append("svg")
         .attr("width", 250)
-        .attr("height", 250)
+        .attr("height", 300)
+        .attr("class", "legendInfo")
+
 
     var legendDetails = legend.append("circle")
         .attr("r", 40)
         .attr("cx", 105)
-        .attr("cy", 390)
+        .attr("cy", 200)
         .style("fill", "none")
         .style("stroke", "black")
         .style("stroke-width", "1.5")
@@ -837,20 +851,93 @@ function CreateSplitLegend(){
     var legendDetails2 = legend.append("circle")
         .attr("r", 20)
         .attr("cx", 105)
-        .attr("cy", 390)
+        .attr("cy", 220)
         .style("fill", "none")
         .style("stroke", "black")
         .style("stroke-width", "1.5")
 
   legend.append("text")
-      .text("$100,000,000")
-      .attr("x", 60)
-      .attr("y", 215)
+      .text("$56,468,989")
+      .attr("x", 140)
+      .attr("y", 160)
 //adding text to legend
   legend.append("text")
-      .text("$50,000,000")
-      .attr("x", 70)
-      .attr("y", 315)
+      .text("$6,850,024")
+      .attr("x", 150)
+      .attr("y", 215)
+
+};
+
+
+function CreateTotalLegend(){
+    var legend = d3.selectAll("#infoPanel").append("svg")
+        .attr("width", 250)
+        .attr("height", 300)
+        .attr("class", "legendTotal")
+
+
+    var legendDetails = legend.append("circle")
+        .attr("r", 70)
+        .attr("cx", 105)
+        .attr("cy", 200)
+        .style("fill", "none")
+        .style("stroke", "black")
+        .style("stroke-width", "1.5")
+
+    var legendDetails2 = legend.append("circle")
+        .attr("r", 35)
+        .attr("cx", 105)
+        .attr("cy", 235)
+        .style("fill", "none")
+        .style("stroke", "black")
+        .style("stroke-width", "1.5")
+
+  legend.append("text")
+      .text("$67,941,789")
+      .attr("x", 140)
+      .attr("y", 160)
+//adding text to legend
+  legend.append("text")
+      .text("$52,205,984")
+      .attr("x", 150)
+      .attr("y", 215)
+
+};
+
+
+function CreatePerCapitaLegend(){
+    var legend = d3.selectAll("#infoPanel").append("svg")
+        .attr("width", 250)
+        .attr("height", 300)
+        .attr("class", "legendPer")
+
+
+    var legendDetails = legend.append("circle")
+        .attr("r", 70)
+        .attr("cx", 105)
+        .attr("cy", 220)
+        .style("fill", "none")
+        .style("stroke", "black")
+        .style("stroke-width", "1.5")
+
+    var legendDetails2 = legend.append("circle")
+        .attr("r", 35)
+        .attr("cx", 105)
+        .attr("cy", 255)
+        .style("fill", "none")
+        .style("stroke", "black")
+        .style("stroke-width", "1.5")
+
+  legend.append("text")
+      .text("$1.74")
+      .attr("x", 180)
+      .attr("y", 170)
+
+//adding text to legend
+  legend.append("text")
+      .text("$1.59")
+      .attr("x", 180)
+      .attr("y", 250)
 
 };
 
