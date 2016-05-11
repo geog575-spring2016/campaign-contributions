@@ -84,6 +84,7 @@ h2 {
 
 #infoPanel {
     position: relative;
+    right:6%;
   float: right;
   margin-right: -10%;
 }
