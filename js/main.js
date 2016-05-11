@@ -3,9 +3,13 @@ var expressed = attrArray[0];
 var fullDate = ["March 2015", "April 2015","May 2015", "June 2015",  "July 2015","August 2015","September 2015","October 2015","November 2015","December 2015","January 2016","February 2016","March 2016"];
 var timeArray = ["March_15","April_15","May_15","June_15","July_15","August_15","September_15","October_15","November_15","December_15","January_16","February_16","March_16"];
 var timelineArray = ["Mar 15", "Apr 15","May 15", "June 15", "July 15","Aug 15","Sep 15","Oct 15","Nov 15","Dec 15","Jan 16","Feb 16","Mar 16"];
+var eventArray1=["Ted Cruz joined race", "Hilary Clinton, Rand Paul, Marco Rubio and Bernie Sanders joined race","Carly Fiorina, Ben Carson, Rick Santorum, Mike Huckabee, Martin O'Malley and George Pataki joined race", "Rick Perry, Jeb Bush, Jill Stein, Donald Trump, Bobby Jindal, Lindsey Graham and  Chris Christie joined race",  "James Webb, John Kasich and Scott Walker joined race"," ","Lawrence Lessig joined race"," "," ",""," "," "," "]
+var eventArray2=[" ", " "," ", " ",  " "," ","Rick Perry and Scott Walker dropped out of race","James Webb dropped out of race","Lawrence Lessig and Bobby Jindal dropped out of race","Lindsey Graham and George Pataki dropped out of race"," "," Martin O'Malley, Mike Huckabee, Rand Paul, Rick Santorum, Chris Christie, and Carly Fiorina drop out of race "," "]
+var eventArray3=[" ", "  "," ", "",  "","1st Republican Forum in New Hampshire; 1st Republican Debate in Ohio","South Carolina finalizes ballot for primary; 2nd Republican Debate in California","1st Democratic Debate in Nevada; 3rd Republican Debate in Colorado","1st Democratic Forum in South Carolina; 4th Republican Debate in Wisconsin; 2nd Democratic Debate in Iowa; Presidential Family (Republican) Forum in Iowa","Republican Jewish Coalition Presidentail Candidates Forum in D.C.; 5th Republican Debate in Nevada; 3rd Democratic Debate in New Hampshire","Republican's Kemp Forum in South Carolina; 3rd Democratic Forum in Iowa; 6th Republican Debate in South Carolina; Democratic Forum in Iowa; 7th Republican Debate in Iowa","Democratic Town Hall Forum in New Hampshire; 5th Democratic Debate in New Hampshire; 8th Republican Debate - New Hampshire; 6th Democratic Debate in Wisconsin; 2 Republican Town Halls in South Carolina; Democratic Town Hall Forum in Nevada; CNN Democratic Town Hall in South Carolina; 10th Republican Debate in Texas; Hillary Clinton and Ted Cruz win Iowa caucuses; Donald Trump and Bernie Sanders win New Hampshire primaries; Hillary Clinton and Donald Trump win Nevada caucuses; Donald Trump and Hillary Clinton win South Carolina primaries"," 11th Republican Debate in Michigan; 7th Democratic Debate in Michigan; 8th/Final Democratic Debate in Florida; 12th Republican Debate in Florida; Republican Town Hall; Hillary wins primaries in Alabama, Arizona, Arkansas, Florida, Georgia, Illinois, Louisiana, Massachusetts, Missouri, Mississippi, North Carolina, Ohio, Tennessee, Texas, and Virginia; Bernie Sanders wins primaries in Colorado, Michigan, Oklahoma, and Vermont; Bernie Sanders wins caucuses in Alaska, Kansas, Hawaii, Idaho, Maine, Minnesota, Nebraska, Utah, and Washington; Donald Trump wins primaries in Alabama, Arizona, Arkansas, Florida, Georgia, Illinois, Louisiana, Massachusetts, Michigan, Mississippi, Missouri, North Carolina, Tennessee, Vermont, Virginia; Donald Trump wins caucuses In Hawaii and Kentucky; Ted Cruz wins primaries in Alaska, Oklahoma, and Texas; Ted Cruz wins Wyoming County Conventions; Marco Rubio wins Minnesota and D.C. caucuses; John Kasich wins Ohio caucus"]
 var count = 12;
 var timeExpressed = timeArray[12];
 var yearExpressedText;
+var eventExpressedText1,eventExpressedText2,eventExpressedText3;
 var candidaterightname, candidateleftname;
 var currentFrame = 0;
 var map;
@@ -14,7 +18,7 @@ var newarray;
 var projection;
 var setRadius;
 var radioName = expressed;
-var width = window.innerWidth * 0.60,
+var width = window.innerWidth * 0.55,
     height= 500;
 var attributeNames = [];
 var csvArray = [];
@@ -36,7 +40,7 @@ function setMap() {
     projection = d3.geo.albersUsa()
     // no center because it's already centered on the US as part of the projection code
         .scale(1000)
-        .translate([width / 1.8, height / 2.3]); // keeps map centered in the svg container
+        .translate([width / 1.95, height / 2.3]); // keeps map centered in the svg container
 
     // creating a path generator to draw the projection
     var path = d3.geo.path()
@@ -267,16 +271,32 @@ function drawMenuInfo(time){
         .attr("y", 0)
         .attr("class", "yearExpressedText menu-info")
         .text(fullDate[a])
-        .style({'font-size':'36px', 'font-weight': 'strong'});
+        .style({'font-size':'30px', 'font-weight': 'strong'});
 
-    eventExpressedText = d3.select('#infoPanel')
+ eventExpressedText1 = d3.select('#infoPanel')
         .append("text")
         .attr("x", 0)
         .attr("y", 0)
-        .attr("class", "eventExpressedText menu-info")
-        // .html(displayEvents);
+        .attr("class", "eventExpressedText1")
+        .text(eventArray1[a]);
 
-             //alters timeline year text
+ eventExpressedText2 = d3.select('#infoPanel')
+        .append("text")
+        .attr("x", 0)
+        .attr("y", 0)
+        .attr("class", "eventExpressedText2")
+        .text(eventArray2[a]);
+
+        eventExpressedText3 = d3.select('#infoPanel')
+        .append("text")
+        .attr("x", 0)
+        .attr("y", 0)
+        .attr("class", "eventExpressedText3")
+        .text(eventArray3[a]);
+
+
+
+
     var timelineYear = d3.select(".axis")
         .selectAll('g')
         .attr("font-weight", function(d){
@@ -296,16 +316,12 @@ function drawMenuInfo(time){
             if (timelineArray[a] == d){
                 return "#9fa696";
             } else {
-                return "#4d4543";
+                return "none";
             }
          });
 };
 
-// function displayEvents(events) {
-//
-//     var monthEvents = ;
-//
-// }
+
 
 function createButton(us,projection) {
 
@@ -320,7 +336,9 @@ function createButton(us,projection) {
         };
 
         var removeOldYear = d3.selectAll(".yearExpressedText").remove();
-        var removeOldEvent = d3.selectAll(".eventExpressedText").remove();
+        var removeOldEvent = d3.selectAll(".eventExpressedText1").remove();
+         var removeOldEvent = d3.selectAll(".eventExpressedText2").remove();
+          var removeOldEvent = d3.selectAll(".eventExpressedText3").remove();
 
         if (candidaterightname && candidateleftname) {
             createRightSplit(candidaterightname,us,projection);
@@ -346,7 +364,9 @@ function createButton(us,projection) {
         };
 
         var removeOldYear = d3.selectAll(".yearExpressedText").remove();
-        var removeOldEvent = d3.selectAll(".eventExpressedText").remove();
+        var removeOldEvent = d3.selectAll(".eventExpressedText1").remove();
+        var removeOldEvent = d3.selectAll(".eventExpressedText3").remove();
+        var removeOldEvent = d3.selectAll(".eventExpressedText2").remove();
 
          if (candidaterightname && candidateleftname)
         {
@@ -366,7 +386,7 @@ function createButton(us,projection) {
 function createSlider(us,projection){
     var y = d3.scale.ordinal()
        .domain(["Mar 15", "Apr 15","May 15", "June 15", "July 15","Aug 15","Sep 15","Oct 15","Nov 15","Dec 15","Jan 16","Feb 16","Mar 16"])
-       .rangeRoundBands([0, 1000]);
+       .rangeRoundBands([0, 990]);
 
     var yAxis = d3.svg.axis()
         .scale(y)
@@ -408,7 +428,9 @@ console.log(axis);
                     count = timelineArray.indexOf(d);
             timeExpressed = timeArray[count];
                     var removeOldYear = d3.selectAll(".yearExpressedText").remove();
-                    var removeOldEvent = d3.selectAll(".eventExpressedText").remove();
+                    var removeOldEvent = d3.selectAll(".eventExpressedText1").remove();
+                    var removeOldEvent = d3.selectAll(".eventExpressedText2").remove();
+                      var removeOldEvent = d3.selectAll(".eventExpressedText3").remove();
 
                     drawMenuInfo(timeExpressed);
 
@@ -570,7 +592,9 @@ function createradio(data,path,map,Bush, Carson, Christie, Clinton, Cruz, Fiorin
                   setCircles2 (path, map, data, projection, us)
                   changeAttribute(this.value, data);
                   $(".yearExpressedText").remove();
-                  $(".eventExpressedText").remove();
+                  $(".eventExpressedText1").remove();
+                  $(".eventExpressedText2").remove();
+                  $(".eventExpressedText3").remove();
                   $(".axis").remove();
                   $(".stepForward").attr("disabled", true);
                   $(".stepBackward").attr("disabled", true);
@@ -589,7 +613,9 @@ function createradio(data,path,map,Bush, Carson, Christie, Clinton, Cruz, Fiorin
                 //CreatePerCapitaLegend();
                 changeAttribute(this.value, data);
                 $(".yearExpressedText").remove();
-                $(".eventExpressedText").remove();
+                $(".eventExpressedText1").remove();
+                 $(".eventExpressedText2").remove();
+                  $(".eventExpressedText3").remove();
                 $(".axis").remove();
                 $(".stepForward").attr("disabled", true);
                 $(".stepBackward").attr("disabled", true);
@@ -833,44 +859,43 @@ function createDropdownRight(us,projection){
         .text(function(d){ return d });
 };
 
-function CreateSplitLegend(){
-    var legend = d3.selectAll("#infoPanel").append("svg")
+function CreateSplitLegend(){    var legend = d3.selectAll("#sideColumn").append("svg")
         .attr("width", 250)
-        .attr("height", 300)
+        .attr("height", 250)
         .attr("class", "legendInfo")
 
 
     var legendDetails = legend.append("circle")
         .attr("r", 40)
-        .attr("cx", 105)
-        .attr("cy", 200)
+          .attr("cx", 76)
+        .attr("cy", 180)
         .style("fill", "none")
         .style("stroke", "black")
         .style("stroke-width", "1.5")
 
     var legendDetails2 = legend.append("circle")
         .attr("r", 20)
-        .attr("cx", 105)
-        .attr("cy", 220)
+        .attr("cx", 76)
+        .attr("cy", 200)
         .style("fill", "none")
         .style("stroke", "black")
         .style("stroke-width", "1.5")
 
   legend.append("text")
       .text("$56,468,989")
-      .attr("x", 140)
+      .attr("x", 120)
       .attr("y", 160)
 //adding text to legend
   legend.append("text")
       .text("$6,850,024")
-      .attr("x", 150)
-      .attr("y", 215)
+      .attr("x", 120)
+      .attr("y", 190)
 
 };
 
 
 function CreateTotalLegend(){
-    var legend = d3.selectAll("#infoPanel").append("svg")
+    var legend = d3.selectAll("#sideColumn").append("svg")
         .attr("width", 250)
         .attr("height", 300)
         .attr("class", "legendTotal")
@@ -878,16 +903,16 @@ function CreateTotalLegend(){
 
     var legendDetails = legend.append("circle")
         .attr("r", 70)
-        .attr("cx", 105)
-        .attr("cy", 200)
+        .attr("cx", 76)
+        .attr("cy", 220)
         .style("fill", "none")
         .style("stroke", "black")
         .style("stroke-width", "1.5")
 
     var legendDetails2 = legend.append("circle")
         .attr("r", 35)
-        .attr("cx", 105)
-        .attr("cy", 235)
+        .attr("cx", 76)
+        .attr("cy", 255)
         .style("fill", "none")
         .style("stroke", "black")
         .style("stroke-width", "1.5")
@@ -906,7 +931,7 @@ function CreateTotalLegend(){
 
 
 function CreatePerCapitaLegend(){
-    var legend = d3.selectAll("#infoPanel").append("svg")
+    var legend = d3.selectAll("#sideColumn").append("svg")
         .attr("width", 250)
         .attr("height", 300)
         .attr("class", "legendPer")
@@ -914,7 +939,7 @@ function CreatePerCapitaLegend(){
 
     var legendDetails = legend.append("circle")
         .attr("r", 70)
-        .attr("cx", 105)
+        .attr("cx", 76)
         .attr("cy", 220)
         .style("fill", "none")
         .style("stroke", "black")
@@ -922,7 +947,7 @@ function CreatePerCapitaLegend(){
 
     var legendDetails2 = legend.append("circle")
         .attr("r", 35)
-        .attr("cx", 105)
+        .attr("cx", 76)
         .attr("cy", 255)
         .style("fill", "none")
         .style("stroke", "black")
@@ -930,13 +955,13 @@ function CreatePerCapitaLegend(){
 
   legend.append("text")
       .text("$1.74")
-      .attr("x", 180)
+      .attr("x", 160)
       .attr("y", 170)
 
 //adding text to legend
   legend.append("text")
       .text("$1.59")
-      .attr("x", 180)
+      .attr("x", 160)
       .attr("y", 250)
 
 };

@@ -9,7 +9,7 @@
 .map {
 position: absolute;
     top: 5%;
-    left: 5%;
+    left: 15%;
     margin: 2% 0 0 1%;
 }
 
@@ -113,36 +113,38 @@ h2 {
 .axis path,
 .axis line {
  position: absolute;
-  left:20%;
+  left:-10px;
     fill: none;
     stroke: #4d4543;
-    stroke-width: 2px;
+    stroke-width: 1.5px;
     shape-rendering: crispEdges;
 }
 
 .axis
 {  position: relative;
-  top: 315px;
+  top: 330px;
+  left:-10px;
   height: 50px;
+
   width:1000px;}
 
 .legendInfo {
   position: relative;
-  top: 200px;
+  top: 20%;
   font-family: 'Roboto', sans-serif;
   color: #4d4543;
 }
 
 .legendPer {
   position: relative;
-  top: 200px;
+  top: 20%;
   font-family: 'Roboto', sans-serif;
   color: #4d4543;
 }
 
 .legendTotal {
   position: relative;
-  top: 250px;
+  top: 20%;
   font-family: 'Roboto', sans-serif;
   color: #4d4543;
 }
@@ -155,29 +157,53 @@ h2 {
 }
 
 .yearExpressedText {
-    float: left;
+    width:300px;
     position:relative;
-    top:30px;
+    top:20px;
     font-family: 'Roboto', sans-serif;
     color: #4d4543;
     font-weight: 600;
 }
 
-.yearExpressedText.menu-info {
-  position: relative;
-  top: 10px;
-  font-family: 'Roboto', sans-serif;
-}
 
-.eventExpressedText
-{/*width:100px;*/
-    float: left;
-    position:relative;
-    top:30px;
+.eventExpressedText1
+{width:350px;
+
+    position:absolute;
+    top:180px;
+    left:10px;
     font-family: 'Roboto', sans-serif;
     font-weight: 400;
     font-size: 16px;
 }
+.eventExpressedText2
+{width:350px;
+  
+   position:absolute;
+    top:230px;
+    left:10px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+}
+.eventExpressedText3
+{width:350px;
+
+    position:absolute;
+    top:290px;
+    left:10px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+}
+
+
+
+
+
+
+
+
 
 .stepForward {
     position:relative;
@@ -223,7 +249,7 @@ background-color: gray;}
 
 .infolabel {
     position: absolute;
-    top: 20%;
+    top: 94px;
     left: 5%;
     min-height: 50px;
     width: 330px;
