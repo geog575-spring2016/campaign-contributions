@@ -118,8 +118,8 @@ h2 {
 
 .axis path,
 .axis line {
- position: relative;
-  /*left:-10px;*/
+ position: absolute;
+  left:-10px;
     fill: none;
     stroke: #4d4543;
     stroke-width: 1.5px;
@@ -127,9 +127,9 @@ h2 {
 }
 
 .axis
-{  position: relative;
-  /*top: 330px;
-  left:-10px;*/
+{  position: absolute;
+  top: 330px;
+  left:-10px;
   height: 50px;
 
   width:1000px;}
@@ -283,10 +283,13 @@ h4 {
     font-weight: bold;
     text-align: center;
     font-size: 2em;
+    color: #4d4543;
 }
 
 #context p {
+    font-family: 'Roboto', sans-serif;
     font-size: 1.1em;
     text-align: left;
+    color: #4d4543;
 
 }

@@ -394,6 +394,24 @@ function createButton(us,projection) {
 };
 
 function createSlider(us,projection){
+
+    var svg = d3.select("#timeline")
+        .append("svg")
+        // .attr("class", "map")
+        .attr("width", 900)
+        .attr("height", 50);
+
+    var g = svg.append("g");
+
+    g.append("rect")
+    .attr("width", 900)
+    .attr("height", 50)
+    .attr("fill", "white")
+    .attr("opacity", 0);
+
+    var timeline = g.append("g")
+        .attr("id", "timelineActual");
+
     var y = d3.scale.ordinal()
        .domain(["Mar 15", "Apr 15","May 15", "June 15", "July 15","Aug 15","Sep 15","Oct 15","Nov 15","Dec 15","Jan 16","Feb 16","Mar 16"])
        .rangeRoundBands([0, 990]);
