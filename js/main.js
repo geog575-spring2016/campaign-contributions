@@ -868,7 +868,7 @@ function CreateSplitLegend(){    var legend = d3.selectAll("#sideColumn").append
 
 
     var legendDetails = legend.append("circle")
-        .attr("r", 40)
+        .attr("r", 40.38)
           .attr("cx", 76)
         .attr("cy", 155)
         .style("fill", "none")
@@ -876,7 +876,7 @@ function CreateSplitLegend(){    var legend = d3.selectAll("#sideColumn").append
         .style("stroke-width", "1.5")
 
     var legendDetails2 = legend.append("circle")
-        .attr("r", 20)
+        .attr("r", 20.43)
         .attr("cx", 76)
         .attr("cy", 175)
         .style("fill", "none")
@@ -884,12 +884,12 @@ function CreateSplitLegend(){    var legend = d3.selectAll("#sideColumn").append
         .style("stroke-width", "1.5")
 
   legend.append("text")
-      .text("$56,468,989")
+      .text("$57,000,000")
       .attr("x", 120)
       .attr("y", 135)
 //adding text to legend
   legend.append("text")
-      .text("$6,850,024")
+      .text("$7,000,000")
       .attr("x", 120)
       .attr("y", 165)
 
@@ -904,7 +904,7 @@ function CreateTotalLegend(){
 
 
     var legendDetails = legend.append("circle")
-        .attr("r", 70)
+        .attr("r", 72.12)
         .attr("cx", 76)
         .attr("cy", 220)
         .style("fill", "none")
@@ -912,7 +912,7 @@ function CreateTotalLegend(){
         .style("stroke-width", "1.5")
 
     var legendDetails2 = legend.append("circle")
-        .attr("r", 35)
+        .attr("r", 33.52)
         .attr("cx", 76)
         .attr("cy", 255)
         .style("fill", "none")
@@ -920,12 +920,12 @@ function CreateTotalLegend(){
         .style("stroke-width", "1.5")
 
   legend.append("text")
-      .text("$67,941,789")
+      .text("$70,000,000")
       .attr("x", 140)
       .attr("y", 160)
 //adding text to legend
   legend.append("text")
-      .text("$52,205,984")
+      .text("$50,000,000")
       .attr("x", 150)
       .attr("y", 215)
 
@@ -940,7 +940,7 @@ function CreatePerCapitaLegend(){
 
 
     var legendDetails = legend.append("circle")
-        .attr("r", 70)
+        .attr("r", 74.22)
         .attr("cx", 76)
         .attr("cy", 220)
         .style("fill", "none")
@@ -948,7 +948,7 @@ function CreatePerCapitaLegend(){
         .style("stroke-width", "1.5")
 
     var legendDetails2 = legend.append("circle")
-        .attr("r", 35)
+        .attr("r", 39.11)
         .attr("cx", 76)
         .attr("cy", 255)
         .style("fill", "none")
@@ -956,13 +956,13 @@ function CreatePerCapitaLegend(){
         .style("stroke-width", "1.5")
 
   legend.append("text")
-      .text("$12.26")
+      .text("$13.00")
       .attr("x", 160)
       .attr("y", 170)
 
 //adding text to legend
   legend.append("text")
-      .text("$3.58")
+      .text("$4.00")
       .attr("x", 160)
       .attr("y", 250)
 
