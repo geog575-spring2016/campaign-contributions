@@ -6,8 +6,6 @@ var timelineArray = ["Mar 15", "Apr 15","May 15", "June 15", "July 15","Aug 15",
 var count = 12;
 var timeExpressed = timeArray[12];
 var yearExpressedText;
-var chartHeight = 200;
-var chartWidth = 882;
 var candidaterightname, candidateleftname;
 var currentFrame = 0;
 var map;
@@ -16,8 +14,8 @@ var newarray;
 var projection;
 var setRadius;
 var radioName = expressed;
-var width = window.innerWidth * 0.645,
-    height = 470;
+var width = window.innerWidth * 0.60,
+    height= 500;
 var attributeNames = [];
 var csvArray = [];
 var oldcsvArray = [];
@@ -38,7 +36,7 @@ function setMap() {
     projection = d3.geo.albersUsa()
     // no center because it's already centered on the US as part of the projection code
         .scale(1000)
-        .translate([width / 2, height / 2.2]); // keeps map centered in the svg container
+        .translate([width / 1.8, height / 2.3]); // keeps map centered in the svg container
 
     // creating a path generator to draw the projection
     var path = d3.geo.path()
@@ -522,7 +520,7 @@ function setCircles2 (path, map, data, projection, us){
 
 function createradio(data,path,map,Bush, Carson, Christie, Clinton, Cruz, Fiorina, Graham, Huckabee, Jindal, Kasich, Lessig, OMalley, Pataki, Paul, Perry, Rubio, Sanders, Santorum, Stein, Trump, Walker, Webb,total, projection,us){
 
-    var filterPhases = ["Total", "PerCapita", "Compare Candidates"],
+    var filterPhases = ["Total", "PerCapita", "CompareCandidates"],
     j=0;
 
     var form1 = d3.select("#sideColumn")
@@ -546,7 +544,7 @@ function createradio(data,path,map,Bush, Carson, Christie, Clinton, Cruz, Fiorin
               //changeAttribute(this.value, data);
               radioName = d;
               //console.log(d);
-              if (d == "Compare Candidates"){
+              if (d == "CompareCandidates"){
                 //console.log("Hi");
                     //changeAttribute(this.value, data);
                     drawMenuInfo(timeExpressed);
@@ -616,7 +614,7 @@ function updateCircles(circles, data){
         radiusMax = Math.max.apply(Math, domainArray);
 
         setRadius = d3.scale.sqrt()
-            .range([0, 100])
+            .range([0, 70])
             .domain([radiusMin, radiusMax]);
     //create a second svg element to hold the bar chart
     var circleRadius= circles.attr("r", function(d){
@@ -634,7 +632,7 @@ function updateCircles2(circles, data){
         radiusMax = Math.max.apply(Math, domainArray);
 
         setRadius = d3.scale.sqrt()
-            .range([0, 100])
+            .range([0, 70])
             .domain([radiusMin, radiusMax]);
     //create a second svg element to hold the bar chart
     var circleRadius= circles.attr("r", function(d){
@@ -826,20 +824,20 @@ function createDropdownRight(us,projection){
 function CreateSplitLegend(){
     var legend = d3.selectAll("#infoPanel").append("svg")
         .attr("width", 250)
-        .attr("height", 500)
+        .attr("height", 250)
 
     var legendDetails = legend.append("circle")
-        .attr("r", 100)
+        .attr("r", 40)
         .attr("cx", 105)
-        .attr("cy", 320)
+        .attr("cy", 390)
         .style("fill", "none")
         .style("stroke", "black")
         .style("stroke-width", "1.5")
 
     var legendDetails2 = legend.append("circle")
-        .attr("r", 50)
+        .attr("r", 20)
         .attr("cx", 105)
-        .attr("cy", 370)
+        .attr("cy", 390)
         .style("fill", "none")
         .style("stroke", "black")
         .style("stroke-width", "1.5")
