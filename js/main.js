@@ -5,7 +5,7 @@ var timeArray = ["March_15","April_15","May_15","June_15","July_15","August_15",
 var timelineArray = ["Mar 15", "Apr 15","May 15", "June 15", "July 15","Aug 15","Sep 15","Oct 15","Nov 15","Dec 15","Jan 16","Feb 16","Mar 16"];
 var eventArray1=["Ted Cruz joined race","Hilary Clinton, Rand Paul, Marco Rubio and Bernie Sanders joined race","Carly Fiorina, Ben Carson, Rick Santorum, Mike Huckabee, Martin O'Malley and George Pataki joined race", "Rick Perry, Jeb Bush, Jill Stein, Donald Trump, Bobby Jindal, Lindsey Graham and  Chris Christie joined race",  "James Webb, John Kasich and Scott Walker joined race"," ","Lawrence Lessig joined race"," "," ",""," "," "," "]
 var eventArray2=[" ", " "," ", " ",  " "," ","Rick Perry and Scott Walker dropped out of race","James Webb dropped out of race","Lawrence Lessig and Bobby Jindal dropped out of race","Lindsey Graham and George Pataki dropped out of race"," "," Martin O'Malley, Mike Huckabee, Rand Paul, Rick Santorum, Chris Christie, and Carly Fiorina drop out of race "," "]
-var eventArray3=[" ", "  "," ", "",  "","1st Republican Forum in New Hampshire </br>1st Republican Debate in Ohio","2nd Republican Debate in California","1st Democratic Debate in Nevada </br> 3rd Republican Debate in Colorado","1st Democratic Forum in South Carolina </br> 4th Republican Debate in Wisconsin </br> 2nd Democratic Debate in Iowa","Republican Jewish Coalition Presidential Candidates Forum in D.C. </br> 5th Republican Debate in Nevada </br> 3rd Democratic Debate in New Hampshire","Republican's Kemp Forum in South Carolina </br> 3rd Democratic Forum in Iowa </br> 6th Republican Debate in South Carolina </br> Democratic Forum in Iowa </br> 7th Republican Debate in Iowa","Democratic Town Hall Forum in New Hampshire </br> 5th Democratic Debate in New Hampshire </br>8th Republican Debate - New Hampshire </br> 6th Democratic Debate in Wisconsin </br>2 Republican Town Halls in South Carolina </br> Democratic Town Hall Forum in Nevada </br> CNN Democratic Town Hall in South Carolina </br> 10th Republican Debate in Texas </br> Hillary Clinton and Ted Cruz win Iowa caucuses </br> Donald Trump and Bernie Sanders win New Hampshire primaries </br> Hillary Clinton and Donald Trump win Nevada caucuses </br> Donald Trump and Hillary Clinton win South Carolina primaries","11th Republican Debate in Michigan </br> 7th Democratic Debate in Michigan </br> 8th/Final Democratic Debate in Florida, 12th Republican Debate in Florida </br> Hillary wins primaries in Alabama, Arizona, Arkansas, Florida, Georgia, Illinois, Louisiana, Massachusetts, Missouri, Mississippi, North Carolina, Ohio, Tennessee, Texas, and Virginia </br> Bernie Sanders wins primaries in Colorado, Michigan, Oklahoma, and Vermont </br>Bernie Sanders wins caucuses in Alaska, Kansas, Hawaii, Idaho, Maine, Minnesota, Nebraska, Utah, and Washington </br> Donald Trump wins primaries in Alabama, Arizona, Arkansas, Florida, Georgia, Illinois, Louisiana, Massachusetts, Michigan, Mississippi, Missouri, North Carolina, Tennessee, Vermont, Virginia </br> Donald Trump wins caucuses In Hawaii and Kentucky </br> Ted Cruz wins primaries in Alaska, Oklahoma, and Texas </br>Ted Cruz wins Wyoming County Conventions </br> Marco Rubio wins Minnesota and D.C. caucuses </br> John Kasich wins Ohio caucus"]
+var eventArray3=[" ", "  "," ", "",  "","1st Republican Forum in New Hampshire </br>1st Republican Debate in Ohio","2nd Republican Debate in California","1st Democratic Debate in Nevada </br> 3rd Republican Debate in Colorado","1st Democratic Forum in South Carolina </br> 4th Republican Debate in Wisconsin </br> 2nd Democratic Debate in Iowa","Republican Jewish Coalition Presidential Candidates Forum in D.C. </br> 5th Republican Debate in Nevada </br> 3rd Democratic Debate in New Hampshire","Republican's Kemp Forum in South Carolina </br> 3rd Democratic Forum in Iowa </br> 6th Republican Debate in South Carolina </br> Democratic Forum in Iowa </br> 7th Republican Debate in Iowa","Democratic Town Hall Forum in New Hampshire </br> 5th Democratic Debate in New Hampshire </br>8th Republican Debate - New Hampshire </br> 6th Democratic Debate in Wisconsin </br>2 Republican Town Halls in South Carolina </br> Democratic Town Hall Forum in Nevada </br> CNN Democratic Town Hall in South Carolina </br> 10th Republican Debate in Texas </br> Hillary Clinton and Ted Cruz win Iowa caucuses </br> Donald Trump and Bernie Sanders win New Hampshire primaries </br> Hillary Clinton and Donald Trump win Nevada caucuses </br> Donald Trump and Hillary Clinton win South Carolina primaries","11th Republican Debate in Michigan </br> 7th Democratic Debate in Michigan </br> 8th/Final Democratic Debate in Florida, </br>12th Republican Debate in Florida </br> Hillary wins primaries in Alabama, Arizona, Arkansas, Florida, Georgia, Illinois, Louisiana, Massachusetts, Missouri, Mississippi, North Carolina, Ohio, Tennessee, Texas, and Virginia </br> Bernie Sanders wins primaries in Colorado, Michigan, Oklahoma, and Vermont </br>Bernie Sanders wins caucuses in Alaska, Kansas, Hawaii, Idaho, Maine, Minnesota, Nebraska, Utah, and Washington </br> Donald Trump wins primaries in Alabama, Arizona, Arkansas, Florida, Georgia, Illinois, Louisiana, Massachusetts, Michigan, Mississippi, Missouri, North Carolina, Tennessee, Vermont, Virginia </br> Donald Trump wins caucuses In Hawaii and Kentucky </br> Ted Cruz wins primaries in Alaska, Oklahoma, and Texas </br>Ted Cruz wins Wyoming County Conventions </br> Marco Rubio wins Minnesota and D.C. caucuses </br> John Kasich wins Ohio caucus"]
 var count = 12;
 var timeExpressed = timeArray[12];
 var yearExpressedText;
@@ -863,14 +863,14 @@ function createDropdownRight(us,projection){
 
 function CreateSplitLegend(){    var legend = d3.selectAll("#sideColumn").append("svg")
         .attr("width", 250)
-        .attr("height", 250)
+        .attr("height", 200)
         .attr("class", "legendInfo")
 
 
     var legendDetails = legend.append("circle")
         .attr("r", 40)
           .attr("cx", 76)
-        .attr("cy", 180)
+        .attr("cy", 155)
         .style("fill", "none")
         .style("stroke", "black")
         .style("stroke-width", "1.5")
@@ -878,7 +878,7 @@ function CreateSplitLegend(){    var legend = d3.selectAll("#sideColumn").append
     var legendDetails2 = legend.append("circle")
         .attr("r", 20)
         .attr("cx", 76)
-        .attr("cy", 200)
+        .attr("cy", 175)
         .style("fill", "none")
         .style("stroke", "black")
         .style("stroke-width", "1.5")
@@ -886,12 +886,12 @@ function CreateSplitLegend(){    var legend = d3.selectAll("#sideColumn").append
   legend.append("text")
       .text("$56,468,989")
       .attr("x", 120)
-      .attr("y", 160)
+      .attr("y", 135)
 //adding text to legend
   legend.append("text")
       .text("$6,850,024")
       .attr("x", 120)
-      .attr("y", 190)
+      .attr("y", 165)
 
 };
 

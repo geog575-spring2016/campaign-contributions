@@ -138,8 +138,8 @@ h2 {
   width:1000px;}
 
 .legendInfo {
-  position: relative;
-  top: 20px;
+  position: absolute;
+  top: 200px;
   font-family: 'Roboto', sans-serif;
   color: #4d4543;
 }
@@ -291,6 +291,11 @@ h4 {
 
 #timeline {
     margin-left: -7%;
+}
+
+.axiss {
+    position: absolute;
+    top: 25%;
 }
 #context p {
     font-family: 'Roboto', sans-serif;
